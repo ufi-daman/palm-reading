@@ -1,5 +1,18 @@
 node_modules
-# Keep environment variables out of version control
-.env
+.next
+next-env.d.ts
 
+# Environment variables
+.env
+.env*.local
+
+# Databases (SQLite)
+*.db
+*.db-journal
+
+# Generated Prisma client
 /generated/prisma
+
+# User uploads
+/public/uploads/*
+!/public/uploads/.gitkeep

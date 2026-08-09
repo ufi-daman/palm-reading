@@ -52,6 +52,7 @@ model Analysis {
 
 model PalmLine {
   id          String    @id @default(cuid())
+  key         String    @unique // "lifeLine" | "heartLine" | ... — mapuje na vstup uživatele
   nameCs      String    @unique
   nameEn      String
   type        String    // "major" | "minor"
@@ -70,6 +71,7 @@ model PalmLine {
 
 model Mount {
   id          String    @id @default(cuid())
+  key         String    @unique // "venus" | "jupiter" | ... — mapuje na vstup uživatele
   nameCs      String    @unique
   nameEn      String
 

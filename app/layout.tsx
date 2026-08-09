@@ -1,11 +1,15 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Čtení z dlaně - Palmistika',
-  description: 'Interaktivní knihovna čtení z dlaně s osobnostní analýzou',
-  charset: 'utf-8',
-  viewport: 'width=device-width, initial-scale=1',
+  title: 'Čtení z dlaně — Palmistika',
+  description:
+    'Interaktivní knihovna čtení z dlaně s osobnostní analýzou. Čáry, vyvýšeniny a typy rukou vysvětlené česky.',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
@@ -15,10 +19,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs">
-      <body className="bg-white">
-        <main className="min-h-screen flex flex-col">
-          {children}
-        </main>
+      <body className="bg-white text-gray-900">
+        <div className="min-h-screen flex flex-col">{children}</div>
       </body>
     </html>
   )

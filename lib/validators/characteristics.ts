@@ -50,6 +50,7 @@ export function validateCharacteristics(input: unknown): Characteristics {
 
 export const AnalyzeRequestSchema = z.object({
   inputType: z.enum(['image', 'text', 'interactive']),
+  imageUrl: z.string().optional(),
   characteristics: CharacteristicsSchema,
 })
 
