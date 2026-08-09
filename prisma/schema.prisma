@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// ==================== USERS ====================
+model User {
+  id        String    @id @default(cuid())
+  email     String?   @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  analyses  Analysis[]
+
+  @@map("users")
+}
+
+// ==================== ANALYSES ====================
+model Analysis {
+  id               String    @id @default(cuid())
+  userId           String?
+  user             User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Input method
+  inputType        String    // "image" | "text" | "interactive"
+  imageUrl         String?
+  imageUploadedAt  DateTime?
+
+  // User characteristics (all inputs stored here as JSON)
+  characteristics  String    // Stored as JSON string
+
+  // Results
+  result           String    // Full Czech analysis
+  confidence       Float     @default(0.0) // 0-1
+
+  // Alternative interpretations
+  alternatives     String?   // Stored as JSON string
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("analyses")
+}
+
+// ==================== KNOWLEDGE BASE ====================
+
+model PalmLine {
+  id          String    @id @default(cuid())
+  nameCs      String    @unique
+  nameEn      String
+  type        String    // "major" | "minor"
+
+  description String
+  anatomy     String
+
+  // Characteristics: stored as JSON string {strong: {...}, weak: {...}, broken: {...}, ...}
+  characteristics String
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("palm_lines")
+}
+
+model Mount {
+  id          String    @id @default(cuid())
+  nameCs      String    @unique
+  nameEn      String
+
+  location    String
+  description String
+
+  // Meanings: stored as JSON string {small: {...}, medium: {...}, large: {...}, ...}
+  meanings    String
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("mounts")
+}
+
+model HandType {
+  id              String    @id @default(cuid())
+  name            String    @unique // "fire" | "air" | "earth" | "water" | "mixed"
+  nameCs          String
+  element         String
+
+  description     String
+  personality     String
+  characteristics String    // Stored as JSON string array
+  strengths       String    // Stored as JSON string array
+  challenges      String    // Stored as JSON string array
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("hand_types")
+}
+
+model Interpretation {
+  id          String    @id @default(cuid())
+
+  // What this interpretation applies to: {handType: "earth", lifeLine: "strong", ...}
+  criteria    String    // Stored as JSON string
+
+  // Results
+  personality String
+  strengths   String    // Stored as JSON string array
+  challenges  String    // Stored as JSON string array
+  guidance    String
+
+  // Metadata
+  weight      Float     @default(1.0)
+  school      String    // "classical" | "modern"
+  source      String?   // Source/author
+  confidence  Float     @default(0.8) // Reliability 0-1
+  tags        String    @default("[]") // Stored as JSON string array
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([school])
+  @@index([confidence])
+  @@map("interpretations")
+}
+
+model UploadedImage {
+  id              String    @id @default(cuid())
+  analysisId      String
+
+  originalName    String
+  originalPath    String
+  processedPath   String
+
+  metadata        String    // Stored as JSON string
+  expiresAt       DateTime  // Auto-delete after 30 days
+
+  createdAt       DateTime  @default(now())
+
+  @@index([analysisId])
+  @@index([expiresAt])
+  @@map("uploaded_images")
+}
