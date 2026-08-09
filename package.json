@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node --loader ts-node/esm prisma/seed.ts",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio"
   },
   "repository": {
     "type": "git",
@@ -25,19 +28,22 @@
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
+    "better-sqlite3": "^13.0.3",
     "next": "^14.2.35",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.35.3",
-    "typescript": "^7.0.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@prisma/adapter-better-sqlite3": "^7.9.1",
     "@prisma/cli": "^3.0.0-beta.30",
     "autoprefixer": "^10.5.4",
     "framer-motion": "^13.0.0",
     "postcss": "^8.5.26",
     "prisma": "^7.9.1",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.11",
+    "typescript": "7.0.2"
   }
 }
