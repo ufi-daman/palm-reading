@@ -51,11 +51,17 @@ export default function TermsPage() {
 
             <section>
               <h2 className="text-xl font-bold text-palm-800 mb-2">
-                Nahrávaný obsah
+                Fotografovaný obsah
               </h2>
               <p>
-                Nahrávejte pouze fotografie vlastních rukou, případně rukou
-                osob, které vám k tomu daly souhlas.
+                Fotografujte pouze vlastní ruce, případně ruce osob, které
+                vám k tomu daly souhlas. Fotografie se ve výchozím stavu
+                zpracuje jen ve vašem prohlížeči; na server jde jen pokud si
+                výslovně vyžádáte AI rozbor (viz{' '}
+                <a href="/privacy" className="text-palm-700 underline">
+                  ochrana osobních údajů
+                </a>
+                ).
               </p>
             </section>
           </div>

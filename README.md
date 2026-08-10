@@ -1,21 +1,43 @@
 # Čtení z dlaně — interaktivní knihovna
 
-Webová aplikace v češtině pro čtení z dlaně. Uživatel popíše čáry, pahorky a tvar
-své ruky a dostane souvislý osobnostní výklad složený z tradičních palmistických
-významů.
+Webová aplikace v češtině pro čtení z dlaně. Primární cesta je fotka: vyfotíte
+dlaň, aplikace v prohlížeči rozpozná typ ruky a čáry a rovnou sestaví čtení.
+Cokoliv detekce nenajde nebo najde špatně, se dá opravit v panelu pod
+výsledkem — a bez focení jde celé čtení sestavit i ručně.
 
-## Co aplikace umí
+## Jak to funguje
 
-**Tři způsoby zadání**, všechny vedou ke stejnému výsledku:
+```
+vyfoťte dlaň → rozpoznání v prohlížeči → ČTENÍ
+                                            ↓
+                                "Upřesnit čtení" → oprava/doplnění
+```
 
-| Způsob | Cesta | Popis |
-|---|---|---|
-| Interaktivní diagram | `/analyzer/interactive` | Klikání přímo do SVG dlaně |
-| Z fotografie | `/analyzer/image-upload` | Nahraná fotka jako podklad pod diagramem |
-| Textový formulář | `/analyzer/text-input` | Výběr znaků ze seznamu |
+1. **Naváděné focení** (`components/GuidedCapture.tsx`) — živý náhled z
+   kamery kontroluje ostrost a expozici, spoušť se odemkne až po splnění
+   obou. Bez kamery nebo při zamítnutém oprávnění nabídne rovnou výběr
+   souboru. Fotka zůstává jen ve vašem prohlížeči.
+2. **Rozpoznání typu ruky** — MediaPipe Hand Landmarker (21 bodů ruky,
+   self-hosted WASM i model, žádné volání Google CDN) spočítá poměry dlaně
+   a prstů čistě geometricky.
+3. **Detekce čar** (`lib/vision/lines/`) — vlastní implementace nad
+   `ImageData`, bez OpenCV.js: homografie normalizuje dlaň do rámce
+   512×512 → CLAHE + bilaterální filtr → vícemeřítkový Frangiho hřebenový
+   filtr (σ 1–5 px, chytá hlavní i vedlejší čáry) → Otsuův práh →
+   Zhang-Suenovo ztenčení → spojené komponenty → přiřazení do anatomických
+   zón. Nedetekovaný znak se **nikdy nereportuje jako dohad** — buď je nad
+   prahem jistoty, nebo do čtení vůbec nevstoupí.
+4. **Čtení** — `lib/analysis/palmReader.ts` poskládá výklad z toho, co se
+   skutečně našlo, podle pramenné znalostní báze (`lib/content/`).
+5. **Oprava** — panel "Upřesnit čtení" pod výsledkem umožní cokoliv doplnit
+   nebo přepsat; čtení se po každé změně přepočítá.
 
-**Referenční knihovna** (`/library`) — 8 čar, 8 pahorků a 5 typů rukou, každý s
-vlastní stránkou a výkladem jednotlivých variant. Plus průvodce v šesti krocích.
+**Bez focení** funguje i interaktivní diagram (`/analyzer/interactive`) a
+textový formulář (`/analyzer/text-input`) — obě cesty jsou z domovské
+stránky viditelně nabídnuté, ne schované jako záložní řešení.
+
+**Volitelný AI rozbor** (`/api/vision`) pošle fotku k vyhodnocení přes
+Anthropic API, pokud o to uživatel výslovně požádá (viz Souhlas a AI níže).
 
 ## Spuštění
 
@@ -23,76 +45,131 @@ vlastní stránkou a výkladem jednotlivých variant. Plus průvodce v šesti kr
 git clone https://github.com/ufi-daman/protocol.git
 cd protocol
 npm install
-
-cp .env.example .env         # DATABASE_URL="file:./prisma/dev.db"
-npx prisma migrate deploy    # vytvoří a připraví databázi
-npx prisma generate
-
+cp .env.example .env
 npm run dev                  # http://localhost:3000
-curl -X POST http://localhost:3000/api/seed   # naplní znalostní bázi
 ```
 
-Bez posledního kroku bude knihovna prázdná a analýza vrátí jen obecný výklad.
+Bez jakýchkoliv proměnných prostředí aplikace plně funguje — chybí jen
+statistiky a AI rozbor (viz níže).
+
+### Volitelné proměnné
+
+| Proměnná | K čemu | Bez ní |
+|---|---|---|
+| `DATABASE_URL` | PostgreSQL pro provozní statistiky (`/admin/stats`) | zápis statistik se tiše přeskočí |
+| `ADMIN_PASSWORD` | HTTP basic auth pro `/admin/*` | `/admin` vrací 503 |
+| `ANTHROPIC_API_KEY` | AI rozbor fotky (`/api/vision`) | tlačítko AI rozboru vrací 503 |
+| `VISION_DAILY_CAP` | denní strop volání AI (výchozí 20) | platí výchozí hodnota |
+
+`DATABASE_URL` a `ANTHROPIC_API_KEY` musí být nastavené obě zároveň, aby
+AI rozbor fungoval — bez databáze nejde vynutit denní strop volání, takže
+endpoint zůstává schválně vypnutý (bezpečnostní pojistka proti nekontrolo-
+vanému utrácení API kreditu).
+
+Pro `DATABASE_URL` funguje libovolný hostovaný Postgres s free tier, např.
+[Neon](https://neon.tech) nebo Vercel Postgres.
 
 ## Technologie
 
 - **Next.js 14** (App Router) + TypeScript
-- **Prisma 7** + SQLite přes driver adapter `@prisma/adapter-better-sqlite3`
+- **Prisma 7** + PostgreSQL přes driver adapter `@prisma/adapter-pg`
 - **Tailwind CSS 3**
-- **sharp** pro zpracování nahraných fotografií
-- **Zod** pro validaci vstupů
+- **@mediapipe/tasks-vision** — rozpoznání bodů ruky (self-hosted)
+- **@anthropic-ai/sdk** — volitelný AI rozbor fotky, structured outputs
+- **Zod** pro validaci vstupů (v3 v aplikaci, v4 jen pro strukturovaný
+  výstup Claude — SDK helper `zodOutputFormat` to vyžaduje, viz
+  `lib/vision/visionSchema.ts`)
 
 ## API
 
 | Endpoint | Metoda | Popis |
 |---|---|---|
 | `/api/analyze` | POST | Hlavní analýza — vrátí osobnost, přednosti, výzvy, doporučení |
-| `/api/upload` | POST | Nahrání fotografie (max 5 MB, JPG/PNG/WebP) |
+| `/api/vision` | POST | Volitelný AI rozbor fotky (vyžaduje `consent: true`) |
 | `/api/palm-lines` | GET | Čáry dlaně |
 | `/api/mounts` | GET | Pahorky dlaně |
 | `/api/hand-types` | GET | Typy rukou |
 | `/api/interpretations` | GET | Kombinace, filtry `?handType=`, `?school=` |
-| `/api/seed` | POST | Naplnění znalostní báze |
+
+Žádný endpoint neukládá fotografie — `/api/analyze` dostává jen vyplněné
+znaky, `/api/vision` fotku přepošle k jednorázovému vyhodnocení a nikam ji
+neukládá.
 
 ### Jak vzniká výklad
 
-Vstup se porovná s kombinacemi v databázi. Kombinace je použitelná jen tehdy,
-když sedí **všechna** její kritéria; skóre pak zvýhodňuje ty konkrétnější
-(váhy: čáry 40, typ ruky 25, pahorky 25, doplňky 10).
+Vstup (ať už z detekce, AI, nebo ručního vyplnění) se porovná s kombinacemi
+ve znalostní bázi. Kombinace je použitelná jen tehdy, když sedí **všechna**
+její kritéria; skóre pak zvýhodňuje ty konkrétnější (váhy: čáry 40, typ ruky
+25, pahorky 25, doplňky 10).
 
 Když žádná kombinace nesedí, výsledek se **poskládá z významů jednotlivých
 znaků**. Díky tomu dá aplikace souvislé čtení na jakýkoli vstup, aniž by
-databáze musela obsahovat všechny myslitelné kombinace.
+báze musela obsahovat všechny myslitelné kombinace.
 
-Jistota výkladu (`confidence`) roste s tím, kolik znaků uživatel vyplnil a jak
-konkrétní kombinace se podařilo najít.
+Detekce (z fotky nebo z AI) dodává jen **znaky** — výklad vždy skládá jen
+`palmReader.ts` ze znalostní báze, nikdy model ani filtr.
+
+## Znalostní báze — stav pramenů
+
+`lib/content/` je typovaný kód v gitu (ne databáze) — dnes 8 čar, 8 pahorků
+a 5 typů rukou. Rozšíření na 15 čar a doplnění povinného zdroje (`source`)
+u každé položky podle volných pramenů (Benham, Cheiro, Dale, Markun) čeká na
+odblokování `gutenberg.org` a `archive.org` v síťové politice prostředí —
+zatím nedostupné.
 
 ## Struktura
 
 ```
 app/
-  analyzer/{interactive,image-upload,text-input}/   tři vstupní metody
-  library/{lines,mounts,hand-types,guide}/          referenční knihovna
-  api/                                              REST endpointy
+  page.tsx                       homepage — fotka jako primární tok
+  analyzer/{interactive,image-upload,text-input}/
+  library/{lines,mounts,hand-types,guide}/
+  admin/stats/                    chráněné statistiky
+  api/                            REST endpointy
 components/
-  HandDiagram.tsx        interaktivní SVG dlaně
-  AnalyzerWizard.tsx     společný pětikrokový průvodce
-  FeatureModal.tsx       dialog pro popis znaku
-  ResultCard.tsx         zobrazení výsledku
+  GuidedCapture.tsx               naváděné focení (kamera + fallback na soubor)
+  PhotoFirstFlow.tsx              orchestrace: focení → detekce → čtení → oprava
+  AiVisionOptIn.tsx               volitelný AI rozbor s explicitním souhlasem
+  AnalyzerWizard.tsx              krokový průvodce i korekční panel (variant="panel")
+  HandDiagram.tsx, FeatureModal.tsx, ResultCard.tsx
 lib/
-  content/               znalostní báze (čáry, pahorky, typy, kombinace)
-  analysis/palmReader.ts vyhodnocovací jádro
-  db/queries.ts          rozbalování JSON sloupců ze SQLite
-  validators/            Zod schémata
-prisma/schema.prisma     databázové schéma
+  content/                        znalostní báze (statický kód, ne DB)
+  analysis/palmReader.ts          vyhodnocovací jádro
+  vision/
+    mediapipe.ts, handType.ts     rozpoznání bodů ruky a typu
+    imageQuality.ts                ostrost/expozice pro naváděné focení
+    lines/                         detekce čar (homografie → filtry → zóny)
+    visionSchema.ts, visionConvert.ts   structured output pro AI rozbor
+  db/
+    client.ts                      Prisma client, nullable bez DATABASE_URL
+    stats.ts, aiCap.ts             zápis statistik, denní strop AI volání
+  validators/                      Zod schémata (v3)
+prisma/schema.prisma               AnalysisStat, AiCallLog — bez osobních údajů
+public/mediapipe/, public/models/  self-hosted WASM a model (~18,5 MB)
 ```
 
-## Nasazení
+## Nasazení na Vercel
 
-SQLite a ukládání fotografií na lokální disk fungují **lokálně a na vlastním
-serveru** (VPS, Docker). **Na Vercelu ne** — serverless má read-only filesystem
-a neudrží stav mezi requesty. Pro Vercel by bylo potřeba přejít na hostovaný
-Postgres a objektové úložiště pro obrázky.
+1. Nastavte `DATABASE_URL` (Neon/Vercel Postgres), volitelně `ADMIN_PASSWORD`,
+   `ANTHROPIC_API_KEY` a `VISION_DAILY_CAP`.
+2. `npx prisma migrate deploy` proti produkční databázi.
+3. Push na Vercel — `vercel.json` nastavuje region `fra1`.
+
+**Limit Hobby tarifu:** serverless funkce má strop 10 s. `/api/vision` má
+nastavené `maxDuration = 60`, ale na Hobby tarifu ho Vercel stejně ořízne na
+10 s — `effort: 'low'` u AI rozboru je zvolený mimo jiné proto, aby se do
+toho vešel. Na Pro tarifu lze `maxDuration` využít celý.
+
+**Velikost self-hosted assetů:** WASM (MediaPipe) + model dohromady ~18,5 MB,
+stahují se až při prvním focení, ne při načtení stránky. Reálná velikost
+změřená z produkčního buildu.
+
+## Cena AI rozboru
+
+Při `effort: 'low'` jde o levné volání (řádově jednotky haléřů až korun za
+rozbor, přesná cena závisí na aktuálním ceníku Anthropic API — ověřte si ji
+prosím na [anthropic.com](https://www.anthropic.com) před nasazením do
+provozu s reálným provozem).
 
 ## Upozornění
 

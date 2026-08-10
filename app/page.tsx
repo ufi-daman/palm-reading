@@ -18,8 +18,8 @@ export default function Home() {
             rozpozná.
           </p>
           <p className="text-sm text-palm-600 max-w-2xl mx-auto">
-            Fotografie zůstává ve vašem prohlížeči a nikdy se neodesílá na
-            server.
+            Fotografie zůstává ve vašem prohlížeči, pokud si výslovně
+            nevyžádáte volitelný AI rozbor.
           </p>
         </section>
 
@@ -79,7 +79,8 @@ export default function Home() {
               </h2>
               <p className="text-gray-600">
                 Fotografie se zpracuje jen ve vašem prohlížeči. Na server jde
-                jen výsledek rozpoznávání, nikdy obrázek samotný.
+                jen výsledek rozpoznávání — pokud si výslovně nevyžádáte
+                volitelný AI rozbor.
               </p>
             </div>
           </div>

@@ -18,23 +18,51 @@ export default function PrivacyPage() {
           <div className="bg-white rounded-xl border border-palm-200 p-8 space-y-6 text-gray-700 leading-relaxed">
             <section>
               <h2 className="text-xl font-bold text-palm-800 mb-2">
-                Fotografie dlaní
+                Fotografie dlaně je biometrický údaj
               </h2>
               <p>
-                Nahrané fotografie se ukládají pouze pro potřeby vaší analýzy.
-                Automaticky se mažou po 30 dnech. Nesdílíme je s třetími stranami
-                a neprovádíme na nich rozpoznávání osob ani biometrické
-                zpracování.
+                Fotografie ruky je podle čl. 9 GDPR zvláštní kategorií
+                osobních údajů. Ve výchozím stavu se zpracuje výhradně ve
+                vašem prohlížeči — rozpoznání typu ruky a čar (MediaPipe a
+                vlastní filtry v <code>lib/vision/</code>) běží lokálně na
+                vašem zařízení. Fotografie se v tomto režimu{' '}
+                <strong>nikdy neodesílá na server</strong>, na síťové vrstvě
+                to lze ověřit: požadavek na <code>/api/analyze</code>{' '}
+                obsahuje jen vyplněné znaky (typ ruky, čáry, pahorky), nikdy
+                obrázek.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-palm-800 mb-2">Analýzy</h2>
+              <h2 className="text-xl font-bold text-palm-800 mb-2">
+                Volitelný AI rozbor
+              </h2>
               <p>
-                Výsledky analýz se ukládají bez vazby na vaši totožnost.
-                Aplikace nevyžaduje registraci ani e-mailovou adresu. Uložená
-                data slouží pouze ke zobrazení výsledku a k vyhodnocení kvality
-                výkladu.
+                Pokud si výslovně vyžádáte AI rozbor (tlačítko „Zkusit
+                přesnější rozbor pomocí AI“), fotografie se pošle na náš
+                server a odtud jednorázově k vyhodnocení přes Anthropic API.
+                Jde o předání zvláštní kategorie údajů třetí straně — proto
+                to vyžaduje samostatný, výslovný souhlas (zaškrtávací pole
+                před odesláním), ne obecný souhlas s podmínkami užití.
+                Fotografie se při tom nikde neukládá — ani na našem serveru,
+                ani u Anthropic — vrací se jen rozpoznané znaky. Server
+                eviduje pouze počet volání za den (bez fotografie, bez
+                obsahu), aby šlo hlídat bezpečnostní strop.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-palm-800 mb-2">
+                Provozní statistiky
+              </h2>
+              <p>
+                Po dokončení čtení se do databáze zapíše jeden řádek: typ
+                ruky, způsob vstupu (fotka/ruční/text), kolik znaků našla
+                detekce a kolik jich doplnil uživatel, a zda se použil AI
+                rozbor. Bez fotografie, bez osobních údajů, bez IP adresy a
+                bez vazby na vaši totožnost — slouží jen k ladění prahů
+                detekce a přehledu o používání na chráněné stránce{' '}
+                <code>/admin/stats</code>.
               </p>
             </section>
 
@@ -51,10 +79,11 @@ export default function PrivacyPage() {
                 Vaše práva
               </h2>
               <p>
-                Máte právo požádat o výmaz svých dat. Vzhledem k tomu, že
-                fotografie se mažou automaticky a analýzy nejsou spojené s vaší
-                totožností, k výmazu ve většině případů dojde bez vaší
-                součinnosti.
+                Aplikace nevyžaduje registraci ani e-mailovou adresu a
+                statistiky nejsou spojené s vaší totožností, takže je nelze
+                dohledat ani smazat jmenovitě — nevznikají v podobě, která by
+                to umožňovala. Fotografii máte plně pod kontrolou: dokud
+                nezvolíte AI rozbor, neopustí váš prohlížeč vůbec.
               </p>
             </section>
           </div>
