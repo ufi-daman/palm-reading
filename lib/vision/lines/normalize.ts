@@ -33,14 +33,16 @@ const CANONICAL: Record<'wrist' | 'index' | 'pinky', Point> = {
  * kolem kterého obíhá čára života.
  */
 export const PALM_MASK: Point[] = [
-  { x: 115, y: 180 },
-  { x: 400, y: 195 },
-  { x: 425, y: 310 },
+  // Horní hrana je schválně níž než linie kloubů: výš leží ohyby u kořenů
+  // prstů, které jsou výrazné a filtr je jinak detekuje jako čáru dlaně.
+  { x: 120, y: 205 },
+  { x: 400, y: 218 },
+  { x: 425, y: 315 },
   { x: 380, y: 440 },
-  { x: 250, y: 470 },
+  { x: 250, y: 468 },
   { x: 130, y: 440 },
-  { x: 72, y: 330 },
-  { x: 80, y: 230 },
+  { x: 74, y: 332 },
+  { x: 84, y: 245 },
 ]
 
 /**

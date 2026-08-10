@@ -14,54 +14,72 @@ export interface ZonePoint {
  * skutečných fotek dlaní (test/fixtures/palms/) nejde doladit na reálná
  * data. Pixel v okolí této osy (viz ZONE_TOLERANCE) se čáře přiřadí.
  */
+/**
+ * Souřadnice odvozené z reálných snímků, ne z popisu. Dlaň v rámci sahá
+ * zhruba x 75–425, y 205–465; palec je vlevo, prsty nahoře, zápěstí dole.
+ * Oblouk čáry života odpovídá průběhu naměřenému na kalibračních fotkách,
+ * zbytek je poloha podle anatomie přepočtená na tento rozsah.
+ *
+ * Původní hodnoty byly odhad z textových popisů a zóny čar srdce a Venuše
+ * kvůli tomu ležely úplně mimo dlaň — nemohly nikdy sednout.
+ */
 export const LINE_ZONES: Record<LineKey, ZonePoint[]> = {
+  // Obíhá val palce; průběh naměřený na kalibračních snímcích.
   lifeLine: [
-    { x: 180, y: 200 },
-    { x: 145, y: 280 },
-    { x: 120, y: 360 },
-    { x: 140, y: 430 },
+    { x: 145, y: 225 },
+    { x: 185, y: 285 },
+    { x: 215, y: 345 },
+    { x: 218, y: 405 },
+    { x: 198, y: 442 },
   ],
+  // Nejvyšší z vodorovných, od hrany pod malíkem k ukazováku.
   heartLine: [
-    { x: 360, y: 150 },
-    { x: 280, y: 140 },
-    { x: 200, y: 150 },
-    { x: 160, y: 165 },
+    { x: 402, y: 258 },
+    { x: 330, y: 240 },
+    { x: 252, y: 238 },
+    { x: 178, y: 254 },
   ],
+  // Střední vodorovná, začíná u palcové hrany společně s čárou života.
   headLine: [
-    { x: 150, y: 240 },
-    { x: 230, y: 255 },
-    { x: 310, y: 260 },
-    { x: 370, y: 250 },
+    { x: 140, y: 268 },
+    { x: 228, y: 298 },
+    { x: 318, y: 310 },
+    { x: 390, y: 302 },
   ],
+  // Svislá středem dlaně k prostředníku.
   fateLine: [
-    { x: 270, y: 440 },
-    { x: 275, y: 320 },
-    { x: 280, y: 220 },
-    { x: 285, y: 150 },
+    { x: 245, y: 448 },
+    { x: 250, y: 368 },
+    { x: 255, y: 295 },
+    { x: 258, y: 232 },
   ],
+  // Svislá pod prsteníkem (mezi prostředníkem a malíkem).
   apolloLine: [
-    { x: 330, y: 400 },
-    { x: 325, y: 300 },
-    { x: 320, y: 220 },
-    { x: 315, y: 160 },
+    { x: 330, y: 425 },
+    { x: 326, y: 350 },
+    { x: 322, y: 285 },
+    { x: 320, y: 238 },
   ],
+  // Od oblasti Luny (dolní vnější část) k pahorku Merkura pod malíkem.
   mercuryLine: [
-    { x: 390, y: 430 },
-    { x: 380, y: 340 },
-    { x: 375, y: 260 },
-    { x: 370, y: 195 },
+    { x: 380, y: 432 },
+    { x: 380, y: 362 },
+    { x: 385, y: 300 },
+    { x: 390, y: 252 },
   ],
+  // Oblouk při vnější hraně dlaně.
   intuitionLine: [
-    { x: 410, y: 380 },
-    { x: 420, y: 320 },
-    { x: 410, y: 260 },
-    { x: 390, y: 220 },
+    { x: 400, y: 395 },
+    { x: 416, y: 335 },
+    { x: 410, y: 282 },
+    { x: 392, y: 248 },
   ],
+  // Oblouk nad čárou srdce, mezi ukazovákem a malíkem.
   venusLine: [
-    { x: 200, y: 120 },
-    { x: 260, y: 105 },
-    { x: 320, y: 115 },
-    { x: 360, y: 135 },
+    { x: 205, y: 232 },
+    { x: 262, y: 218 },
+    { x: 330, y: 220 },
+    { x: 378, y: 236 },
   ],
 }
 
