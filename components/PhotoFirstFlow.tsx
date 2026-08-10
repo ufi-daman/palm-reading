@@ -6,6 +6,8 @@ import { GuidedCapture, type CaptureResult } from './GuidedCapture'
 import { AnalyzerWizard } from './AnalyzerWizard'
 import { detectHandLandmarks } from '@/lib/vision/mediapipe'
 import { classifyHandType } from '@/lib/vision/handType'
+import { detectLines } from '@/lib/vision/lines/detect'
+import type { LineKey } from '@/lib/content/types'
 
 function loadImage(dataUrl: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
@@ -16,10 +18,18 @@ function loadImage(dataUrl: string): Promise<HTMLImageElement> {
   })
 }
 
+type PanelLineValue = { present: boolean; strength?: string; length?: string; quality?: string }
+
 type FlowState =
   | { phase: 'capture' }
   | { phase: 'detecting'; dataUrl: string }
-  | { phase: 'found'; dataUrl: string; handType: string }
+  | {
+      phase: 'found'
+      dataUrl: string
+      handType: string
+      lines: Partial<Record<LineKey, PanelLineValue>>
+      detectedCount: number
+    }
   | { phase: 'not-found'; dataUrl: string }
   | { phase: 'detection-failed'; dataUrl: string; message: string }
 
@@ -36,7 +46,31 @@ export function PhotoFirstFlow() {
         return
       }
       const { handType } = classifyHandType(landmarks)
-      setState({ phase: 'found', dataUrl: result.dataUrl, handType })
+
+      // Detekce čar je oddělený krok — když selže, čtení pokračuje aspoň
+      // podle typu ruky, ne že celý tok spadne.
+      let lines: Partial<Record<LineKey, PanelLineValue>> = {}
+      let detectedCount = 0
+      try {
+        const lineResult = detectLines(image, landmarks)
+        if (lineResult) {
+          detectedCount = lineResult.detectedCount
+          for (const key of Object.keys(lineResult.lines) as LineKey[]) {
+            const detected = lineResult.lines[key]!
+            lines[key] = {
+              present: true,
+              strength: detected.strength,
+              length: detected.length,
+              quality: detected.quality,
+            }
+          }
+        }
+      } catch {
+        lines = {}
+        detectedCount = 0
+      }
+
+      setState({ phase: 'found', dataUrl: result.dataUrl, handType, lines, detectedCount })
     } catch (error) {
       setState({
         phase: 'detection-failed',
@@ -121,7 +155,13 @@ export function PhotoFirstFlow() {
   return (
     <div className="space-y-6">
       <div className="bg-palm-100 border border-palm-300 rounded-lg px-4 py-3 text-palm-800 text-sm flex items-center justify-between gap-4">
-        <span>Typ ruky rozpoznán z fotky. Čtení níže se dá upřesnit.</span>
+        <span>
+          Typ ruky rozpoznán z fotky
+          {state.detectedCount > 0
+            ? ` spolu s ${state.detectedCount} ${state.detectedCount === 1 ? 'čárou' : 'čarami'}.`
+            : ', čáry se rozpoznat nepodařilo — doplňte je níže ručně.'}{' '}
+          Čtení se dá upřesnit.
+        </span>
         <button type="button" onClick={retake} className="underline whitespace-nowrap">
           Vyfotit znovu
         </button>
@@ -131,6 +171,8 @@ export function PhotoFirstFlow() {
         hasPhoto
         backgroundImage={state.dataUrl}
         initialHandType={state.handType}
+        initialLines={state.lines}
+        detectedCount={state.detectedCount}
       />
       {manualAlternatives}
     </div>
