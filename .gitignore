@@ -20,3 +20,6 @@ next-env.d.ts
 # OCR/extraction scratch cache (fáze 4) — mezivýsledky, ne výstup
 /.ocr-cache/
 tsconfig.tsbuildinfo
+
+# Kalibrační fotky dlaní — biometrický údaj, do veřejného repa nepatří
+/test/fixtures/palms/

@@ -87,9 +87,6 @@ export function GuidedCapture({
           return
         }
         streamRef.current = stream
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream
-        }
         setCameraState('available')
       })
       .catch(() => {
@@ -102,6 +99,24 @@ export function GuidedCapture({
       streamRef.current = null
     }
   }, [])
+
+  /**
+   * Stream se přiřazuje až tady, ne hned po jeho získání. Element <video>
+   * se renderuje teprve při cameraState === 'available', takže v okamžiku,
+   * kdy getUserMedia vrátí stream, ještě neexistuje — dřívější přiřazení
+   * propadlo do prázdna a náhled zůstal černý. Protože z černého obrazu
+   * vyjde kontrola expozice jako podexponovaná, zůstala navíc zamčená
+   * spoušť a focení nešlo spustit vůbec.
+   */
+  useEffect(() => {
+    if (cameraState !== 'available') return
+    const video = videoRef.current
+    const stream = streamRef.current
+    if (!video || !stream) return
+    video.srcObject = stream
+    // Některé prohlížeče autoplay u srcObject nespustí samy.
+    void video.play().catch(() => undefined)
+  }, [cameraState])
 
   useEffect(() => {
     if (cameraState !== 'available') return
@@ -207,9 +222,9 @@ export function GuidedCapture({
                 type="button"
                 onClick={capture}
                 disabled={processing}
-                className="text-xs text-gray-500 underline"
+                className="border-2 border-palm-300 text-palm-700 px-5 py-2 rounded-full text-sm"
               >
-                Přesto vyfotit
+                Vyfotit i tak
               </button>
             )}
           </div>

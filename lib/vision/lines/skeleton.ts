@@ -107,7 +107,13 @@ export interface Component {
   pixels: { x: number; y: number }[]
 }
 
-const MIN_COMPONENT_SIZE = 6
+/**
+ * Kratší útvary se zahazují. Hlavní čáry mají v rámci 512×512 přes 150
+ * pixelů, vedlejší přes 50. Původní hodnota 6 propouštěla každý úlomek
+ * kožní vrásky — na reálné fotce jich vzniklo přes sto a zóny se pak
+ * plnily šumem.
+ */
+const MIN_COMPONENT_SIZE = 40
 
 /** 8-souvislé komponenty kostry, s odfiltrováním drobného šumu. */
 export function connectedComponents(skeleton: Uint8Array, width: number, height: number): Component[] {

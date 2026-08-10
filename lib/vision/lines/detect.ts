@@ -1,5 +1,5 @@
 import type { LineKey } from '@/lib/content/types'
-import { normalizePalm, FRAME_SIZE } from './normalize'
+import { normalizePalm, insidePalmCore, FRAME_SIZE } from './normalize'
 import { toGrayscale, claheApprox, bilateralFilter } from './enhance'
 import { multiScaleFrangi } from './ridges'
 import { otsuThreshold, threshold, zhangSuenThin, connectedComponents } from './skeleton'
@@ -31,6 +31,15 @@ export function detectLines(image: HTMLImageElement, landmarks: Point[]): LineDe
   const smoothed = bilateralFilter(enhanced, FRAME_SIZE, FRAME_SIZE)
 
   const response = multiScaleFrangi(smoothed, FRAME_SIZE, FRAME_SIZE)
+
+  // Vynulovat odezvu u okraje masky — jinak se jako nejdelší „čára" najde
+  // obrys dlaně, tedy artefakt maskování, ne znak na ruce.
+  for (let y = 0; y < FRAME_SIZE; y++) {
+    for (let x = 0; x < FRAME_SIZE; x++) {
+      if (!insidePalmCore(x, y)) response[y * FRAME_SIZE + x] = 0
+    }
+  }
+
   const cutoff = otsuThreshold(response)
   const binary = threshold(response, cutoff)
   const skeleton = zhangSuenThin(binary, FRAME_SIZE, FRAME_SIZE)

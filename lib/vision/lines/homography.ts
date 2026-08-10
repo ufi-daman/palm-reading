@@ -10,6 +10,39 @@ export interface Point {
  * zrcadlení, takže funguje stejně pro levou i pravou ruku bez rozlišení
  * "handedness" — stačí, že orgány (zápěstí, klouby) korespondují správně.
  */
+/**
+ * Afinní transformace ze 3 bodových korespondencí, vrácená jako 3×3 matice
+ * (poslední řádek 0,0,1), aby ji šlo použít stejně jako homografii.
+ *
+ * Proč afinní a ne homografie: homografie potřebuje 4 body, a čtvrtý
+ * anatomicky stabilní a dostatečně vzdálený bod na dlani není. Kořen palce
+ * (THUMB_CMC) leží blízko zápěstí a jeho poloha se navíc mění s odtažením
+ * palce — krátká základna dělá soustavu špatně podmíněnou a výsledek se
+ * zkosí. Trojice zápěstí + klouby ukazováku a malíku je dobře rozprostřená
+ * a stabilní. Perspektivu afinní transformace nesrovná, ale při focení
+ * zhruba zepředu je zbytková chyba řádově menší než to zkosení.
+ *
+ * Záporný determinant (zrcadlení) je v pořádku a žádoucí — levá i pravá
+ * ruka se tím narovnají do téhož rámce, palec vždy na stejné straně.
+ */
+export function computeAffine(src: Point[], dst: Point[]): Mat3 {
+  if (src.length !== 3 || dst.length !== 3) {
+    throw new Error('Afinní transformace vyžaduje přesně 3 korespondence.')
+  }
+
+  const A: number[][] = []
+  const b: number[] = []
+  for (let i = 0; i < 3; i++) {
+    A.push([src[i].x, src[i].y, 1, 0, 0, 0])
+    b.push(dst[i].x)
+    A.push([0, 0, 0, src[i].x, src[i].y, 1])
+    b.push(dst[i].y)
+  }
+
+  const t = solveLinearSystem(A, b)
+  return [t[0], t[1], t[2], t[3], t[4], t[5], 0, 0, 1]
+}
+
 export function computeHomography(src: Point[], dst: Point[]): Mat3 {
   if (src.length !== 4 || dst.length !== 4) {
     throw new Error('Homografie ze 4 bodů vyžaduje přesně 4 korespondence.')
