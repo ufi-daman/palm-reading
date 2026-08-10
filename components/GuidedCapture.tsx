@@ -252,10 +252,17 @@ export function GuidedCapture({
         </p>
       )}
 
-      <p className="text-xs text-gray-500">
-        Fotografie se zpracuje jen ve vašem prohlížeči a nikdy se neodesílá na
-        server — pokud si výslovně nevyžádáte AI rozbor.
-      </p>
+      <div className="text-xs text-gray-500 space-y-1">
+        <p>
+          Fotografie se zpracuje jen ve vašem prohlížeči a nikdy se neodesílá na
+          server — pokud si výslovně nevyžádáte AI rozbor.
+        </p>
+        <p>
+          Právě proto se po prvním vyfocení stáhne asi 18 MB rozpoznávacího
+          modelu. Děje se to jednou a pak si ho prohlížeč pamatuje — na mobilních
+          datech s tím ale počítejte.
+        </p>
+      </div>
     </div>
   )
 }

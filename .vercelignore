@@ -1,0 +1,13 @@
+# Prameny znalostní báze — vstupy pro extrakci obsahu do lib/content/,
+# za běhu aplikace se nepoužijí. Vyloučením se zrychlí build a zmenší
+# nasazovaný balík o ~25 MB.
+2015.126681.The-Laws-Of-Scientific-Hand-Reading_compressed.pdf
+www.gutenberg.org/
+
+# Mezivýsledky OCR (stejně gitignorované, pro jistotu)
+.ocr-cache/
+
+# Konfigurace vývojových nástrojů
+.agents/
+.claude/
+.windsurf/

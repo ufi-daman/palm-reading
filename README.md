@@ -150,10 +150,35 @@ public/mediapipe/, public/models/  self-hosted WASM a model (~18,5 MB)
 
 ## Nasazení na Vercel
 
-1. Nastavte `DATABASE_URL` (Neon/Vercel Postgres), volitelně `ADMIN_PASSWORD`,
-   `ANTHROPIC_API_KEY` a `VISION_DAILY_CAP`.
-2. `npx prisma migrate deploy` proti produkční databázi.
-3. Push na Vercel — `vercel.json` nastavuje region `fra1`.
+Celé přes web, bez terminálu a bez CLI:
+
+1. [vercel.com](https://vercel.com) → přihlásit přes GitHub → **Add New → Project**
+2. **Import** repozitáře `ufi-daman/palm-reading` — Next.js se rozpozná sám,
+   ostatní nastavení nechte výchozí
+3. **Deploy**
+
+Build projde i **bez jediné proměnné prostředí** — ověřeno na čistém buildu
+včetně `postinstall: prisma generate`. Proměnné se doplňují až podle toho,
+co chcete zapnout navíc:
+
+| Proměnná | Co zapne | Bez ní |
+|---|---|---|
+| `ADMIN_PASSWORD` | `/admin/stats` | stránka vrací 503 |
+| `DATABASE_URL` | ukládání statistik | zápis se tiše přeskočí |
+| `ANTHROPIC_API_KEY` **+** `DATABASE_URL` | AI rozbor fotky | endpoint vrací 503 |
+
+`ANTHROPIC_API_KEY` bez `DATABASE_URL` AI rozbor **nezapne** — je to
+záměrná pojistka, bez databáze nejde vynutit denní strop volání.
+
+Po nasazení běží aplikace na HTTPS, což je nutná podmínka pro přístup ke
+kameře v prohlížeči. Na `http://` (mimo `localhost`) focení dlaně nefunguje.
+
+### Instalace na telefon
+
+Aplikace je PWA. Na mobilu v prohlížeči přes nabídku **„Přidat na plochu"**
+(Android: Chrome → ⋮; iOS: Safari → Sdílet) se nainstaluje jako běžná
+aplikace s vlastní ikonou a spouští se na celou obrazovku bez adresního
+řádku. Manifest je `app/manifest.ts`, ikony `public/icon-*.png`.
 
 **Limit Hobby tarifu:** serverless funkce má strop 10 s. `/api/vision` má
 nastavené `maxDuration = 60`, ale na Hobby tarifu ho Vercel stejně ořízne na
