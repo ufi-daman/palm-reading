@@ -1,0 +1,2367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><style>
+#pg-header div, #pg-footer div {
+    all: inherit;
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 2em;
+}
+#pg-footer div.agate {
+    font-size: 90%;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+#pg-footer li {
+    all: initial;
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    text-indent: -0.6em;
+}
+#pg-footer div.secthead {
+    font-size: 110%;
+    font-weight: bold;
+}
+#pg-footer #project-gutenberg-license {
+    font-size: 110%;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+#pg-header-heading {
+    all: inherit;
+    text-align: center;
+    font-size: 120%;
+    font-weight: bold;
+}
+#pg-footer-heading {
+    all: inherit;
+    text-align: center;
+    font-size: 120%;
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#pg-header #pg-machine-header p {
+    text-indent: -4em;
+    margin-left: 4em;
+    margin-top: 1em;
+    margin-bottom: 0;
+    font-size: medium
+}
+#pg-header #pg-header-authlist {
+    all: initial;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+#pg-header #pg-machine-header strong {
+    font-weight: normal;
+}
+#pg-header #pg-start-separator, #pg-footer #pg-end-separator {
+    margin-bottom: 3em;
+    margin-left: 0;
+    margin-right: auto;
+    margin-top: 2em;
+    text-align: center
+}
+
+    .xhtml_center {text-align: center; display: block;}
+    .xhtml_center table {
+        display: table;
+        text-align: left;
+        margin-left: auto;
+        margin-right: auto;
+        }</style><title>The Project Gutenberg eBook of title, by author</title>
+<link href="images/cover.jpg" rel="icon" type="image/x-cover" id="id-7409715570116270341">
+<style>@media screen {
+    body {
+        margin-left: 8%;
+        margin-right: 10%
+        }
+    }
+.pagedjs_page_content > div {
+    margin-left: 8%;
+    margin-right: 10%
+    }
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: xx-large
+    }
+h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: x-large
+    }
+h3 {
+    text-align: center;
+    font-weight: bold;
+    font-size: large
+    }
+.pageno {
+    right: 1%;
+    font-size: x-small;
+    background-color: inherit;
+    color: silver;
+    text-indent: 0;
+    text-align: right;
+    position: absolute;
+    border: thin solid silver;
+    padding: 0.1em 0.2em;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    text-decoration: none
+    }
+p {
+    text-indent: 0;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: justify
+    }
+.fss {
+    font-size: 75%
+    }
+.sc {
+    font-variant: small-caps
+    }
+.xlarge {
+    font-size: x-large
+    }
+ol.ol_1 {
+    padding-left: 0;
+    margin-left: 2.78%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    list-style-type: decimal
+    }
+.chapter {
+    clear: both;
+    page-break-before: always
+    }
+.figcenter {
+    clear: both;
+    max-width: 100%;
+    margin: 2em auto;
+    text-align: center
+    }
+div.figcenter p {
+    text-align: center;
+    text-indent: 0
+    }
+.figcenter img {
+    max-width: 100%;
+    height: auto
+    }
+.id001 {
+    width: 435px
+    }
+.id002 {
+    width: 436px
+    }
+.id003 {
+    width: 393px
+    }
+.id004 {
+    width: 403px
+    }
+.id005 {
+    width: 670px
+    }
+@media handheld {
+    .id001 {
+        margin-left: 23%;
+        width: 54%
+        }
+    }
+@media handheld {
+    .id002 {
+        margin-left: 23%;
+        width: 54%
+        }
+    }
+@media handheld {
+    .id003 {
+        margin-left: 25%;
+        width: 49%
+        }
+    }
+@media handheld {
+    .id004 {
+        margin-left: 25%;
+        width: 50%
+        }
+    }
+@media handheld {
+    .id005 {
+        margin-left: 8%;
+        width: 83%
+        }
+    }
+.ic001 {
+    width: 100%
+    }
+.ig001 {
+    width: 100%
+    }
+.nf-center {
+    text-align: center
+    }
+.nf-center-c1 {
+    text-align: left;
+    margin: 1em 0
+    }
+.c000 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em
+    }
+.c001 {
+    page-break-before: always;
+    margin-top: 4em
+    }
+.c002 {
+    margin-top: 2em
+    }
+.c003 {
+    margin-top: 1em
+    }
+.c004 {
+    page-break-before: auto;
+    margin-top: 4em
+    }
+.c005 {
+    margin-top: 2em;
+    margin-bottom: 0.5em
+    }
+.c006 {
+    page-break-before: always;
+    margin-top: 2em
+    }
+.c007 {
+    margin-top: 1em;
+    margin-bottom: 0.5em
+    }
+div.tnotes {
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: #E3E4FA;
+    border: 1px solid silver;
+    margin: 2em 10% 0 10%
+    }
+.covernote {
+    visibility: hidden;
+    display: none
+    }
+div.tnotes p {
+    text-align: left
+    }
+@media handheld {
+    .covernote {
+        visibility: visible;
+        display: block
+        }
+    }
+.sc {
+    font-style: normal
+    }
+.ph3 {
+    text-indent: 0;
+    font-weight: bold;
+    font-size: large;
+    margin: 0.75em auto
+    }
+body {
+    background: initial;
+    color: initial
+    }
+a {
+    text-decoration: underline
+    }</style>
+<link rel="schema.dc" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.dcterms" href="http://purl.org/dc/terms/">
+<meta name="dc.title" content="Indian Palmistry">
+<meta name="dc.language" content="en">
+<meta name="dcterms.source" content="https://www.gutenberg.org/files/52523/52523-h/52523-h.htm">
+<meta name="dcterms.modified" content="2026-07-21T09:36:18.085475+00:00">
+<meta name="dc.rights" content="Public domain in the USA.">
+<link rel="dcterms.isFormatOf" href="http://www.gutenberg.org/ebooks/52523">
+<meta name="dc.creator" content="Dale, J. B., Mrs., 1853-1921">
+<meta name="dc.subject" content="Palmistry -- India">
+<meta name="dcterms.created" content="2016-07-08">
+<meta name="generator" content="Ebookmaker 0.14.2 by Project Gutenberg">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
+<meta property="og:title" content="Indian Palmistry">
+<meta property="og:type" content="Text">
+<meta property="og:url" content="https://www.gutenberg.org/cache/epub/52523/pg52523-images.html">
+<meta property="og:image" content="https://www.gutenberg.org/cache/epub/52523/pg52523.cover.medium.jpg">
+</head>
+<body><header class="pg-boilerplate pgheader" id="pg-header" lang="en"><h2 id="pg-header-heading" title="">The Project Gutenberg eBook of <span lang="en" id="pg-title-no-subtitle">Indian Palmistry</span></h2>
+    
+<div>This eBook is for the use of anyone anywhere in the United States and
+most other parts of the world at no cost and with almost no restrictions
+whatsoever. You may copy it, give it away or re-use it under the terms
+of the Project Gutenberg License included with this eBook or online
+at <a class="reference external" href="https://www.gutenberg.org">www.gutenberg.org</a>. If you are not located in the United States,
+you will have to check the laws of the country where you are located
+before using this eBook.</div>
+
+<div class="container" id="pg-machine-header"><p><strong>Title</strong>: Indian Palmistry</p>
+<div id="pg-header-authlist">
+<p><strong>Author</strong>: Mrs. J. B. Dale</p>
+</div>
+<br>
+        
+<p><strong>Release date</strong>: July 8, 2016 [eBook #52523]<br>
+                Most recently updated: October 23, 2024</p>
+
+<p><strong>Language</strong>: English</p>
+
+<p><strong>Other information and formats</strong>: <a href="https://www.gutenberg.org/ebooks/52523">www.gutenberg.org/ebooks/52523</a></p>
+
+<p><strong>Credits</strong>: Produced by Richard Tonsing and the Online Distributed<br>
+        Proofreading Team at http://www.pgdp.net (This file was<br>
+        produced from images generously made available by The<br>
+        Internet Archive)</p>
+
+</div><div id="pg-start-separator">
+<span>*** START OF THE PROJECT GUTENBERG EBOOK INDIAN PALMISTRY ***</span>
+</div></header><div></div>
+<div class="tnotes covernote">
+<p class="c000"> <strong>Transcriber's Note:</strong></p>
+<p class="c000">  The cover image was created by the transcriber and is placed in the public domain.</p>
+</div>
+<div>
+<h1 class="c001">INDIAN PALMISTRY.</h1>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>BY</div>
+<div class="c003"><span class="xlarge">MRS. J. B. DALE.</span></div>
+<div class="c002">LONDON:</div>
+<div><span class="sc">Theosophical Publishing Society, 7, Duke Street, Adelphi, W.C.</span></div>
+<div class="c003">NEW YORK:</div>
+<div><span class="sc">The Path, 144, Madison Avenue</span>.</div>
+<div class="c003">MADRAS:</div>
+<div><span class="sc">Proprietors of the Theosophist, Adyar</span>.</div>
+<div class="c003">1895.</div>
+</div>
+</div>
+<div class="figcenter id001">
+<img alt="" class="ig001" src="images/i_003.jpg" id="img_images_i_003.jpg">
+<div class="ic001">
+<p>PLATE I.—THE REFERENCE HAND.</p>
+</div>
+</div>
+<div class="chapter">
+<span class="pageno" id="Page_v">v</span>
+<h2 class="c004">PREFACE.</h2>
+</div>
+<p class="c005">Cheiromancy, the art of foretelling the events
+of life by the lineaments of the hand, derived its
+name from the Greek word <em>cheiros</em>, the palm, and
+<em>manteia</em>, to foretell, whence it has been vulgarly
+called Palmistry—as it is named in a recent Act
+of Parliament to forbid its practice for gain or
+reward. In Coleman's <cite>Mythology of the Hindoos</cite>,
+p. 202, it is written: "On the Buddha's foot is the
+mark called the 'chakravarti,' wheel or discus,
+which should have been on the palm of the hand,
+by which the sages at his birth divined that he
+would rise to considerable eminence." He says
+(p. 19): "Various data have been assigned to the
+period of Buddha's existence. The most correct
+seems to be about 550 <span class="fss">B.C.</span>, whence, as the sages
+practised cheiromancy at Buddha's birth, its existence
+must have been much earlier known among
+the Indians." "In the year 1652," writes Zadkiel,
+"the celebrated astrologer, Geo. Wharton, Esq.,
+published a translation of 'a matchless piece' as
+<span class="pageno" id="Page_vi">vi</span>he terms it, on the subject, written in Latin by
+Dr. J. Rothman." Since that period the art of
+cheiromancy has gradually fallen into disuse,
+chiefly from the extensive nonsense published by
+recent writers. One of the writers makes a
+shallow attempt to disprove the connection which
+exists between astrology and palmistry, while
+another says it is based on the principles of the
+Kabalah, the latter being nothing more than
+a mnemonical system of astrology. From the
+writings of Dr. J. Rothman and Geo. Wharton,
+Esq., I propose now to give, together with some
+of the choicest of those of the East, the principal
+matter, and to explain in the ordinary language
+used by palmisters such points as may require
+elucidation. Mr. Wharton, a careful student in
+these subjects, clearly proves that palmistry can
+only act in accordance with astrology, and that the
+art of cheiromancy cannot be relied upon beyond
+the period of from one to two years at most, for he
+observes in his preface, "What more convincing
+than if, by inspection made into the hand of any
+man, I truly pronounce this or that planet essentially
+dignified or angular in his geniture, or in
+such or such a position with other planets or stars,
+another unfortunate, afflicted or defected? Or if,
+on the contrary, by looking first into the geniture
+and considering therein the several positions of
+<span class="pageno" id="Page_vii">vii</span>the planets and their configurations one to another
+and with other stars, I tell him, and that distinctly
+and truly, the lines and signatures engraven upon
+his head or hand—what, I say, is or can be more
+satisfactory than this to rational men, as touching
+the power and influence of the planets and stars
+upon these inferiors, and consequently of the
+lawful use and truth of the science called astrology,
+cheiromancy and metoposcopia, between which
+three sciences there appear to be such a secret
+coherence and harmony?"</p>
+<p class="c000">It is also written in the <em>Book of Job</em>, xxxvii. 7:
+"In the hand of all men he shall put a mark that
+everyone may know his own work"; but in our
+translation of the <cite>Bible</cite> it is written as follows:
+"In the hand of all men he putteth a mark that
+every man may know his own work." This alone
+proves that Job believed in this science.</p>
+<p class="c000">The author does not claim that there is anything
+new in this work, although the method of
+translating and setting may be original.</p>
+<div class="chapter">
+<span class="pageno" id="Page_9">9</span>
+<h2 class="c004">REFERENCES TO HAND.</h2>
+</div>
+<h3 class="c006">No. 1.</h3>
+<p class="c007"><em>Name.</em>—Mount of Jupiter.</p>
+<p class="c000"><em>Location.</em>—Root of forefinger.</p>
+<p class="c000"><em>Interpretation.</em>—When very fully shown denotes
+pride, tyranny; when deficient in size denotes
+idleness and vulgarity; when there are concentric
+circles shown by the pores of the skin, here they
+indicate sure success in religion, marriage and
+monetary matters, ambition; broken circles or
+elongated, slightly less powerful; entirely void, no
+success thereby.</p>
+<h3 class="c006">No. 2.</h3>
+<p class="c007"><em>Name.</em>—Mount of Saturn.</p>
+<p class="c000"><em>Location.</em>—Root of middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—When fully marked denotes wisdom,
+prudence; when very full, taciturnity, sadness;
+when concentric circles are placed here success in
+all Saturnian affairs; when absent or elongated the
+person will never make much headway with such
+things and persons.</p>
+<div>
+<span class="pageno" id="Page_10">10</span>
+<h3 class="c006">No. 3.</h3>
+</div>
+<p class="c007"><em>Name.</em>—Mount of the Sun, "Apollo."</p>
+<p class="c000"><em>Location.</em>—Root of ring finger.</p>
+<p class="c000"><em>Interpretation.</em>—When prominent it gives art,
+genius, intelligence; when very full, denotes a
+greedy and untruthful disposition; when flat or
+small, then it causes the person to be dull; when
+concentric circles appear here, the person will be
+very powerful, have riches and honour by the state,
+or marry a high-born person; elongated or none,
+shows the person will have mean preferment, or
+none, as the case may be.</p>
+<h3 class="c006">No. 4.</h3>
+<p class="c007"><em>Name.</em>—Mount of Mercury.</p>
+<p class="c000"><em>Location.</em>—Root of little finger.</p>
+<p class="c000"><em>Interpretation.</em>—When prominent and full, and
+with concentric circles thereon, it denotes science,
+inventiveness, wit and success in all Mercurial
+matters, as writings, professions, especially church
+and law, and journeys; when very large and with
+elongated circles, it denotes theft, lying, cunning;
+when flat or none, it shows a negative life, and unfortunate
+in all above.</p>
+<h3 class="c006">No. 5.</h3>
+<p class="c007"><em>Name.</em>—Girdle of Venus.</p>
+<p class="c000"><em>Location.</em>—A curved line from root of forefinger
+to root of little finger.</p>
+<p class="c000"><span class="pageno" id="Page_11">11</span><em>Interpretation.</em>—When this line is clear it shows
+a natural desire for the opposite sex; when double
+it denotes an intemperate and lustful life; when
+broken, it shows terrible loss and infamy through
+lusts, a filthy person.</p>
+<h3 class="c006">No. 6.</h3>
+<p class="c007"><em>Name.</em>—Via Combusta.</p>
+<p class="c000"><em>Location.</em>—Extends through hollow of hand to
+mount of middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—See Lines (8) page <a href="#Page_36" class="pginternal">36</a>.</p>
+<h3 class="c006">No. 7.</h3>
+<p class="c007"><em>Name.</em>—Via Solis.</p>
+<p class="c000"><em>Location.</em>—A curved line running from root of
+ring finger to the mount of the Moon.</p>
+<p class="c000"><em>Interpretation.</em>—When straight and uniformly
+composed and well coloured, it promises the favour
+of great men and great honours; if dissected or
+uneven judge the contrary, or the frowns or ill
+favour of great people, with impediments in life or
+envy.</p>
+<h3 class="c006">No. 8.</h3>
+<p class="c007"><em>Name.</em>—Line of Fortune.</p>
+<p class="c000"><em>Location.</em>—A line extending from the mount of
+Jupiter to the mount of Mercury.</p>
+<p class="c000"><em>Interpretation.</em>—When long and with incisures,
+<span class="pageno" id="Page_12">12</span>denotes that the principal members of the body
+are strong, constancy; if short or crooked, the contrary;
+if severed, the same; when it stops at the
+mount of Saturn, it shows a vain lying person; if
+it branches on mount of Jupiter it denotes honours;
+if single or without branches, it shows poverty and
+want.</p>
+<h3 class="c006">No. 9.</h3>
+<p class="c007"><em>Name.</em>—Liver line.</p>
+<p class="c000"><em>Location.</em>—A curved line running through the
+palm of the hand, between the line of Fortune and
+the Life line.</p>
+<p class="c000"><em>Interpretation.</em>—When straight and not dissected
+by obscure little lines, denotes a healthy body; if
+extending only to the hollow of the hand, or short,
+it denotes a short life, or full of disease; the longer
+this line, the longer may the life be; if cut at end
+poverty in old age.</p>
+<h3 class="c006">No. 10.</h3>
+<p class="c007"><em>Name.</em>—Line of Life.</p>
+<p class="c000"><em>Location.</em>—A curved line running round the root
+of the thumb.</p>
+<p class="c000"><em>Interpretation.</em>—When broad and uniform, denotes
+a long and healthy life, and but few diseases;
+if slender, short or cut, or with little obscure lines
+running through, it denotes feebleness of body,
+sickness, short life, except line be strong; if sloping
+<span class="pageno" id="Page_13">13</span>nicely to Liver line, and beautified in the angle
+with parallels or little crosses, it shows a good wit
+and even temper.</p>
+<h3 class="c006">No. 11.</h3>
+<p class="c007"><em>Name.</em>—Line of Saturn.</p>
+<p class="c000"><em>Location.</em>—A line extending from the wrist lines
+up to middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—If it extend to the middle finger
+it indicates profound meditations, and if fortunate,
+events in counsels and actions; if short (without
+other testimony) misfortunes; if bent towards the
+mount of the Moon, in the hollow of the hand, imprisonment.</p>
+<h3 class="c006">No. 12.</h3>
+<p class="c007"><em>Name.</em>—Line of the Head and Brain, called by
+some the line of Health.</p>
+<p class="c000"><em>Location.</em>—A line running from the wrist, or line
+of Saturn, and extending up to the mount of Mercury.</p>
+<p class="c000"><em>Interpretation.</em>—If this line be uniform and not
+intersected, it forms with the line of Life and
+Liver line (sometimes called the Head line) a triangle
+on the plane of Mars, if of good colour, it
+denotes prudence, manly wit and fair fortune; the
+more perfect this triangle, the better will be the
+person's wit and courage; if obtuse it shows an
+evil nature and a rude man; no triangle shows a
+fool or a knave.</p>
+<div>
+<span class="pageno" id="Page_14">14</span>
+<h3 class="c006">No. 13.</h3>
+</div>
+<p class="c007"><em>Name.</em>—Line of the Moon.</p>
+<p class="c000"><em>Location.</em>—A line running from the line of Saturn
+and line of the Brain to the mount of the moon
+called sometimes the Via Lactea.</p>
+<p class="c000"><em>Interpretation.</em>—This line being uniformly composed,
+proportionate and continued, denotes fortunate
+journeys both by land and sea; also a good
+brain, the favour of women (the mount of Venus
+being also unafflicted), a composed and graceful
+speech; if it be cut or distorted it argues infelicity
+and proneness to lies; if whole and ascending up
+to little finger it denotes great happiness.</p>
+<h3 class="c006">No. 14.</h3>
+<p class="c007"><em>Name.</em>—Mount of the Moon.</p>
+<p class="c000"><em>Location.</em>—The outside part of hand, opposite to
+root of thumb, between mount of Mercury and wrist.</p>
+<p class="c000"><em>Interpretation.</em>—Imagination, refinement, poetry;
+if very large or full it denotes despair, caprice and
+almost lunacy; when flat and hollow, denotes dulness,
+want of speech, positiveness.</p>
+<h3 class="c006">No. 15.</h3>
+<p class="c007"><em>Name.</em>—Plane and place of Mars. The mount
+of Mars.</p>
+<p class="c000"><em>Location.</em>—The place of Mars is twice represented,
+one on the side of the palm by the mount of Mars,
+<span class="pageno" id="Page_15">15</span>and the other in the palm between the line of Life
+and the Liver line, called the plane or place of
+Mars.</p>
+<p class="c000"><em>Interpretation.</em>—The mount of Mars shows courage;
+when in excess, passion; when small, temerity.</p>
+<p class="c000">(<i><span lang="la">Vide</span></i> marks, etc., specially numbered.)</p>
+<h3 class="c006">No. 16.</h3>
+<p class="c007"><em>Name.</em>—Mount of Venus.</p>
+<p class="c000"><em>Location.</em>—In the root of the thumb.</p>
+<p class="c000"><em>Interpretation.</em>—Love of beauty and pleasure;
+where large, inconstancy, coquetry; when small,
+coldness.</p>
+<h3 class="c006">No. 17.</h3>
+<p class="c007"><em>Name.</em>—Dragon lines or Bracelets.</p>
+<p class="c000"><em>Location.</em>—Lines to be found on the wrist.</p>
+<p class="c000"><em>Interpretation.</em>—If double or triple and forming a
+right and continuous tract, it shows good composure
+of body; thrice, indicates health, wealth and prosperity;
+a star or cross here shows tranquillity in
+old age; if a line extends to the mount of Moon or
+Mercury from Dragon lines, it shows esteem and
+life in a foreign country.</p>
+<h3 class="c006">No. 18.</h3>
+<p class="c007"><em>Name.</em>—Plane of Mensa, or place of Fortune.</p>
+<p class="c000"><em>Location.</em>—The space between the line of Fortune
+and the Liver line.</p>
+<p class="c000"><span class="pageno" id="Page_16">16</span><em>Interpretation.</em>—Great and broad and forming a
+nice figure, it declares a liberal man, magnanimous
+and long-lived; if small and narrow, it argues
+slender fortune, niggardliness and fearfulness; a
+star or cross in this space, clear and well-proportioned,
+especially under the mount of the Sun,
+shows honours and dignities to follow.</p>
+<h3 class="c006">No. 19.</h3>
+<p class="c007"><em>Name.</em>—Egyptian Staff.</p>
+<p class="c000"><em>Location.</em>—Just below chain of Fortune.</p>
+<p class="c000"><em>Interpretation.</em>—Great renown in antiquities—a
+great commander and ofttimes a great statesman,
+a lover of ancient research.</p>
+<h3 class="c006">No. 20.</h3>
+<p class="c007"><em>Name.</em>—Chain of Fortune.</p>
+<p class="c000"><em>Location.</em>—Small crosses or stars between the
+line of Life and the Liver line, under the mount of
+Jupiter.</p>
+<p class="c000"><em>Interpretation.</em>—These denote wit and an even
+nature; riches and honours, or wealth by position
+of noted kind.</p>
+<h3 class="c006">No. 21.</h3>
+<p class="c007"><em>Name.</em>—Sun place.</p>
+<p class="c000"><em>Location.</em>—A small circle on the line of Life
+opposite to the mount of the Moon.</p>
+<p class="c000"><span class="pageno" id="Page_17">17</span><em>Interpretation.</em>—The loss of eyesight; two circles,
+the loss of both eyes.</p>
+<h3 class="c006">No. 22.</h3>
+<p class="c007"><em>Name.</em>—Envy line.</p>
+<p class="c000"><em>Location.</em>—A line running from the root of the
+thumb, near the Dragon lines, to the line of Saturn.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes envy.</p>
+<h3 class="c006">No. 23.</h3>
+<p class="c007"><em>Name.</em>—Perilous line.</p>
+<p class="c000"><em>Location.</em>—A small line running from the Life line
+and passing through the point formed by the cutting
+of line of Saturn and Liver line.</p>
+<p class="c000"><em>Interpretation.</em>—This indicates perils of all kinds,
+and disease, and sometimes sudden death or misfortune.</p>
+<h3 class="c006">No. 24.</h3>
+<p class="c007"><em>Name.</em>—Line of Friendship.</p>
+<p class="c000"><em>Location.</em>—A small line starting from the line of
+Life, about midway, and passing through the Saturn
+and Liver lines, forming a small triangle, and extending
+to the mount of the Sun.</p>
+<p class="c000"><em>Interpretation.</em>—This shows honours and favours
+from great ladies of rank and fortune.</p>
+<h3 class="c006">No. 25.</h3>
+<p class="c007"><em>Name.</em>—Cross of Indigence.</p>
+<p class="c000"><span class="pageno" id="Page_18">18</span><em>Location.</em>—A star on the Liver line or natural
+mean, near or on mount of the Moon.</p>
+<p class="c000"><em>Interpretation.</em>—Poverty in old age.</p>
+<h3 class="c006">No. 26.</h3>
+<p class="c007"><em>Name.</em>—Path of Mars.</p>
+<p class="c000"><em>Location.</em>—A small line running midway from
+line of Life to plane of Mars with a small star on
+or near the end.</p>
+<p class="c000"><em>Interpretation.</em>—Hurts and wounds.</p>
+<h3 class="c006">No. 27.</h3>
+<p class="c007"><em>Name.</em>—Dragon's Head.</p>
+<p class="c000"><em>Location.</em>—A star on Dragon line or Bracelets.</p>
+<p class="c000"><em>Interpretation.</em>—Tranquillity in life, in old age.</p>
+<h3 class="c006">No. 28.</h3>
+<p class="c007"><em>Name.</em>—Dragon's Tail.</p>
+<p class="c000"><em>Location.</em>—A line running from second Bracelet
+into the mount of Venus.</p>
+<p class="c000"><em>Interpretation.</em>—Adversities from kindred or wife.</p>
+<h3 class="c006">No. 29.</h3>
+<p class="c007"><em>Name.</em>—Line of Mars.</p>
+<p class="c000"><em>Location.</em>—A line running parallel with the line
+of Life on mount of Venus.</p>
+<p class="c000"><em>Interpretation.</em>—This augments and strengthens
+the things signified by the line of Life; it particularly
+<span class="pageno" id="Page_19">19</span>promises good success in war and a robust
+constitution.</p>
+<h3 class="c006">No. 30.</h3>
+<p class="c007"><em>Name.</em>—Mars Cross.</p>
+<p class="c000"><em>Location.</em>—Cross or star on the mount of Mars.</p>
+<p class="c000"><em>Interpretation.</em>—Fortunate journeys.</p>
+<h3 class="c006">No. 31.</h3>
+<p class="c007"><em>Name.</em>—Oracle of Jove.</p>
+<p class="c000"><em>Location.</em>—The sign Jupiter under the mount or
+on the mount of Apollo.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes honours and ecclesiastical
+dignities.</p>
+<h3 class="c006">No. 32.</h3>
+<p class="c007"><em>Name.</em>—Line of Calamity.</p>
+<p class="c000"><em>Location.</em>—A small line running from line of Life
+up through second joint of thumb.</p>
+<p class="c000"><em>Interpretation.</em>—This signifies a violent death and
+danger from married women.</p>
+<h3 class="c006">No. 33.</h3>
+<p class="c007"><em>Name.</em>—Cross bars.</p>
+<p class="c000"><em>Location.</em>—Small lines on the second joint of
+thumb.</p>
+<p class="c000"><em>Interpretation.</em>—This is an indication of contention
+and brawling; small hair lines running horizontally
+<span class="pageno" id="Page_20">20</span>to thumb shows riches in second part of
+life.</p>
+<h3 class="c006">No. 34.</h3>
+<p class="c007"><em>Name.</em>—Girdle of Pollux.</p>
+<p class="c000"><em>Location.</em>—A ring round the thumb.</p>
+<p class="c000"><em>Interpretation.</em>—This is an indication of hanging.</p>
+<h3 class="c006">No. 35.</h3>
+<p class="c007"><em>Name.</em>—First phalanx of forefinger.</p>
+<p class="c000"><em>Location.</em>—Small lines running parallel with
+joint.</p>
+<p class="c000"><em>Interpretation.</em>—Indication of inheritance. This
+phalanx hollow or curved upwards indicates avarice;
+if turned backwards, extravagance.</p>
+<h3 class="c006">No. 36.</h3>
+<p class="c007"><em>Name.</em>—Second phalanx of forefinger.</p>
+<p class="c000"><em>Location.</em>—Small lines in the centre running vertical
+to joints.</p>
+<p class="c000"><em>Interpretation.</em>—Indicates many children.</p>
+<h3 class="c006">No. 37.</h3>
+<p class="c007"><em>Name.</em>—Third phalanx of forefinger.</p>
+<p class="c000"><em>Location.</em>—Small lines running vertical to joints.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes a jovial disposition.
+This finger thick at the root denotes a greedy
+appetite.</p>
+<div>
+<span class="pageno" id="Page_21">21</span>
+<h3 class="c006">No. 38.</h3>
+</div>
+<p class="c007"><em>Name.</em>—Small star or cross.</p>
+<p class="c000"><em>Location.</em>—On third phalanx of forefinger.</p>
+<p class="c000"><em>Interpretation.</em>—Shows an unchaste and lascivious
+life.</p>
+<h3 class="c006">No. 39.</h3>
+<p class="c007"><em>Name.</em>—Small star.</p>
+<p class="c000"><em>Location.</em>—On second phalanx of middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes melancholy; a star near
+middle of third phalanx denotes unhappiness.</p>
+<h3 class="c006">No. 40.</h3>
+<p class="c007"><em>Name.</em>—A line with star at bottom.</p>
+<p class="c000"><em>Location.</em>—A small line running throughout
+middle finger, with a star on third phalanx.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes folly and madness.</p>
+<h3 class="c006">No. 41.</h3>
+<p class="c007"><em>Name.</em>—Small lines running vertical to joint.</p>
+<p class="c000"><em>Location.</em>—Second phalanx of ring finger.</p>
+<p class="c000"><em>Interpretation.</em>—Indicates fame, especially if a
+straight and well-defined line passes up the middle
+of the finger.</p>
+<h3 class="c006">No. 42.</h3>
+<p class="c007"><em>Name.</em>—Small cross bars.</p>
+<p class="c000"><em>Location.</em>—Third phalanx of ring finger.</p>
+<p class="c000"><em>Interpretation.</em>—Honours and riches.</p>
+<div>
+<span class="pageno" id="Page_22">22</span>
+<h3 class="c006">No. 43.</h3>
+</div>
+<p class="c007"><em>Name.</em>—Small cross or star.</p>
+<p class="c000"><em>Location.</em>—On mount of Mercury close to joint.</p>
+<p class="c000"><em>Interpretation.</em>—Eloquence.</p>
+<h3 class="c006">No. 44.</h3>
+<p class="c007"><em>Name.</em>—Two small stars or indented line.</p>
+<p class="c000"><em>Location.</em>—On mount of Mercury, one below the
+other, or a clear indented line on mount of Apollo.</p>
+<p class="c000"><em>Interpretation.</em>—The first indicates a brilliant
+mind. The line on mount of Apollo also shows
+a noted and brilliant mind, but the loss of a dear
+male friend, sometimes death of wife.</p>
+<h3 class="c006">No. 45.</h3>
+<p class="c007"><em>Name.</em>—Cross bars.</p>
+<p class="c000"><em>Location.</em>—On second phalanx of little finger.</p>
+<p class="c000"><em>Interpretation.</em>—Shows a thief or a very deceitful
+person.</p>
+<h3 class="c006">No. 46.</h3>
+<p class="c007"><em>Name.</em>—Marriage lines.</p>
+<p class="c000"><em>Location.</em>—Small lines on outside of hand on
+mount of Mercury.</p>
+<p class="c000"><em>Interpretation.</em>—These, according to their number,
+denote the number of husbands or wives
+should the widow line also appear; without it they
+may mean lovers.</p>
+<div>
+<span class="pageno" id="Page_23">23</span>
+<h3 class="c006">No. 47</h3>
+</div>
+<p class="c007"><em>Name.</em>—Crest of Hermes.</p>
+<p class="c000"><em>Location.</em>—Small crosses or star on third phalanx
+of little finger, especially in the centre.</p>
+<p class="c000"><em>Interpretation.</em>—Shows ingenuity and eloquence.</p>
+<h3 class="c006">No. 48.</h3>
+<p class="c007"><em>Name.</em>—Small concentric circles formed by pores
+of the skin.</p>
+<p class="c000"><em>Location.</em>—On first phalanx of all fingers.</p>
+<p class="c000"><em>Interpretation.</em>—Denotes that the person will be
+always earning or inheriting money all his life, and
+in fact it is one of the most successful signs in the
+hand for pecuniary success.</p>
+<h3 class="c006">No. 49.</h3>
+<p class="c007"><em>Location.</em>—On Mounts.</p>
+<p class="c000"><em>Name.</em>—Concentric.</p>
+<p class="c000"><em>Interpretation.</em>—The same on the mounts indicate
+money by or through persons or things indicated
+by the mount of the fingers, on the forefinger, a
+wealthy partner; on the mount of Saturn, wealth
+by lands, house property, legacies; on the ring
+finger by successful business, or profession and
+fame; on the mount of Mercury by writings, by
+profession, by eloquence, etc. Should these assume
+an elongated form, as seen on middle finger,
+then, if unbroken, the person will succeed by
+labour and many difficulties; if none appear, then
+<span class="pageno" id="Page_24">24</span>they will never succeed in pecuniary matters,
+unless the hand is otherwise very strong.</p>
+<h3 class="c006">No. 50.</h3>
+<p class="c007"><em>Name.</em>—Lapis Lazuli.</p>
+<p class="c000"><em>Location.</em>—Tip of middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—Same as above on mount of
+Saturn—but in foreign countries or from abroad.</p>
+<h3 class="c006">No. 51.</h3>
+<p class="c007"><em>Name.</em>—Lapis Lazuli.</p>
+<p class="c000"><em>Location.</em>—On mount of Saturn or middle finger.</p>
+<p class="c000"><em>Interpretation.</em>—Same as No. 50.</p>
+<h3 class="c006">No. 52.</h3>
+<p class="c007"><em>Name.</em>—Shell form shown by pores of skin.</p>
+<p class="c000"><em>Location.</em>—On first phalanx of little finger.</p>
+<p class="c000"><em>Interpretation.</em>—This is perhaps the best means
+of success, as shown above, in writing and speaking,
+etc., if other testimonies concur, but I prefer
+the complete circle.</p>
+<h3 class="c006">No. 53.</h3>
+<p class="c007"><em>Name.</em>—Corn or diamond loops.</p>
+<p class="c000"><em>Location.</em>—On joints of fingers.</p>
+<p class="c000"><em>Interpretation.</em>—Should the lines on the joints,
+between the phalanges of the fingers, take the form
+of a barleycorn or diamond, the person may expect
+many and unexpected advantages, but much depends
+on the sum of these lines when counted.</p>
+<div>
+<span class="pageno" id="Page_25">25</span>
+<h3 class="c006">No. 54.</h3>
+</div>
+<p class="c007"><em>Name.</em>—Luna lines.</p>
+<p class="c000"><em>Location.</em>—Near mount of Moon on outside of
+hand, below the Liver or Father line.</p>
+<p class="c000"><em>Interpretation.</em>—Aptitude for travelling, a sailor,
+quietness, contentment, poetic imagination when
+regular; cross bars here give discontent, sometimes
+suicide, a morbid imagination.</p>
+<h3 class="c006">No. 55.</h3>
+<p class="c007"><em>Name.</em>—Line of intuition.</p>
+<p class="c000"><em>Location.</em>—A line running from the Liver line to
+the mount of the Moon.</p>
+<p class="c000"><em>Interpretation.</em>—This shows poetic intelligence,
+seldom found except in highly imaginative and intellectual
+persons.</p>
+<h3 class="c006">No. 56.</h3>
+<p class="c007"><em>Name.</em>—Line of Temper.</p>
+<p class="c000"><em>Location.</em>—A line running vertically from mount
+of Mars to mount of Moon.</p>
+<p class="c000"><em>Interpretation.</em>—This denotes determination and
+decision.</p>
+<h3 class="c006"> <span class="sc">A Summary of Judgment.</span></h3>
+<p class="c007">(1) Observe the kind of hands from the front or
+inside.</p>
+<p class="c000">Short hands denote an impulsive judgment without
+analysis.</p>
+<p class="c000"><span class="pageno" id="Page_26">26</span>Smooth hands denote impression, ability, inspiration,
+intuition.</p>
+<p class="c000">Hard, firm hands denote great energy and perseverance.</p>
+<p class="c000">Soft, loose hands denote a kind of debility or
+laziness, a disinclination to work.</p>
+<p class="c000">Knotted hands denote reflection, order, success.</p>
+<p class="c000">(2) Observe the fingers.</p>
+<p class="c000"><em>Pointed.</em>—Forefinger (first), intuitive; middle
+finger (second), frivolous, light-hearted, gay; ring
+finger (third), artistic, testy, nice, refined; little
+finger (fourth), eloquent.</p>
+<p class="c000"><em>Square.</em>—Forefinger (first), truthful, cautious;
+middle finger (second), grave, thoughtful; ring
+finger (third), reasonable, a thinker; little finger
+(fourth), judicious.</p>
+<p class="c000"><em>Spatulated.</em>—Forefinger (first), mystic, delighting
+in occult studies; middle finger (second), morbid,
+fanciful; ring finger (third), dramatic, sympathetic;
+little finger (fourth), mechanical.</p>
+<p class="c000">(3) Look at the nails on the hands.</p>
+<p class="c000">1.—Narrow, indicate an irritable temper or aspiring
+spirit.</p>
+<p class="c000">2.—Round and full, indicate learning and liberal
+views.</p>
+<p class="c000">3.—Small, indicate pride, stubbornness, narrowness
+and bigotry.</p>
+<p class="c000">4.—Broad and flat, indicate a mild and timorous
+disposition.</p>
+<p class="c000"><span class="pageno" id="Page_27">27</span>5.—Filbert-shaped, indicate refinement and courteous
+manners.</p>
+<p class="c000"><em>Note.</em>—When the hand is allowed to open freely,
+the space between the first and second fingers,
+farthest apart, denotes independence of thought;
+third and fourth, independence of action, and if
+both are very wide apart, originality and self-reliance.</p>
+<p class="c000">If the thumb inclines inward, avarice; outward,
+generosity.</p>
+<p class="c000">(4) Observe the length and depth of the lines.</p>
+<p class="c000">(5) The quality, whether they are crooked or
+straight.</p>
+<p class="c000">(6) Observe whether they touch or cut other lines.</p>
+<p class="c000">(7) Observe whether they are touched or cut by
+other lines.</p>
+<p class="c000">(8) Their place and position.</p>
+<p class="c000"><em>Note.</em>—The lines are sometimes lengthened until
+certain years of our life, while others are shortened.
+At one time they may become pale, at
+another they become notably clear and red. The
+minor marks, such as are found on the mounts,
+sometimes quite vanish, and at other times they will
+assume different shapes and colours. Therefore
+the most studious in palmistry cannot attain a
+complete knowledge of the events of a life at
+once, because they come and go as nature, or
+the circumstances of life, change and twist, but
+can only read for a year or so in advance. These
+changes are caused, as before stated, by the progressions
+<span class="pageno" id="Page_28">28</span>and changing of the laws relating to
+nature, of which we are a part.</p>
+<h3 class="c006"> <span class="sc">The Hand to Examine.</span></h3>
+<p class="c007">The general rule in the East is that the right
+palm of the male and the left palm of the female
+ought to be examined. In either case take the
+hand in which the signs and lines are clearly
+shown. If they concur in both hands and appear
+clear and nicely marked they declare a constancy
+of fortune and health, etc. In the male generally
+the right hand is the fate hand or the positive
+hand, that is, events about to happen; while the
+left denotes the negative or those events which
+have come to pass or been accomplished by the
+person, or those just passing away. Judge the
+converse in the female hands.</p>
+<h3 class="c006"> <span class="sc">Signification of Animals, Flowers and Promiscuous Marks found on the Hand.</span></h3>
+<p class="c007">These are principally formed by the smaller lines
+running with the pores of the skin. Great care
+must therefore be taken in determining these forms,
+because very much depends on their position.
+The numbers herein referred to have reference to
+Plate II of the hand which I have set apart for
+the express purpose of showing these marks and
+signs.</p>
+<p class="c000">The first space of the hand near to the mounts
+is that part which has principally to show the
+animal passions—lusts and intrigues.</p>
+<div class="figcenter id002">
+<span class="pageno" id="Page_29">29</span>
+<img alt="" class="ig001" src="images/i_029.jpg" id="img_images_i_029.jpg">
+<div class="ic001">
+<p>PLATE II.</p>
+</div>
+</div>
+<p class="c000"><span class="pageno" id="Page_31">31</span>The second space, or the part of the hand
+between the girdle of Venus and the Table line,
+deals more specifically with love affairs or the spiritual
+side, while the former treats more on the physical
+plane.</p>
+<p class="c000">These two, therefore, taken together, may be considered
+the moral region of the hand.</p>
+<p class="c000">The next space between the Table line and the
+Liver line may be called the mental and social
+region.</p>
+<p class="c000">The one following this may be called the commercial
+region or the wealth generally of the person.</p>
+<p class="c000">That space enclosed by the line of Life is the
+artistic or dramatic region.</p>
+<p class="c000">The right hand side of the hand separated by the
+line of Saturn denotes the positive nature, while
+the left hand portion is the negative or imaginative
+nature of the individual.</p>
+<p class="c000">If a fish or a similar figure be found at the root
+of the hand (No. 1) it signifies great success in the
+world—riches and many children.</p>
+<p class="c000">If a lotus flower or like-shaped figure be here,
+the person, if a female, will be sure to become a
+great lady, in fact almost a queen. If the same be
+on a male hand he will be sure to be renowned and
+great (No. 2).</p>
+<p class="c000">A serpent found here or on the wrist just above
+the Bracelet and near to the line of Saturn, the
+man will become a great warrior or hero (Nos. 1
+and 3).</p>
+<p class="c000"><span class="pageno" id="Page_32">32</span>An octagonal figure placed between the line of
+Life and the Liver line will cause the person to be
+burdened with the possession of landed estates
+(No. 4).</p>
+<p class="c000">If conch, or marine shells, or any circular figure
+be found here (No. 5) they presage that the person
+will be a learned man, especially if they should be
+found on the first phalanx of the little finger (No.
+6), on the mount of Mercury (No. 7), or on the
+mount of the Moon (No. 8).</p>
+<p class="c000">Should the sign of a flag be found here, and particularly
+on the mount of Mercury (No. 7) or on
+the palm of the hand (No. 9), the person will be a
+philosopher and a great thinker.</p>
+<p class="c000">A trident (No. 10), the three-pronged sceptre of
+Neptune or similar figure, the person rises to great
+fame, almost a prince or princess. If the trident
+be formed, but somewhat indistinct, he will not
+rise so high, but sure to have very important appointments
+and be attached to royalty. He will
+also be very kind, generous, and likely to acquire
+fame.</p>
+<p class="c000">If in the male hand, or even on the female hand,
+there be anything like a spear or bow and arrow
+the person is sure to get a throne (No. 11); and if
+all three, bow, arrow and lance together be there,
+the person is sure to be a king or queen (No. 12).</p>
+<p class="c000">Should the sign of a wheel and flag come together
+on the same hand the person will have riches and
+power, respect among his fellow-men, will be a
+<span class="pageno" id="Page_33">33</span>great ruler or prime minister, and be noted or celebrated
+for his wisdom and goodness (No. 13).</p>
+<p class="c000">If the sign of an elephant, which of itself is
+good (No. 14), or the sign of an earring (No. 15)
+and wheel (No. 16) appear on the same hand
+together, the person is likely to be an emperor or
+great personage.</p>
+<p class="c000">A hill (No. 17) or wristlet (No. 18) like a bough
+or something like the head of a man (No. 19), or a
+pitcher (No. 20), the person is almost sure to rise to
+the exalted position of a minister of state.</p>
+<p class="c000">If the sign of a barleycorn be found on the flat
+part of the thumb the person will spend life very
+happily and go through life easily (No. 21). Should
+the barley appear on the mount of Mars, in the
+centre of the hand, the person will be very intellectual,
+respectable and wise (No. 22). Should the
+form of the barley be found under any two fingers,
+especially on the mount of Saturn, the possessor
+will lead a happy life, honourable, have a good
+partner in marriage and have many children (No.
+23).</p>
+<p class="c000">If the line of the Heart (or the line of Fortune
+in India) (No. 25), extend only to the mount of
+Apollo (the Sun), the person will scarcely live ten
+years. And should this line be broken in many
+places the person will die by drowning. But if
+another smaller line appear running parallel with
+the Heart line and which extends only to the mount
+of Apollo (No. 26), the person will meet his death
+<span class="pageno" id="Page_34">34</span>either by a fall from a house or a tree. Should,
+however, this line extend from the outside part of
+the hand to the mount of Jupiter, the life will be
+long and good, if not broken.</p>
+<p class="c000">If a line rises from the mount of Venus to the first
+phalanx of the thumb he will be a commander of
+a large army (No. 27).</p>
+<p class="c000">A vertical line on the mount of Jupiter, the possessor
+will be a great diplomatist, but an irreligious
+person (No. 28). If this line appear on the mount
+of Saturn, he will be a prosperous man with a
+beautiful wife and have many children (No. 29).</p>
+<p class="c000">A line under the Sun denotes a trades person
+with a long life, but only rises to the middle class
+(No. 30).</p>
+<p class="c000">If a vertical and well-defined line appear on the
+mount of Mercury (No. 31), the person is likely to
+lead a long life in a foreign country.</p>
+<p class="c000">If the line of the Heart (Fortune line) goes to
+the mount of Saturn, he will live thirty years.</p>
+<p class="c000">If the Life line and the Liver line (called the
+Head line in England) be separated entirely, the
+female will either be seduced before marriage or
+have illegitimate children, or in both sexes be
+illegitimate themselves.</p>
+<p class="c000">If the palm of the hand be filled with numerous
+and indistinct marks or lines the person leads a
+very unhappy life.</p>
+<p class="c000">If a person have single lines or marks thus ==
+between the phalanges on the joints of the fingers
+<span class="pageno" id="Page_35">35</span>and when counted together make twelve, they will
+be happy, prosperous and rich for the most part of
+life.</p>
+<p class="c000">If they make thirteen he will be very unhappy.</p>
+<p class="c000">If they make fifteen he will be dishonest or a
+thief.</p>
+<p class="c000">If they make sixteen he will be a great gambler
+and cheat.</p>
+<p class="c000">If they make seventeen he will be guilty of debauchery
+and much wickedness.</p>
+<p class="c000">If they make eighteen the person will be very
+fortunate and religious.</p>
+<p class="c000">If they make nineteen he will be very clever and
+respectable.</p>
+<p class="c000">If they make twenty an enthusiast in religion.</p>
+<p class="c000">If they make twenty-one he will be a great poet
+and become famous.</p>
+<p class="c000">When these lines are joined at the ends and form
+the shape of a barleycorn or wheat, the fame and
+learning of the person depend on the number; one
+would be weak, two strong, and so on. If the lines
+just over the mounts be united at the ends, as
+described above, the person in whose hands the
+same appear will have riches and wealth, but generally
+by marriage. If they be united over all four
+fingers the person will be very rich, over three less
+wealthy and so on.</p>
+<p class="c000">Small concentric circles, formed principally by
+the pores of the skin, on the points or first phalanges
+of the fingers and thumb, and these be not broken
+<span class="pageno" id="Page_36">36</span>and appear the same on all four fingers and thumb,
+the person will be extremely famous and very
+powerful.</p>
+<p class="c000">Also on the outer ridge of the hand will be found
+various marks.</p>
+<p class="c000">All the marks above the Heart line indicate the
+number of wives, and all below the number of
+children, the short one indicates those that will
+probably die.</p>
+<p class="c000">The line around the lower joint of the thumb
+just above the mount of Venus, if well-defined and
+clear, and particularly if they bend thus ‿ on the
+mount, denote the person to be famous as a sculptor
+or painter.</p>
+<p class="c000">If on the mounts of Jupiter, Saturn, Apollo,
+Mercury, there be found concentric circles, and
+very complete, and in no way broken, the man will
+attain great wealth and power through marriage or
+marry some noted person.</p>
+<p class="c000">If at the end of the Hepatica or Liver line there
+so be an opening like the tail of a fish, the person will
+have great happiness and riches.</p>
+<h3 class="c006"> <span class="sc">The Lines.</span></h3>
+<p class="c007">(1) The line of Life, which ought to be called
+the line of the Heart, embraces the root of the
+thumb.</p>
+<p class="c000">(2) The Liver or natural mean runs straight
+through the middle of the hand.</p>
+<p class="c000">(3) The line of the Head or Brain rises before
+the line of Life and extends towards the mount of
+Mercury, forming a triangular figure in the palm of
+the hand—the great sign of success and brilliancy.</p>
+<div class="figcenter id003">
+<span class="pageno" id="Page_37">37</span>
+<img alt="" class="ig001" src="images/i_037.jpg" id="img_images_i_037.jpg">
+<div class="ic001">
+<p>PLATE III.—THE LINES AND MOUNTS ON THE HAND.</p>
+</div>
+</div>
+<p class="c000"><span class="pageno" id="Page_39">39</span>(4) The line of Fortune or Title line, which
+begins under the root of the little finger and extends
+towards the forefinger.</p>
+<p class="c000">(5) The Bracelet lines at the root of the hand,
+stretch across the wrist, and may be single, double
+or treble, etc.</p>
+<p class="c000">(6) The Sun line, called for clearness Via Solis,
+is a right line which begins at the mount of Apollo
+and stretches into the hollow of the hand after
+curving towards the mount of the Moon.</p>
+<p class="c000">(7) The line of the Moon, called the Via Lactea,
+runs upwards from the line of Saturn, through the
+mount of the Moon.</p>
+<p class="c000">(8) The line of Fortune or Saturn begins at the
+wrist lines, extends through the hollow of the hand
+to the mount of the middle finger. If this line be
+cut or severed it is called the Via Combusta; when
+this line assumes a double line in the middle of the
+palm it is said that you do more good to others than
+yourself.</p>
+<h3 class="c006"> <span class="sc">The Mounts.</span></h3>
+<p class="c007">These are the fleshy or prominent parts under
+the fingers, called:</p>
+<p class="c000">(1) The mount of Venus, in the root of the thumb.</p>
+<p class="c000">(2) The mount of Jupiter, in the root of the forefinger.</p>
+<p class="c000">(3) The mount of Saturn, in the root of the middle
+finger.</p>
+<p class="c000"><span class="pageno" id="Page_40">40</span>(4) The mount of Sun (Apollo), in the root of
+the ring finger.</p>
+<p class="c000">(5) The mount of Mercury, in the root of the
+little finger.</p>
+<h3 class="c006"> <span class="sc">The Line of Life.</span></h3>
+<p class="c007">This line, broad, uniform, lively colour and a
+good length, denotes the party to be long lived and
+subject to few diseases. This line slender, short,
+cut or broken, or with obscure little lines, or pale,
+or blackish colour, denotes feebleness of body,
+sickness, short life. This line sloping nicely to the
+Liver line and forming a nice angle with parallel
+or little crosses at the juncture, shows good wit and
+even temper, a sharp quick person and business
+man.</p>
+<p class="c000">Little branches in the upper part branching
+towards the Liver line signify riches and honour.
+These little lines running the opposite way towards
+the wrist denote poverty, deceit, unfaithful servants.
+Little confused hair lines in this line signify diseases.</p>
+<h3 class="c006"> <span class="sc">Time of Events.</span></h3>
+<p class="c007">Should they be found in the lower part of the
+hand the good or bad will be in early age. In the
+middle of the hand towards the hollow, in the
+middle age. If towards the Liver line, in declining
+age.</p>
+<p class="c000">Danger of death is threatened if this line be
+broken.</p>
+<div class="figcenter id004">
+<span class="pageno" id="Page_41">41</span>
+<img alt="" class="ig001" src="images/i_041.jpg" id="img_images_i_041.jpg">
+<div class="ic001">
+<p>PLATE IV.—THE LINE OF LIFE.</p>
+</div>
+</div>
+<p class="c000"><span class="pageno" id="Page_43">43</span>To find the exact age this line may be divided
+into seventy parts, each part counting one year of
+life.</p>
+<p class="c000">The character ☉ in this line shows loss of an
+eye. This character double denotes the loss of
+both eyes.</p>
+<p class="c000">A line ascending from the line of Life (beneath
+the angle formed by the line of Life and the Liver
+line) to the line of Saturn, denotes an envious
+man, and shows also a perilous disease in that part
+wherein it touches the vital. So much the worse
+if it cut the line of Life or severs the mount.</p>
+<p class="c000">A line passing from the line of Life to the ring
+finger promises honours to follow by means of a
+lady of rank, or gain through favour.</p>
+<p class="c000">The line of Life thicker than ordinary at the end
+under the forefinger shows a laborious old age.</p>
+<h3 class="c006"> <span class="sc">The Liver Line.</span></h3>
+<p class="c007">This line being straight and not dissected by
+obscure little lines, denotes a healthy body.</p>
+<p class="c000">If it be short or broken and does not reach beyond
+the hollow of the hand, it denotes diseases
+and a short life.</p>
+<p class="c000">The longer this line, the greater may the life be
+warranted.</p>
+<p class="c000">If cut at the end by a small intervening line, it
+threatens poverty in old age.</p>
+<p class="c000">When this line is very close to the line of Life, it
+denotes diseases of the heart, as palpitation, syncope,
+etc.</p>
+<p class="c000"><span class="pageno" id="Page_44">44</span>If the space between the line of Life and the
+Liver line, especially of the space between the
+Liver line and the line of Fortune, be broad, it
+shows prodigality.</p>
+<p class="c000">If the Liver line turn and wind several ways, unequal,
+of a different colour and dissected, it bodes
+disease or obstruction in the liver, and hence the
+disease arising from its weakness. It also denotes
+covetousness and depravity of nature and wit;
+more especially if from under the region of the
+middle finger it extends towards the line of Life,
+thus making a short or narrow triangle. Where it
+is well drawn and of a good clear colour, it is a sign
+of a cheerful and ingenious disposition.</p>
+<p class="c000">If this line have a sister line it promises inheritances.</p>
+<p class="c000">If continued with some little hard knots, it forebodes
+manslaughter either perpetrated or to be
+perpetrated, according to the number of those knots.</p>
+<p class="c000">If a cross be found therein, under the region of
+the middle finger, it promises death at hand.</p>
+<p class="c000">If it ends with a fork towards the mount of the
+Moon, it is a sign of hypocrisy and evil manners.</p>
+<p class="c000">When it bends towards the Mensal it is a token
+of a slanderous tongue and envy.</p>
+<p class="c000">When it projects a remarkable branch through
+the line of Life unto the mount of Venus, and cuts
+or touches the line of Mars, especially if the line
+be of a ruddy colour, it warns to be guarded against
+thieves and intimates, fraud and deceit of enemies.
+<span class="pageno" id="Page_45">45</span>This same branch shows also great heat of the
+liver, coming from Mars, whereby life is endangered.</p>
+<h3 class="c006"> <span class="sc">The Line of the Head and Brain.</span></h3>
+<p class="c007">If this line (ascending from its place with uniform
+proportion) connect the line of the Liver and
+Life in a triangular form, having a lively colour
+and not intersected, it declares a person of admirable
+prudence, and of a manly wit and fair fortune.
+The more perfect this triangle, the better shall the
+temper, wit and courage be. But if it be obtuse, it
+argues an evil disposed nature and a rude man. If
+there be no triangle, much worse, a fool, a prodigal
+and a liar, and frequently a short life.</p>
+<p class="c000">The nearer it approaches a right angle, and not
+acute, the better the person. But when the angle
+formed be very acute, especially when the lines of
+Liver and Life touch under the region of the middle
+finger, it argues covetousness. If not under the
+middle finger, it shows a keen, sharp and powerful
+wit, also a clever business person.</p>
+<p class="c000">The left angle (male hand), if it be made upon
+the natural mean in the mount of the Moon, and
+be a right angle by the line passing to the mount
+of Mercury, confirms goodness, and quality of the
+intellect.</p>
+<p class="c000">When the line of the Head and Brain throws out
+unequal and incomposed branches towards the
+mount of the Moon, thereby making unusual characters,
+it denotes in men weakness of brain and
+<span class="pageno" id="Page_46">46</span>dangerous sea voyages; but in a woman frequent
+sorrows of mind and difficulties in child-bearing.
+Equal lines thus projected presage the contrary in
+both sexes, viz., in men, a clear and well-composed
+brain and frequent voyages, and in women cheerfulness
+and felicity in child-bearing.</p>
+<p class="c000">The line of the Head has this peculiarity; if it
+project a cleft or a manifest star upwards to the
+<span lang="la">cavea martis</span>, it signifies boldness and courage; but
+if it let fall the same downwards, thefts and deceitfulness.</p>
+<p class="c000">When the line of the Head is joined to the line
+of the Dragon's Head it promises a prudent and
+pleasant old age. The same throwing a branch in
+the shape of a fork towards the place of the line of
+Fortune signifies subtlety in managing affairs and
+craftiness either to do good or evil.</p>
+<p class="c000">If this character ⊕ appears in or near the fork it
+gives riches and honours by means of ingenuity
+and arts.</p>
+<h3 class="c006"> <span class="sc">The Line of Fortune.</span></h3>
+<p class="c007">This line is also called the Table line. This line,
+when it is long enough and without incisures, argues
+a due strength in the principal members of man
+and denotes constancy. Judge the contrary if this
+line be short or crooked or is severed. When this
+line terminates under the mount of Saturn, it shows
+a vain and lying fellow.</p>
+<p class="c000">If it projects small branches unto the mount of
+Jupiter, it produces honours. Should this be a
+<span class="pageno" id="Page_47">47</span>simple line on the mount of Jupiter, and void of
+any good marks or branches, it is a sign of poverty
+and want.</p>
+<p class="c000">If it severs the mount of Jupiter, cruelty of mind
+and excessive wrath.</p>
+<p class="c000">If it throws a branch between the forefinger and
+the middle, it threatens to a man a wound in the
+head, but to a woman danger in child-bearing.</p>
+<p class="c000">A small line running from the line of Fortune to
+the space between the middle and ring finger,
+denotes sorrow and labour.</p>
+<p class="c000">A line passing from the Liver line to the line of
+Fortune, forming an acute angle, brings sorrow
+and labour.</p>
+<p class="c000">Should there be no Liver line and the line of
+Fortune connected by a small line to the line of
+Life, it threatens a deadly wound.</p>
+<p class="c000">The absence of the line of Fortune shows a
+malevolent, contentious, faithless, inconstant person
+and of base conditions.</p>
+<p class="c000">Confused little lines in the line of Fortune denote
+sickness, and if under Mercury, in the first age;
+under the mount of the Sun in manhood; under
+the middle finger in old age.</p>
+<p class="c000">When certain points are observed in this line
+they argue lust and vigour of body.</p>
+<h3 class="c006"> <span class="sc">The Bracelets Line.</span></h3>
+<p class="c007">If this be double or treble and forming a right
+and continuous tract, it promises a good composure
+of body.</p>
+<p class="c000"><span class="pageno" id="Page_48">48</span>The line which is nearest to the thumb, of a
+good lively colour, and unbroken, promises riches.
+Should this line be broken in the middle, crooked
+and very pale, it denotes debility of body and a
+want of all things.</p>
+<p class="c000">A cross or star placed here shows tranquillity of
+life in old age.</p>
+<p class="c000">If there be a star single or double or any lines
+near the mount of the thumb, in women they
+denote misfortune and infamy.</p>
+<p class="c000">A line passing from the Dragon line through the
+mount of Venus, presages adversities either by
+means of some kindred or a wife.</p>
+<p class="c000">A line running from the Dragon line to the mount
+of the Moon shows adversities and private enemies;
+crooked or distorted it increases the evil and shows
+long servitude.</p>
+<p class="c000">This line being clear and straight and extending
+as far as the region of the Moon, presages many
+journeys both by land and sea.</p>
+<p class="c000">If this line continues to the mount of Mercury it
+argues that the man will live in a foreign country
+in great esteem. If it extends to the Liver line it
+shows an honest behaviour and a long life. If to
+the mount of the Sun, single or double, it denotes
+great good and enables the man to govern and rule
+in great affairs. If it pass to the mount of Mercury
+it betokens a man fit for many things. If it does
+not extend to the mount of Mercury, but is broken
+about the middle and ends beneath that mount, it
+<span class="pageno" id="Page_49">49</span>denotes an untruthful, tittle-tattling, discontented
+person.</p>
+<p class="c000">If this line ascends directly to the mount of
+Saturn, it denotes a good position of Saturn in the
+geniture; but if crooked and passes towards the
+Dragon line and the Liver line, it denotes a hard,
+covetous, and laborious man.</p>
+<h3 class="c006"> <span class="sc">The Via Solis.</span></h3>
+<p class="c007">This line being straight and uniformly composed
+and well coloured, promises the favour of great men,
+and joyful honours; if dissected and uneven, judge
+the contrary, with various impediments and envy.</p>
+<h3 class="c006"> <span class="sc">The Via Lactea.</span></h3>
+<p class="c007">This line being uniformly composed, proportionate
+and continued, denotes fortunate journeys both
+by sea and land; also a good brain, the favour of
+women (the mount of Venus being unafflicted), a
+composed and graceful speech. If it be cut or distorted
+it argues infelicity and lies; but if whole,
+ascending towards the little finger, it is a sign of
+great happiness.</p>
+<h3 class="c006"> <span class="sc">The Line of Saturn.</span></h3>
+<p class="c007">This line being fully and wholly protracted to
+the middle finger is an argument of profound meditations,
+and of fortunate events in counsels and
+actions.</p>
+<p class="c000">This line deficient is an evil sign portending
+many misfortunes, unless other positions favour it.
+If bending backward, into the hollow of the hand
+<span class="pageno" id="Page_50">50</span>towards the mount of the Moon, after the form of
+a semicircle, threatens imprisonment.</p>
+<p class="c000">The line beginning from the line of Life and
+passing through the Liver line, to the mount of
+Saturn—and if there it touch the Saturnia—threatens
+imprisonment.</p>
+<h3 class="c006"> <span class="sc">Morality. The Girdle of Venus.</span></h3>
+<p class="c007">This line of itself, unless there be other testimony
+to counteract it, is sufficient to indicate fulness of
+nature to appreciate the opposite sex, while the
+want of it denotes (except in a measure given by
+the fulness of the mount of Venus, etc.) coldness,
+unnaturalness for the other sex, and usually a cold,
+insipid partner, a poor, neglectful mother or father.
+But if this line have a sister line, that is, a small
+line running parallel with the Girdle, it argues intemperance
+and lust in both sexes and baseness in
+sexual matters—a filthy person. If this line be
+divided or broken up by various lines it denotes
+losses and infamy by reason of these lusts.</p>
+<h3 class="c006"> <span class="sc">The Line of Mars. Courage and Fortitude.</span></h3>
+<p class="c007">This line is sometimes called the sister line to
+the line of Life because it is often found running
+parallel with that line and denotes increased vital
+force—courage, because it strengthens the heart
+and thus the energy. When clear and well-defined
+it presages a long and active life, with little or no
+diseases. People with this line will suffer largely
+from gout, rheumatism and apoplexy if they take
+<span class="pageno" id="Page_51">51</span>stimulants of any kind, inasmuch as the person
+will have sufficient energy of himself, and all
+stimulation which will increase the vascular action
+will only impede and retard the heart's action, like
+too much oil to a machine. This line strengthens
+all things denoted by the line of Life, and if clear
+and decidedly red it promises great success in war.</p>
+<h3 class="c006"> <span class="sc">The Rule to Tell the Planets.</span></h3>
+<p class="c007">When a figure similar to that used by astronomers
+in designating the planets is found on the
+mount particularly set aside for that planet, as on
+the mount of Jupiter there is the figure ♃, and on
+the mount of Saturn there is the sign ♄, on Apollo
+the sign ☉, on the mount of Mercury there is the
+sign ☿, and on the thick part of the thumb you
+find a similar sign ♀, on the mount of the moon
+the sign ☽, on Mars' place the figure ♂, and so on,
+then they are termed benevolent. How far, however,
+this is relevant to the subject I do not state,
+but I should rather advise the student to treat this
+with great care, although the marks given underneath
+will be found of value when placed as indicated.</p>
+<p class="c000">The planets are considered unfortunate when
+confused lines, broken semicircle, gridiron marks,
+or signs contrary to the mounts indicated above,
+as ♃ to mount of Jupiter, and so on, are found on
+the mounts or places.</p>
+<p class="c000">Venus (♀) is dignified when you find on her
+<span class="pageno" id="Page_52">52</span>mount a clear star, or red furrows running transversely
+parallel.</p>
+<p class="c000">A jovial, merry nature is shown by fulness or
+elevation of the root of the thumb, but luxurious,
+amorous, graceful, comely, concupiscent, very
+honest, just and constant in friendship.</p>
+<p class="c000">Description when strong and full: the body
+somewhat tall, skin clear, eyes pleasant and sparkling,
+full of allurement and temptation. The hair
+is brown, light, crisp and soft, sometimes slightly
+waving in front or curling; a noble mind. The
+mind is ofttimes prone to boasting, and loves the
+society of ladies; an admirer of music, painting
+and beauty.</p>
+<p class="c000">Professions must be judged according to the
+strength or debility of the mount; it produces
+musicians, merchants for fancy goods, teachers,
+apothecaries, gardeners, etc.</p>
+<p class="c000">The mount weak, not elevated or badly marked,
+causes men to be inconstant, lascivious, vain. A
+cross near first joint of the thumb signifies an
+adulterer, or has had or will have a mishap through
+females.</p>
+<p class="c000">The place of Venus, void of incisures, flat and
+smooth-looking, shows an effeminate, rude and
+sorrowful person, or one foolishly and ridiculously
+addicted to merriment and jesting.</p>
+<h3 class="c006"> <span class="sc">The Planet Mars. Courage, War.</span></h3>
+<p class="c007">Mars is fortunate (1) when line of Life is strong,
+deep, red and decently drawn; (2) when a cross or
+<span class="pageno" id="Page_53">53</span>star is found on his place, especially the palm of
+the hand.</p>
+<p class="c000">Description when strong: denotes full courage,
+often bold, dauntless, stout, warlike, contentious,
+firm of purpose, large and lusty appetite, imperious.</p>
+<p class="c000">Hair light brown or sandy, yellow, often red.</p>
+<p class="c000">The eyes, blue or grey-green, which often grow
+red and terrible-looking when angry.</p>
+<p class="c000">Mars unfortunate: men, etc., are quarrelsome,
+violent, deceitful, angry natures—produces thieves
+and murderers.</p>
+<p class="c000">Profession according to strength: generals, surgeons,
+ironmasters or workers and tradesmen of all
+kinds who work with metal, as ironmongers, farriers,
+etc.</p>
+<p class="c000"><em>Note.</em>—Mars has signification of wives, husbands,
+sons and friends (deceitful or otherwise).</p>
+<p class="c000">Diseases: he produces fevers, blisters, sore eyes,
+skin diseases, apoplexy, wounds, wicked thoughts.</p>
+<p class="c000">With Jupiter he affects the gall, the reins, back
+and liver.</p>
+<p class="c000">With Venus he affects the privy parts and sexual
+diseases.</p>
+<p class="c000">If Mars be strong females have largely constructed
+bodies and love men of rank; if Venus be strong
+men love women of rank; if weak they form attachments
+for servants, coachmen and inferiors.</p>
+<p class="c000">The sign ♄ placed in cavea of the hand threatens
+a fall from a precipice or some high place; a fall
+is also indicated by the line of Saturn stopping
+<span class="pageno" id="Page_54">54</span>or breaking on the mount of Mars (hollow of
+hand).</p>
+<p class="c000">Imprisonment: a crooked line ascending from
+mount of Mars to the mount of Saturn.</p>
+<p class="c000">Journeys and peregrinations denoted by a line
+running from plain of Mars (hollow of hand) down
+to the Bracelet lines and ending immediately below
+the mount of the Moon.</p>
+<h3 class="c006"> <span class="sc">The Mount of Jupiter. Honour, Fame, Renown, Ecclesiastical, State, Law.</span></h3>
+<p class="c007">The planet is fortunate when (1) a star or double
+cross; (2) parallel lines or (3) line clearly drawn
+from line of Life to his mount.</p>
+<p class="c000">Description when fortunate: he signifies a noble,
+glorious, honest, benevolent, affable, honourable,
+merry, renowned, neat, just and equitable person;
+good-looking, formidable and happy, with beautiful
+hazel or blue eyes.</p>
+<p class="c000">Hair dark brown; grave gesture, modest, and
+faithful to their promises.</p>
+<p class="c000">Professions, etc.: great dignitaries, churchmen,
+lawyers or counsellors, statesmen or persons brought
+into contact with great men who are highly esteemed
+and loved. They favour their wives, sons, and all
+good men.</p>
+<p class="c000">Jupiter rules the liver, blood, ribs, lungs and
+gristles.</p>
+<p class="c000">Jupiter unfortunate when half a gridiron on his
+mount. This shows losses by powerful women.
+When generally unfortunate: when flat, flabby,
+<span class="pageno" id="Page_55">55</span>with no good marks on it, interlaced with a lot of
+little hair lines, etc., he causes persons to lose their
+estates and brings about great calamities in money
+matters, although, if nothing else stops it, the
+person will usually recover it after he becomes
+strong.</p>
+<p class="c000">Diseases: when afflicted he causes troubles of
+the heart, cramps, inflammation of the lungs, windy
+spasms.</p>
+<p class="c000">Apoplexy indicated by a line transversely cutting
+his mount and extending towards the mount
+of Saturn (middle finger), and forming there a cleft
+or little lines.</p>
+<p class="c000">Splendid honours and fame, riches, public rewards
+from princes and great men, a cross, especially
+a clear and red star on the mount of Jupiter
+or ♃ marked thereon.</p>
+<h3 class="c006"> <span class="sc">The Mount of Apollo. The Planet Sun. Ingenuity, Public Honours, Brilliancy, etc.</span></h3>
+<p class="c007">The Sun is fortunate—same as in last planet.</p>
+<p class="c000">Description when fortunate: persons are faithful,
+ingenious, honoured, high-minded, wise, humane,
+religious, just, moderate, aged, and do all things
+wisely.</p>
+<p class="c000">He gives a well-set body with yellow or sandy
+hair, and rules the heart and eyes, the diaphragm
+(bowels) and nerves.</p>
+<p class="c000">Description when unfortunate: the persons are
+proud and easily elated, manifesting their access
+<span class="pageno" id="Page_56">56</span>to dignity by unjust means, boasters and immodest.</p>
+<p class="c000">Diseases: he produces sore eyes and blindness,
+especially of right eye in man and left in a woman,
+and trembling of the heart, syncope, etc.</p>
+<p class="c000">Political honours: the Via Solis being uniform
+and of a clear good colour; it also gives the favour
+and grace of princes.</p>
+<p class="c000">Trouble and enmity from political and legal men
+when the Via Solis is confused and afflicted.</p>
+<h3 class="c006"> <span class="sc">The Moon. Travelling by Land and Sea.</span></h3>
+<p class="c007">When fortunate: good and clear marks near this
+mount, stars, etc. These persons are successful in
+journeys and messages and great prosperity in
+foreign countries; to a female felicity and happiness
+in bearing children.</p>
+<p class="c000">Ominous signs placed here show death and affliction
+in childbirth.</p>
+<p class="c000">Description: the persons will be famous, honest
+and honourable, with well-set large bodies proportioned
+and pleasant. They travel by land and
+sea, and causes them to desire to lie or walk by the
+side of water—rivers and running waters.</p>
+<p class="c000">When unfortunate principally known by pale and
+confused line on the mount of the Moon.</p>
+<p class="c000">The mount flat, soft and small, she causes persons
+to be inconstant in life and actions.</p>
+<p class="c000">Diseases: affects the brain, stomach and belly,
+and occasions paralysis, epilepsy, cancer, spots on
+the body, gripings and severe colds.</p>
+<div>
+<span class="pageno" id="Page_57">57</span>
+<h3 class="c006"> <span class="sc">The Planet Saturn. The Mount of Saturn. Counsels, Mathematicians, Grave Thinkers, Inventors, etc.</span></h3>
+</div>
+<p class="c007">When fortunate: when the line of Saturn runs
+uniformly and clear to his mount or ♄ marked
+thereon.</p>
+<p class="c000">Saturn unfortunate when there are confused lines
+on his mount or contrary or unfortunate signs
+thereon.</p>
+<p class="c000">Saturn fortunate: men are silent, provident;
+good and profound, not always rich, counsels, grave
+meditators, somewhat melancholy, and generally
+have a foolish way of laughing and jesting.</p>
+<p class="c000">Description: they generally have a slender body,
+and rather tall, pale and feeble.</p>
+<p class="c000">Hair brown or blackish colour, yet sometimes
+sandy. The eyes are sunken.</p>
+<p class="c000">Trades, etc.: they are fortunate in agriculture,
+in minerals of all kinds, as mines, etc. They are
+somewhat careless of their wives and less addicted
+to sexual excesses, are more grasping and tenacious
+than is just.</p>
+<p class="c000">When Saturn is unfortunate he makes persons
+sorrowful, laborious, sordid, humble, covetous, unfaithful,
+liars, unfortunate, malicious, oppressed
+with continual griefs and calamities.</p>
+<p class="c000">Diseases: he gives dangerous diseases, colds,
+coughs, melancholy, hypochondriacal complaints,
+dropsy, gout, falling sickness, quartan and hectic
+fevers.</p>
+<p class="c000"><span class="pageno" id="Page_58">58</span>Accidents: he produces falls from houses, imprisonment
+and danger of drowning.</p>
+<p class="c000">A deep line running from the space between the
+forefinger and middle finger to the line of Fortune
+and cutting or interrupting it, signifies a wound or
+disease in the lower part of the abdomen.</p>
+<h3 class="c006"> <span class="sc">The Planet Mercury. The Mount of Mercury. Study, Research, Sciences, Speaking, etc.</span></h3>
+<p class="c007">When this planet is fortunate, men are ingenious,
+studious, scientific and searchers after secrets.</p>
+<p class="c000">Professions, trades, etc., according to his dignity:
+he produces orators, poets, eloquent speakers, persons
+ready to learn anything, mathematicians, merchants,
+sometimes crafty, variable people.</p>
+<p class="c000">When unfortunate he produces persons full of
+levity, liars, prattlers, thieves, cheats, inconstant,
+faithless, traitors, etc.</p>
+<p class="c000">Diseases: he produces madness, fury, acute
+fevers, etc.</p>
+<p class="c000">Signs of deceit and danger to life: the mensa
+sharpened by the concourse of the line of Fortune
+and the line of Life or the Liver line. The best
+sign is the mensa diverging, open at both ends and
+forming the figure ≍.</p>
+<p class="c000">Perfection of wit and science: a star placed (or
+other clearly-formed flowers or flag) in the mensa
+especially under the mount of Mercury or the Sun.</p>
+<div>
+<span class="pageno" id="Page_59">59</span>
+<h3 class="c006"> <span class="sc">Mensa. The Part of Fortune.</span></h3>
+</div>
+<p class="c007">When fortunate: liberal, magnanimous and long-lived
+people. The space between the line of Fortune
+and the Liver line (called sometimes the
+line of the Heart and the line of the Head), and
+forms a nice figure.</p>
+<p class="c000">When unfortunate: small and narrow (by the
+approaching of these two lines), it argues slender
+fortune, niggardliness and fearfulness.</p>
+<p class="c000">Honours and dignities to follow by great and
+noble personages, when a star or cross appears in
+this space, clear and well-formed, especially under
+the mount of the Sun (see chapter on figures and
+flowers on hand).</p>
+<p class="c000">The sign of ♃ here promises prominent ecclesiastical
+dignities.</p>
+<p class="c000">Good fortune is denoted by the star or triple
+cross. Good and equal lines in this space denote
+a good fortune; evil or unequal lines the reverse.</p>
+<p class="c000">The worst sign when no mensa is found, for it
+shows obscurity both of life and fortune.</p>
+<p class="c000">Misfortune and loss of honours when confused
+little lines appear here, the good is diverted, and
+anxieties and troubles threaten, to honours especially,
+if under the mount of the Sun.</p>
+<p class="c000">Fortunate journeys: a cross or star on the
+outermost part of the mensa on or near the mount
+of the Moon is a sure sign.</p>
+<div>
+<span class="pageno" id="Page_60">60</span>
+<h3 class="c006"> <span class="sc">The Fingers. The Thumb.</span></h3>
+</div>
+<p class="c007">Riches and honours shown by overthwart lines
+clear and red underneath the nail and joint of the
+thumb.</p>
+<p class="c000">A violent death or danger through a married
+woman, etc.: a line passing from the upper joint of
+the thumb to the line of Life.</p>
+<p class="c000">A contentious nature: confused lines on the
+lower joint of the thumb; one always brawling and
+scolding.</p>
+<p class="c000">Death by hanging, etc.: a line surrounding the
+thumb at the middle joint.</p>
+<p class="c000">Riches and possessions—to be worked for: equal
+furrows under the lower joint.</p>
+<p class="c000">Idleness and lack of energy: if the first and
+second joints are void of incisures.</p>
+<h3 class="c006"> <span class="sc">The Forefinger or Index Finger.</span></h3>
+<p class="c007">Inheritance: denoted by many overthwart lines
+in the top joint; these in the second joint show
+envious and evil-disposed persons.</p>
+<p class="c000">Issue, bad tongue: right lines running between
+the top and second joints declare in a woman
+a numerous issue; in a man bitterness of
+tongue.</p>
+<p class="c000">A jovial disposition: right lines in the joint
+near the mount of Jupiter.</p>
+<p class="c000">Unchaste and lascivious: in a female hand a
+star being placed in the joint near the mount of
+Jupiter.</p>
+<div>
+<span class="pageno" id="Page_61">61</span>
+<h3 class="c006"> <span class="sc">The Middle Finger.</span></h3>
+</div>
+<p class="c007">An unhappy, melancholy and depraved mind:
+denoted by small gridirons or confused marks in
+the joints of this finger.</p>
+<p class="c000">Success with metals: manifested by equal lines.</p>
+<p class="c000">Drowning or violent death: this is denoted by
+a star in the joints of this finger.</p>
+<p class="c000">Folly and madness: a crossed line, extending
+from the root of this finger upwards through the
+whole length of the finger.</p>
+<h3 class="c006"> <span class="sc">The Ring Finger.</span></h3>
+<p class="c007">Great and noble fame denoted by a line ascending
+unbroken from the mount of the Sun through
+the joints of this finger to the end.</p>
+<p class="c000">Honour and riches: this is shown by equal lines
+in the first joint (near the mount).</p>
+<p class="c000">Enmity of great men: denoted by overthwart
+lines here; it is made late in life when these lines
+are intersected.</p>
+<h3 class="c006"> <span class="sc">The Little Finger.</span></h3>
+<p class="c007">The planet Mars has dominion over this finger.
+A strong and valorous person when strong and
+well fed.</p>
+<p class="c000"><em>Note.</em>—From the joints of this finger as from
+the mount itself are judgments passed concerning
+merchandise and favours.</p>
+<p class="c000">Ingenuity and eloquence: a star in the first
+joint (near the mount of Mercury) shows this; it
+is also shown by a right line extending from the
+<span class="pageno" id="Page_62">62</span>mount of Mercury to the end of finger, also a
+great speaker.</p>
+<p class="c000">Foolishness, etc.: denoted by obtuse and confused
+marks placed here.</p>
+<p class="c000">A thief and deceitful person: this is shown by
+confused and unfortunate marks appearing in the
+first and second joints of this finger.</p>
+<p class="c000">Perpetual inconstancy: this is shown by adverse
+lines in the last or top joint of the finger.</p>
+<p class="c000"><em>Note.</em>—The number of wives and husbands are
+frequently indicated from the small lines passing
+from the outermost part of the hand to the mount
+of Mercury, but I consider the proper place is from
+the mount of Venus.</p>
+<p class="c000">If the end of the little finger does not reach so
+far as to touch the last joint of the ring finger, it
+signifies that the partner in marriage will be imperious
+in all things.</p>
+<p class="c000">The mounts marked with good figures and characters
+show good and happy omens, being vitiated
+with confused or broken characters, etc., or lines,
+they always denote the contrary, unless they are
+restrained by other lines that be good.</p>
+<p class="c000">Chiromancers generally teach that the first joints
+near the mount of the finger indicate the early age,
+the second, the flourishing state of manhood, and
+the last old age. But our opinion is that the planets
+shown by the nativity of the persons do, in their
+proper order, manifest their marks and characters
+whether for good or bad.</p>
+<div class="figcenter id005">
+<span class="pageno" id="Page_63">63</span>
+<img alt="" class="ig001" src="images/i_063.jpg" id="img_images_i_063.jpg">
+<div class="ic001">
+<p>PLATE V.—ALLEGED MARKS ON THE FEET OF THE BENIGN BUDDHA.</p>
+</div>
+</div>
+<p class="c000"><span class="pageno" id="Page_65">65</span><em>Note.</em>—A knowledge of astrology will prove an
+acquisition to the study of palmistry or any science.</p>
+<h3 class="c006"> <span class="sc">Signs on the Head. How to Read the Forehead.</span></h3>
+<p class="c007">If a person has a broad forehead and takes the
+form of ⌒, a crescent, he was born of poor
+parents but is sure to be rich.</p>
+<p class="c000">If a prominent single vein or mark extends from
+the nose to the top of the forehead the person is
+born to immense wealth.</p>
+<p class="c000">If there are many similarly placed the person is
+very vicious.</p>
+<p class="c000">If the forehead is depressed in the middle he is
+very jealous and a lascivious or sinful man.</p>
+<p class="c000">If the forehead is narrow he is a great miser.</p>
+<p class="c000">If there be three furrows going across the head
+he is likely to live a long life, especially if they go
+over the eyes.</p>
+<p class="c000">If there be four such lines the person will be a
+commander or great potentate and live a very long
+time.</p>
+<p class="c000">Many indistinct lines on the forehead denote
+lewd persons.</p>
+<p class="c000">If there be any marks in the middle of the forehead
+and they take the form of a crescent ⌒, the
+person will be very prosperous and fortunate.</p>
+<h3 class="c006"> <span class="sc">Signs on the Feet.</span></h3>
+<p class="c007">If a crescent or elongated horseshoe mark appear
+on sole of the foot and the toes separated well from
+<span class="pageno" id="Page_66">66</span>each other, the person will have a harsh temper and
+remain poor.</p>
+<p class="c000">If a female's toes are well set together and close,
+and has a wheel or flower mark on either or both
+feet, she will become a lady of rank and position.</p>
+<p class="c000">If there be an ear-shaped figure on the foot and
+without hair, or a little tuft, the person may expect
+to be successful in the world.</p>
+<h3 class="c006"> <span class="sc">The Arms.</span></h3>
+<p class="c007">If her arms are very long she will be renowned
+and well-to-do. Short-armed persons generally
+remain poor.</p>
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>Women's Printing Society, Ltd., 66, Whitcomb St., W.C.</div>
+</div>
+</div>
+<div><span class="pageno" id="Page_67">67</span></div>
+<div class="ph3">
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>NATURE'S FINER FORCES</div>
+</div>
+</div>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center">
+<div>and their Influence upon</div>
+<div class="c003">HUMAN LIFE AND DESTINY.</div>
+<div class="c003"><span class="sc">By RÂMA PRASÂD, M.A.</span></div>
+<div class="c003"><em>Cloth, 8vo. 4/6 net.</em></div>
+</div>
+</div>
+<p class="c000">"Of these excellent essays we cannot speak too highly; they will
+prove a new revelation to our scientifically inclined readers and
+demonstrate conclusively the impregnable basis of ancient Aryan
+Science, which did not neglect the PSYCHIC and MENTAL DATA
+which the modern scientific world MUST acknowledge ere long,
+and so enter upon an entire 'Reformation' of its methods and
+hypotheses. The whole science of the Tatwas is founded on that
+which is termed 'Vibration' or 'Motion' and opens up possibilities
+which readers of 'THE SECRET DOCTRINE' alone at present
+can foresee."—<em>Lucifer.</em></p>
+<div class="ph3">
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>The Dream of Ravan. A Mystery.</div>
+</div>
+</div>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center">
+<div><em>Cloth, 8vo. 2/6 net.</em></div>
+</div>
+</div>
+<p class="c000">"It is beyond question that the unknown writer of this work was
+both a scholar and a mystic. That he had studied the <cite>Râmâyana</cite> from
+the original texts and was a master of Vedântic psychology is amply
+manifested; that he was a mystic himself and spoke of things that
+were realities to him and not mere empty speculations, is evident to
+every earnest student of Indian theosophical literature. In no other
+western publication have the three 'states' of man's consciousness
+been so strikingly and so intelligibly set forth as by our author. In
+this work the mystic and student of yoga will recognise many a home
+truth but slightly veiled, and many an important secret wholly
+disclosed."</p>
+<div class="ph3">
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>SOMNIUM SCIPIONIS</div>
+</div>
+</div>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center">
+<div><em>Translated into English</em></div>
+<div class="c003"><span class="sc">With an Essay "The Vision of Scipio" considered as a</span></div>
+<div><span class="sc">Fragment of the Mysteries. By L. O.</span></div>
+<div class="c003"><span class="sc">The Golden Verses of Pythagoras. By A. E. A.</span></div>
+<div class="c003"><span class="sc">The Symbols of Pythagoras. By S. A.</span></div>
+<div class="c003"><em>One vol., cloth, 8vo. 2/6 net.</em></div>
+</div>
+</div>
+<p class="c000">"Not since 1804 has any English version of the two famous
+Pythagorean treatises included in this volume appeared in book form.
+Of their importance it is sufficient to state that they have been justly
+held in the highest esteem by Mystics from an early period to the
+present time. This has also been the case with the <cite>Somnium Scipionis</cite>
+or Vision of Scipio, Cicero's famous essay. L. O.'s able essay will be
+found most valuable to students."</p>
+<div><span class="pageno" id="Page_68">68</span></div>
+<div class="ph3">
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>The Building of the Cosmos.</div>
+</div>
+</div>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center">
+<div><span class="sc">By ANNIE BESANT.</span></div>
+<div class="c003"><em>Cloth, 8vo. Price 2/- net.</em></div>
+</div>
+</div>
+<p class="c000">"Sound; Fire; Yoga; and Symbolism are the subjects treated
+of in this most excellent book. The essay upon Yoga, the Kingly
+Science of the Soul whereby a man may attain to that Divine Wisdom
+which is his birthright, deserves to be read of all men. To lovers of
+the Scriptures of the World the essay on 'Symbolism' will appeal
+strongly and will be found most helpful, for in those Ancient Writings
+the most important truths are frequently veiled from the superficial
+reader by an allegory or a symbol, and in this essay the reader will
+find a clue to the method by which the study of symbols may be
+approached with beneficial results. Considerable light is thrown
+upon some of the very complex symbols pertaining to Indian
+Philosophies."</p>
+<div class="ph3">
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>THE YOGA OF CHRIST: or the Science of the Soul.</div>
+</div>
+</div>
+</div>
+<div class="nf-center-c1">
+<div class="nf-center">
+<div><span class="sc">Written down by A. K. G.</span></div>
+<div class="c003"><span class="sc">Edited by F. HENRIETTA MÜLLER, B.A.</span></div>
+<div class="c003"><em>Cloth, 8vo, 2/- net. Wrappers, 1/- net.</em></div>
+</div>
+</div>
+<p class="c000">"This book appeals especially to that large class of devout souls
+who find neither satisfying Truth nor edifying practice in Modern
+Christianity; who believe, nevertheless, that Christ had a message for
+them, and that somewhere hidden beneath the noise of words, and the
+misinterpretations of sectarians, a Truth, divine and living, may be
+found: to them the following pages will bring, if not the full radiance
+of Christ's illuminating Love, at least many valuable suggestions for
+thought, and aids in the solution of difficult problems. That Christianity,
+the religion which the West has made peculiarly its own, should be
+reverentially taught by 'an Indian' from an Indian point of view,
+is in itself unusual, may be regarded as a happy omen of the ultimate
+breaking down of those barriers of Sectarianism which have hitherto
+been potent in dividing the English people from sympathetic communion
+with the natives of India."</p>
+<div class="nf-center-c1">
+<div class="nf-center c002">
+<div>THE THEOSOPHICAL PUBLISHING SOCIETY,</div>
+<div>7, DUKE STREET, ADELPHI, LONDON, W.C.</div>
+</div>
+</div>
+<div class="tnotes">
+<div class="chapter">
+<h2 class="c004">TRANSCRIBER'S NOTES</h2>
+</div>
+<ol class="ol_1 c002">
+<li>Silently corrected simple spelling, grammar, and typographical errors.
+
+    </li>
+<li>Retained anachronistic and non-standard spellings as printed.
+    </li>
+</ol>
+</div>
+<div></div><footer class="pg-boilerplate pgheader" id="pg-footer" lang="en">
+<div id="pg-end-separator">
+<span>*** END OF THE PROJECT GUTENBERG EBOOK INDIAN PALMISTRY ***</span>
+</div>
+
+    
+<div>
+Updated editions will replace the previous one—the old editions will
+be renamed.
+</div><div>
+Creating the works from print editions not protected by U.S. copyright
+law means that no one owns a United States copyright in these works,
+so the Foundation (and you!) can copy and distribute it in the United
+States without permission and without paying copyright
+royalties. Special rules, set forth in the General Terms of Use part
+of this license, apply to copying and distributing Project
+Gutenberg™ electronic works to protect the PROJECT GUTENBERG™
+concept and trademark. Project Gutenberg is a registered trademark,
+and may not be used if you charge for an eBook, except by following
+the terms of the trademark license, including paying royalties for use
+of the Project Gutenberg trademark. If you do not charge anything for
+copies of this eBook, complying with the trademark license is very
+easy. You may use this eBook for nearly any purpose such as creation
+of derivative works, reports, performances and research. Project
+Gutenberg eBooks may be modified and printed and given away—you may
+do practically ANYTHING in the United States with eBooks not protected
+by U.S. copyright law. Redistribution is subject to the trademark
+license, especially commercial redistribution.
+</div>
+
+<div id="project-gutenberg-license">START: FULL LICENSE</div>
+
+<h2 id="pg-footer-heading">THE FULL PROJECT GUTENBERG™ LICENSE</h2>
+
+<div class="agate">PLEASE READ THIS BEFORE YOU DISTRIBUTE OR USE THIS WORK
+</div><div>
+To protect the Project Gutenberg™ mission of promoting the free
+distribution of electronic works, by using or distributing this work
+(or any other work associated in any way with the phrase “Project
+Gutenberg”), you agree to comply with all the terms of the Full
+Project Gutenberg License available with this file or online at
+www.gutenberg.org/license.
+</div><div class="secthead">
+Section 1. General Terms of Use and Redistributing Project Gutenberg
+electronic works
+</div><div>
+1.A. By reading or using any part of this Project Gutenberg
+electronic work, you indicate that you have read, understand, agree to
+and accept all the terms of this license and intellectual property
+(trademark/copyright) agreement. If you do not agree to abide by all
+the terms of this agreement, you must cease using and return or
+destroy all copies of Project Gutenberg electronic works in your
+possession. If you paid a fee for obtaining a copy of or access to a
+Project Gutenberg electronic work and you do not agree to be bound
+by the terms of this agreement, you may obtain a refund from the person
+or entity to whom you paid the fee as set forth in paragraph 1.E.8.
+</div><div>
+1.B. “Project Gutenberg” is a registered trademark. It may only be
+used on or associated in any way with an electronic work by people who
+agree to be bound by the terms of this agreement. There are a few
+things that you can do with most Project Gutenberg electronic works
+even without complying with the full terms of this agreement. See
+paragraph 1.C below. There are a lot of things you can do with Project
+Gutenberg electronic works if you follow the terms of this
+agreement and help preserve free future access to Project Gutenberg
+electronic works. See paragraph 1.E below.
+</div><div>
+1.C. The Project Gutenberg Literary Archive Foundation (“the
+Foundation” or PGLAF), owns a compilation copyright in the collection
+of Project Gutenberg electronic works. Nearly all the individual
+works in the collection are in the public domain in the United
+States. If an individual work is unprotected by copyright law in the
+United States and you are located in the United States, we do not
+claim a right to prevent you from copying, distributing, performing,
+displaying or creating derivative works based on the work as long as
+all references to Project Gutenberg are removed. Of course, we hope
+that you will support the Project Gutenberg mission of promoting
+free access to electronic works by freely sharing Project Gutenberg
+works in compliance with the terms of this agreement for keeping the
+Project Gutenberg name associated with the work. You can easily
+comply with the terms of this agreement by keeping this work in the
+same format with its attached full Project Gutenberg License when
+you share it without charge with others.
+</div><div>
+1.D. The copyright laws of the place where you are located also govern
+what you can do with this work. Copyright laws in most countries are
+in a constant state of change. If you are outside the United States,
+check the laws of your country in addition to the terms of this
+agreement before downloading, copying, displaying, performing,
+distributing or creating derivative works based on this work or any
+other Project Gutenberg work. The Foundation makes no
+representations concerning the copyright status of any work in any
+country other than the United States.
+</div><div>
+1.E. Unless you have removed all references to Project Gutenberg:
+</div><div>
+1.E.1. The following sentence, with active links to, or other
+immediate access to, the full Project Gutenberg License must appear
+prominently whenever any copy of a Project Gutenberg work (any work
+on which the phrase “Project Gutenberg” appears, or with which the
+phrase “Project Gutenberg” is associated) is accessed, displayed,
+performed, viewed, copied or distributed:
+</div><blockquote><div>
+    This eBook is for the use of anyone anywhere in the United States and most
+    other parts of the world at no cost and with almost no restrictions
+    whatsoever. You may copy it, give it away or re-use it under the terms
+    of the Project Gutenberg™ License included with this eBook or online
+    at <a href="https://www.gutenberg.org">www.gutenberg.org</a>. If you
+    are not located in the United States, you will have to check the laws
+    of the country where you are located before using this eBook.
+  </div></blockquote><div>
+1.E.2. If an individual Project Gutenberg electronic work is
+derived from texts not protected by U.S. copyright law (does not
+contain a notice indicating that it is posted with permission of the
+copyright holder), the work can be copied and distributed to anyone in
+the United States without paying any fees or charges. If you are
+redistributing or providing access to a work with the phrase “Project
+Gutenberg” associated with or appearing on the work, you must comply
+either with the requirements of paragraphs 1.E.1 through 1.E.7 or
+obtain permission for the use of the work and the Project Gutenberg
+trademark as set forth in paragraphs 1.E.8 or 1.E.9.
+</div><div>
+1.E.3. If an individual Project Gutenberg electronic work is posted
+with the permission of the copyright holder, your use and distribution
+must comply with both paragraphs 1.E.1 through 1.E.7 and any
+additional terms imposed by the copyright holder. Additional terms
+will be linked to the Project Gutenberg License for all works
+posted with the permission of the copyright holder found at the
+beginning of this work.
+</div><div>
+1.E.4. Do not unlink or detach or remove the full Project Gutenberg
+License terms from this work, or any files containing a part of this
+work or any other work associated with Project Gutenberg.
+</div><div>
+1.E.5. Do not copy, display, perform, distribute or redistribute this
+electronic work, or any part of this electronic work, without
+prominently displaying the sentence set forth in paragraph 1.E.1 with
+active links or immediate access to the full terms of the Project
+Gutenberg License.
+</div><div>
+1.E.6. You may convert to and distribute this work in any binary,
+compressed, marked up, nonproprietary or proprietary form, including
+any word processing or hypertext form. However, if you provide access
+to or distribute copies of a Project Gutenberg work in a format
+other than “Plain Vanilla ASCII” or other format used in the official
+version posted on the official Project Gutenberg website
+(www.gutenberg.org), you must, at no additional cost, fee or expense
+to the user, provide a copy, a means of exporting a copy, or a means
+of obtaining a copy upon request, of the work in its original “Plain
+Vanilla ASCII” or other form. Any alternate format must include the
+full Project Gutenberg License as specified in paragraph 1.E.1.
+</div><div>
+1.E.7. Do not charge a fee for access to, viewing, displaying,
+performing, copying or distributing any Project Gutenberg works
+unless you comply with paragraph 1.E.8 or 1.E.9.
+</div><div>
+1.E.8. You may charge a reasonable fee for copies of or providing
+access to or distributing Project Gutenberg electronic works
+provided that:
+</div><ul>
+    <li>• You pay a royalty fee of 20% of the gross profits you derive from
+        the use of Project Gutenberg works calculated using the method
+        you already use to calculate your applicable taxes. The fee is owed
+        to the owner of the Project Gutenberg trademark, but he has
+        agreed to donate royalties under this paragraph to the Project
+        Gutenberg Literary Archive Foundation. Royalty payments must be paid
+        within 60 days following each date on which you prepare (or are
+        legally required to prepare) your periodic tax returns. Royalty
+        payments should be clearly marked as such and sent to the Project
+        Gutenberg Literary Archive Foundation at the address specified in
+        Section 4, “Information about donations to the Project Gutenberg
+        Literary Archive Foundation.”
+    </li>
+    <li>• You provide a full refund of any money paid by a user who notifies
+        you in writing (or by e-mail) within 30 days of receipt that s/he
+        does not agree to the terms of the full Project Gutenberg™
+        License. You must require such a user to return or destroy all
+        copies of the works possessed in a physical medium and discontinue
+        all use of and all access to other copies of Project Gutenberg™
+        works.
+    </li>
+    <li>• You provide, in accordance with paragraph 1.F.3, a full refund of
+        any money paid for a work or a replacement copy, if a defect in the
+        electronic work is discovered and reported to you within 90 days of
+        receipt of the work.
+    </li>
+    <li>• You comply with all other terms of this agreement for free
+        distribution of Project Gutenberg™ works.
+    </li>
+</ul><div>
+1.E.9. If you wish to charge a fee or distribute a Project
+Gutenberg™ electronic work or group of works on different terms than
+are set forth in this agreement, you must obtain permission in writing
+from the Project Gutenberg Literary Archive Foundation, the manager of
+the Project Gutenberg™ trademark. Contact the Foundation as set
+forth in Section 3 below.
+</div><div>
+1.F.
+</div><div>
+1.F.1. Project Gutenberg volunteers and employees expend considerable
+effort to identify, do copyright research on, transcribe and proofread
+works not protected by U.S. copyright law in creating the Project
+Gutenberg™ collection. Despite these efforts, Project Gutenberg™
+electronic works, and the medium on which they may be stored, may
+contain “Defects,” such as, but not limited to, incomplete, inaccurate
+or corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged disk or
+other medium, a computer virus, or computer codes that damage or
+cannot be read by your equipment.
+</div><div>
+1.F.2. LIMITED WARRANTY, DISCLAIMER OF DAMAGES - Except for the “Right
+of Replacement or Refund” described in paragraph 1.F.3, the Project
+Gutenberg Literary Archive Foundation, the owner of the Project
+Gutenberg™ trademark, and any other party distributing a Project
+Gutenberg™ electronic work under this agreement, disclaim all
+liability to you for damages, costs and expenses, including legal
+fees. YOU AGREE THAT YOU HAVE NO REMEDIES FOR NEGLIGENCE, STRICT
+LIABILITY, BREACH OF WARRANTY OR BREACH OF CONTRACT EXCEPT THOSE
+PROVIDED IN PARAGRAPH 1.F.3. YOU AGREE THAT THE FOUNDATION, THE
+TRADEMARK OWNER, AND ANY DISTRIBUTOR UNDER THIS AGREEMENT WILL NOT BE
+LIABLE TO YOU FOR ACTUAL, DIRECT, INDIRECT, CONSEQUENTIAL, PUNITIVE OR
+INCIDENTAL DAMAGES EVEN IF YOU GIVE NOTICE OF THE POSSIBILITY OF SUCH
+DAMAGE.
+</div><div>
+1.F.3. LIMITED RIGHT OF REPLACEMENT OR REFUND - If you discover a
+defect in this electronic work within 90 days of receiving it, you can
+receive a refund of the money (if any) you paid for it by sending a
+written explanation to the person you received the work from. If you
+received the work on a physical medium, you must return the medium
+with your written explanation. The person or entity that provided you
+with the defective work may elect to provide a replacement copy in
+lieu of a refund. If you received the work electronically, the person
+or entity providing it to you may choose to give you a second
+opportunity to receive the work electronically in lieu of a refund. If
+the second copy is also defective, you may demand a refund in writing
+without further opportunities to fix the problem.
+</div><div>
+1.F.4. Except for the limited right of replacement or refund set forth
+in paragraph 1.F.3, this work is provided to you ‘AS-IS’, WITH NO
+OTHER WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PURPOSE.
+</div><div>
+1.F.5. Some states do not allow disclaimers of certain implied
+warranties or the exclusion or limitation of certain types of
+damages. If any disclaimer or limitation set forth in this agreement
+violates the law of the state applicable to this agreement, the
+agreement shall be interpreted to make the maximum disclaimer or
+limitation permitted by the applicable state law. The invalidity or
+unenforceability of any provision of this agreement shall not void the
+remaining provisions.
+</div><div>
+1.F.6. INDEMNITY - You agree to indemnify and hold the Foundation, the
+trademark owner, any agent or employee of the Foundation, anyone
+providing copies of Project Gutenberg™ electronic works in
+accordance with this agreement, and any volunteers associated with the
+production, promotion and distribution of Project Gutenberg™
+electronic works, harmless from all liability, costs and expenses,
+including legal fees, that arise directly or indirectly from any of
+the following which you do or cause to occur: (a) distribution of this
+or any Project Gutenberg work, (b) alteration, modification, or
+additions or deletions to any Project Gutenberg work, and (c) any
+Defect you cause.
+</div><div class="secthead">
+Section 2. Information about the Mission of Project Gutenberg
+</div><div>
+Project Gutenberg is synonymous with the free distribution of
+electronic works in formats readable by the widest variety of
+computers including obsolete, old, middle-aged and new computers. It
+exists because of the efforts of hundreds of volunteers and donations
+from people in all walks of life.
+</div><div>
+Volunteers and financial support to provide volunteers with the
+assistance they need are critical to reaching Project Gutenberg’s
+goals and ensuring that the Project Gutenberg collection will
+remain freely available for generations to come. In 2001, the Project
+Gutenberg Literary Archive Foundation was created to provide a secure
+and permanent future for Project Gutenberg and future
+generations. To learn more about the Project Gutenberg Literary
+Archive Foundation and how your efforts and donations can help, see
+Sections 3 and 4 and the Foundation information page at www.gutenberg.org.
+</div><div class="secthead">
+Section 3. Information about the Project Gutenberg Literary Archive Foundation
+</div><div>
+The Project Gutenberg Literary Archive Foundation is a non-profit
+501(c)(3) educational corporation organized under the laws of the
+state of Mississippi and granted tax exempt status by the Internal
+Revenue Service. The Foundation’s EIN or federal tax identification
+number is 64-6221541. Contributions to the Project Gutenberg Literary
+Archive Foundation are tax deductible to the full extent permitted by
+U.S. federal laws and your state’s laws.
+</div><div>
+The Foundation’s business office is located at 41 Watchung Plaza #516,
+Montclair NJ 07042, USA, +1 (862) 621-9288. Email contact links and up
+to date contact information can be found at the Foundation’s website
+and official page at www.gutenberg.org/contact
+</div><div class="secthead">
+Section 4. Information about Donations to the Project Gutenberg
+Literary Archive Foundation
+</div><div>
+Project Gutenberg™ depends upon and cannot survive without widespread
+public support and donations to carry out its mission of
+increasing the number of public domain and licensed works that can be
+freely distributed in machine-readable form accessible by the widest
+array of equipment including outdated equipment. Many small donations
+($1 to $5,000) are particularly important to maintaining tax exempt
+status with the IRS.
+</div><div>
+The Foundation is committed to complying with the laws regulating
+charities and charitable donations in all 50 states of the United
+States. Compliance requirements are not uniform and it takes a
+considerable effort, much paperwork and many fees to meet and keep up
+with these requirements. We do not solicit donations in locations
+where we have not received written confirmation of compliance. To SEND
+DONATIONS or determine the status of compliance for any particular state
+visit <a href="https://www.gutenberg.org/donate/">www.gutenberg.org/donate</a>.
+</div><div>
+While we cannot and do not solicit contributions from states where we
+have not met the solicitation requirements, we know of no prohibition
+against accepting unsolicited donations from donors in such states who
+approach us with offers to donate.
+</div><div>
+International donations are gratefully accepted, but we cannot make
+any statements concerning tax treatment of donations received from
+outside the United States. U.S. laws alone swamp our small staff.
+</div><div>
+Please check the Project Gutenberg web pages for current donation
+methods and addresses. Donations are accepted in a number of other
+ways including checks, online payments and credit card donations. To
+donate, please visit: www.gutenberg.org/donate.
+</div><div class="secthead">
+Section 5. General Information About Project Gutenberg electronic works
+</div><div>
+Professor Michael S. Hart was the originator of the Project
+Gutenberg concept of a library of electronic works that could be
+freely shared with anyone. For forty years, he produced and
+distributed Project Gutenberg eBooks with only a loose network of
+volunteer support.
+</div><div>
+Project Gutenberg eBooks are often created from several printed
+editions, all of which are confirmed as not protected by copyright in
+the U.S. unless a copyright notice is included. Thus, we do not
+necessarily keep eBooks in compliance with any particular paper
+edition.
+</div><div>
+Most people start at our website which has the main PG search
+facility: <a href="https://www.gutenberg.org">www.gutenberg.org</a>.
+</div><div>
+This website includes information about Project Gutenberg,
+including how to make donations to the Project Gutenberg Literary
+Archive Foundation, how to help produce our new eBooks, and how to
+subscribe to our email newsletter to hear about new eBooks.
+</div>
+
+</footer></body>
+<!-- created with ppgen.py 3.56b on 2016-07-07 22:45:16 GMT -->
+</html>
