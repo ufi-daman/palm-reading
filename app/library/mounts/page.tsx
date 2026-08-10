@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { getMounts } from '@/lib/db/queries'
-
-export const dynamic = 'force-dynamic'
+import { getMounts } from '@/lib/content'
 
 const VALUE_LABELS: Record<string, string> = {
   small: 'Malý',
@@ -12,8 +10,8 @@ const VALUE_LABELS: Record<string, string> = {
   prominent: 'Pevný',
 }
 
-export default async function MountsPage() {
-  const mounts = await getMounts()
+export default function MountsPage() {
+  const mounts = getMounts()
 
   return (
     <div className="max-w-4xl mx-auto">

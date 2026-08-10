@@ -13,7 +13,7 @@ import {
   getInterpretations,
   getMounts,
   getPalmLines,
-} from '@/lib/db/queries'
+} from '@/lib/content'
 
 /** Váhy jednotlivých rovin podle schváleného návrhu. */
 const WEIGHTS = {
@@ -237,12 +237,12 @@ function buildHighlights(
 export async function analyze(
   input: Characteristics,
 ): Promise<AnalysisOutcome> {
-  const [lines, mounts, handTypes, interpretations] = await Promise.all([
-    getPalmLines(),
-    getMounts(),
-    getHandTypes(),
-    getInterpretations(),
-  ])
+  // Znalostní báze je synchronní typovaný kód (lib/content), await zde
+  // zůstává kvůli signatuře funkce — volající ji používá jako async.
+  const lines = getPalmLines()
+  const mounts = getMounts()
+  const handTypes = getHandTypes()
+  const interpretations = getInterpretations()
 
   const handType = handTypes.find((type) => type.name === input.handType)
 

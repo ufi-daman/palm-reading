@@ -49,9 +49,17 @@ export function validateCharacteristics(input: unknown): Characteristics {
 }
 
 export const AnalyzeRequestSchema = z.object({
-  inputType: z.enum(['image', 'text', 'interactive']),
-  imageUrl: z.string().optional(),
+  inputType: z.enum(['photo', 'text', 'interactive']),
   characteristics: CharacteristicsSchema,
+  // Metadata o původu znaků — fotka samotná se na server neposílá, jen
+  // počty pro statistiku úspěšnosti detekce (viz lib/db/stats.ts).
+  detection: z
+    .object({
+      linesDetected: z.number().int().min(0).default(0),
+      linesManual: z.number().int().min(0).default(0),
+      usedAi: z.boolean().default(false),
+    })
+    .optional(),
 })
 
 export type AnalyzeRequest = z.infer<typeof AnalyzeRequestSchema>

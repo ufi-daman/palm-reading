@@ -117,11 +117,12 @@ const STEPS = ['Typ ruky', 'Čáry', 'Pahorky', 'Doplňky', 'Souhrn'] as const
 export function AnalyzerWizard({
   variant,
   backgroundImage,
-  imageUrl,
+  hasPhoto,
 }: {
   variant: 'interactive' | 'text'
   backgroundImage?: string
-  imageUrl?: string
+  /** Fotka byla vstupem, ale samotný obrázek se na server neposílá. */
+  hasPhoto?: boolean
 }) {
   const [step, setStep] = useState(0)
   const [handType, setHandType] = useState<string>()
@@ -167,13 +168,19 @@ export function AnalyzerWizard({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          inputType: imageUrl ? 'image' : variant === 'text' ? 'text' : 'interactive',
-          imageUrl,
+          inputType: hasPhoto ? 'photo' : variant === 'text' ? 'text' : 'interactive',
           characteristics: {
             handType,
             palmLines: lines,
             mounts,
             additionalFeatures: additional,
+          },
+          // Detekce ještě není zapojena (přijde ve fázi 3) — zatím je
+          // vše ruční vyplnění, proto linesManual = počet vyplněných znaků.
+          detection: {
+            linesDetected: 0,
+            linesManual: filledLines + filledMounts,
+            usedAi: false,
           },
         }),
       })

@@ -1,10 +1,8 @@
 import Link from 'next/link'
-import { getPalmLines } from '@/lib/db/queries'
+import { getPalmLines } from '@/lib/content'
 
-export const dynamic = 'force-dynamic'
-
-export default async function LinesPage() {
-  const lines = await getPalmLines()
+export default function LinesPage() {
+  const lines = getPalmLines()
   const major = lines.filter((line) => line.type === 'major')
   const minor = lines.filter((line) => line.type === 'minor')
 

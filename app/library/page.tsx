@@ -1,14 +1,10 @@
 import Link from 'next/link'
-import { getHandTypes, getMounts, getPalmLines } from '@/lib/db/queries'
+import { getHandTypes, getMounts, getPalmLines } from '@/lib/content'
 
-export const dynamic = 'force-dynamic'
-
-export default async function LibraryHub() {
-  const [lines, mounts, handTypes] = await Promise.all([
-    getPalmLines(),
-    getMounts(),
-    getHandTypes(),
-  ])
+export default function LibraryHub() {
+  const lines = getPalmLines()
+  const mounts = getMounts()
+  const handTypes = getHandTypes()
 
   const sections = [
     {

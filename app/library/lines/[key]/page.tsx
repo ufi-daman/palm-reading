@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPalmLine } from '@/lib/db/queries'
+import { getPalmLine, getPalmLines } from '@/lib/content'
 
-export const dynamic = 'force-dynamic'
+export function generateStaticParams() {
+  return getPalmLines().map((line) => ({ key: line.key }))
+}
 
 const AXIS_TITLES: Record<string, string> = {
   strength: 'Podle výraznosti',
@@ -22,12 +24,12 @@ const VALUE_LABELS: Record<string, string> = {
   island: 'S ostrůvkem',
 }
 
-export default async function LineDetailPage({
+export default function LineDetailPage({
   params,
 }: {
   params: { key: string }
 }) {
-  const line = await getPalmLine(params.key)
+  const line = getPalmLine(params.key)
   if (!line) notFound()
 
   return (

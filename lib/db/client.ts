@@ -1,26 +1,18 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
-import path from 'path'
+import { PrismaPg } from '@prisma/adapter-pg'
 
-const globalForPrisma = global as unknown as { prisma?: PrismaClient }
+const globalForPrisma = global as unknown as { prisma?: PrismaClient | null }
 
 /**
- * SQLite cesty v DATABASE_URL jsou relativní ke kořeni projektu. Prisma CLI a
- * Next.js runtime ale běží z různých pracovních adresářů, takže relativní cestu
- * převádíme na absolutní — jinak vzniknou dvě různé databáze.
+ * Statistiky jsou volitelné — aplikace i bez DATABASE_URL musí normálně
+ * číst z dlaně. Bez proměnné vrátíme null a volající zápis tiše přeskočí
+ * (viz lib/db/stats.ts), místo aby appka spadla na chybějícím klientovi.
  */
-function resolveDatabaseUrl(): string {
-  const raw = process.env.DATABASE_URL ?? 'file:./prisma/dev.db'
-  if (!raw.startsWith('file:')) return raw
+function createPrismaClient(): PrismaClient | null {
+  const url = process.env.DATABASE_URL
+  if (!url) return null
 
-  const filePath = raw.slice('file:'.length)
-  if (path.isAbsolute(filePath)) return raw
-
-  return `file:${path.resolve(process.cwd(), filePath)}`
-}
-
-function createPrismaClient(): PrismaClient {
-  const adapter = new PrismaBetterSqlite3({ url: resolveDatabaseUrl() })
+  const adapter = new PrismaPg({ connectionString: url })
   return new PrismaClient({ adapter })
 }
 

@@ -1,7 +1,5 @@
 import Link from 'next/link'
-import { getHandTypes } from '@/lib/db/queries'
-
-export const dynamic = 'force-dynamic'
+import { getHandTypes } from '@/lib/content'
 
 const ICONS: Record<string, string> = {
   earth: '🌍',
@@ -11,8 +9,8 @@ const ICONS: Record<string, string> = {
   mixed: '🔀',
 }
 
-export default async function HandTypesPage() {
-  const handTypes = await getHandTypes()
+export default function HandTypesPage() {
+  const handTypes = getHandTypes()
 
   return (
     <div className="max-w-4xl mx-auto">

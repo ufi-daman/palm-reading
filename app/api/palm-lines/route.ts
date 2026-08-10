@@ -1,16 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getPalmLines } from '@/lib/db/queries'
-
-export const dynamic = 'force-dynamic'
+import { getPalmLines } from '@/lib/content'
 
 export async function GET() {
-  try {
-    return NextResponse.json(await getPalmLines())
-  } catch (error) {
-    console.error('Načtení čar selhalo:', error)
-    return NextResponse.json(
-      { error: 'Nepodařilo se načíst čáry dlaně.' },
-      { status: 500 },
-    )
-  }
+  return NextResponse.json(getPalmLines())
 }

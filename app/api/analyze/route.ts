@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server'
+import { randomUUID } from 'crypto'
 import { ZodError } from 'zod'
-import { prisma } from '@/lib/db/client'
 import { analyze } from '@/lib/analysis/palmReader'
 import { AnalyzeRequestSchema } from '@/lib/validators/characteristics'
-
-export const dynamic = 'force-dynamic'
+import { recordAnalysisStat } from '@/lib/db/stats'
 
 export async function POST(request: Request) {
   let payload: unknown
@@ -46,22 +45,19 @@ export async function POST(request: Request) {
   try {
     const outcome = await analyze(parsed.characteristics)
 
-    const analysis = await prisma.analysis.create({
-      data: {
-        inputType: parsed.inputType,
-        imageUrl: parsed.imageUrl ?? null,
-        characteristics: JSON.stringify(parsed.characteristics),
-        result: outcome.personality,
-        confidence: outcome.confidence,
-        alternatives: JSON.stringify(outcome.alternatives),
-      },
+    // Statistika je jen doplňková a nesmí zpomalit ani shodit odpověď.
+    void recordAnalysisStat({
+      inputType: parsed.inputType,
+      characteristics: parsed.characteristics,
+      confidence: outcome.confidence,
+      detection: parsed.detection,
     })
 
     return NextResponse.json({
-      analysisId: analysis.id,
+      analysisId: randomUUID(),
       inputType: parsed.inputType,
       ...outcome,
-      createdAt: analysis.createdAt,
+      createdAt: new Date().toISOString(),
     })
   } catch (error) {
     console.error('Analýza selhala:', error)
