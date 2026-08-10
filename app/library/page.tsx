@@ -70,6 +70,13 @@ export default function LibraryHub() {
           Otevřít průvodce
         </Link>
       </div>
+
+      <p className="mt-6 text-sm text-gray-600 text-center">
+        Odkud výklad vychází?{' '}
+        <Link href="/library/sources" className="text-palm-700 underline">
+          Prameny znalostní báze
+        </Link>
+      </p>
     </div>
   )
 }

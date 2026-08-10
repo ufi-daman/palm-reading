@@ -68,6 +68,13 @@ export default function HandTypesPage() {
                 </ul>
               </div>
             </div>
+
+            {type.source && type.source.length > 0 && (
+              <p className="text-xs text-palm-400 mt-4">
+                Zdroj:{' '}
+                {type.source.map((s) => `${s.work} (${s.year}) — ${s.locator}`).join('; ')}
+              </p>
+            )}
           </article>
         ))}
       </div>

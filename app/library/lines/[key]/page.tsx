@@ -70,6 +70,14 @@ export default function LineDetailPage({
                   <p className="text-gray-500 text-sm mt-1">
                     {meaning.personality}
                   </p>
+                  {meaning.source && meaning.source.length > 0 && (
+                    <p className="text-xs text-palm-400 mt-2">
+                      Zdroj:{' '}
+                      {meaning.source
+                        .map((s) => `${s.work} (${s.year}) — ${s.locator}`)
+                        .join('; ')}
+                    </p>
+                  )}
                 </div>
               ))}
             </div>
@@ -87,6 +95,14 @@ export default function LineDetailPage({
             <p className="text-gray-500 text-sm mt-1">
               {line.characteristics.absent.personality}
             </p>
+            {line.characteristics.absent.source && line.characteristics.absent.source.length > 0 && (
+              <p className="text-xs text-palm-400 mt-2">
+                Zdroj:{' '}
+                {line.characteristics.absent.source
+                  .map((s) => `${s.work} (${s.year}) — ${s.locator}`)
+                  .join('; ')}
+              </p>
+            )}
           </div>
         </section>
       )}

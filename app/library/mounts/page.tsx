@@ -52,6 +52,15 @@ export default function MountsPage() {
                 ),
               )}
             </div>
+
+            {mount.meanings?.size?.large?.source && mount.meanings.size.large.source.length > 0 && (
+              <p className="text-xs text-palm-400 mt-4">
+                Zdroj:{' '}
+                {mount.meanings.size.large.source
+                  .map((s) => `${s.work} (${s.year}) — ${s.locator}`)
+                  .join('; ')}
+              </p>
+            )}
           </article>
         ))}
       </div>
