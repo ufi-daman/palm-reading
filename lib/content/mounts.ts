@@ -1,6 +1,15 @@
 import type { MountContent } from './types'
+import { cheiro } from './sources'
 
-/** Osm pahorků dlaně včetně obou Marsových, které v prvním seedu chyběly. */
+/**
+ * Osm pahorků dlaně (oba Marsovy zvlášť). Zdroj: Cheiro, Palmistry for All
+ * (1916), kapitola "The Mounts of the Hand and their Meaning" — vytěženo a
+ * přeformulováno vlastními slovy, viz `source` u každého významu.
+ *
+ * Cheiro spojuje pahorky i s daty narození (astrologické "positive/negative"
+ * dělení) — tuhle vrstvu vynechávám, aplikace datum narození nesbírá a
+ * nebyla by čitelná ze samotné dlaně, o kterou tu jde.
+ */
 export const MOUNTS: MountContent[] = [
   {
     key: 'venus',
@@ -8,34 +17,40 @@ export const MOUNTS: MountContent[] = [
     nameEn: 'Mount of Venus',
     location: 'Vyvýšenina u kořene palce, ohraničená čárou života',
     description:
-      'Souvisí s životní energií, vřelostí, smyslností a schopností těšit se ze života.',
+      'Cheiro ho spojuje s touhou po lásce a společnosti, se smyslem pro krásu a s uměleckým, citovým temperamentem — vysoký pahorek kryje důležitou tepnu dlaně, proto ho spojuje i s celkovou vitalitou.',
     meanings: {
       size: {
         small: {
-          meaning: 'Zdrženlivější projev vřelosti.',
-          personality: 'Blízkost dávkujete a potřebujete svůj prostor.',
+          meaning: 'Plochý nebo málo vyvinutý pahorek — city podle Cheira spíš duševní než tělesné povahy.',
+          personality: 'Vaše náklonnost je hlubší, než na první pohled ukazujete — méně sázíte na smyslové gesto.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
         medium: {
-          meaning: 'Vyvážená vřelost a chuť do života.',
-          personality: 'Umíte si užít společnost i klid o samotě.',
+          meaning: 'Dobře tvarovaný, ale ne příliš velký pahorek — u Cheira výborné znamení touhy po lásce a kráse bez přehnané smyslnosti.',
+          personality: 'Umíte si užít blízkost i krásu kolem sebe, aniž by vás to ovládalo.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
         large: {
-          meaning: 'Silná životní energie a přirozená přitažlivost.',
-          personality: 'Lidé se u vás rádi zdrží — vyzařujete teplo.',
+          meaning: 'Výrazně vyvinutý pahorek — silná cirkulace, vitalita a podle Cheira i výraznější smyslová přitažlivost.',
+          personality: 'Vyzařujete vitalitu a přitažlivost, kterou lidé kolem vás vnímají.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Energie spíš na útlumu.',
-          personality: 'Potřebujete víc regenerace, než si přiznáváte.',
+          meaning: 'Plochý, málo pružný pahorek.',
+          personality: 'Vaše energie je spíš klidová — regeneraci berete vážně.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
         normal: {
-          meaning: 'Stabilní tělesná i citová energie.',
-          personality: 'Držíte se v rovnováze.',
+          meaning: 'Vyvážená pevnost a tvar.',
+          personality: 'Držíte stabilní vitalitu bez výkyvů.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
         prominent: {
-          meaning: 'Výrazná vitalita a smyslnost.',
-          personality: 'Žijete naplno a je to na vás vidět.',
+          meaning: 'Pevný, výrazně vystupující pahorek — podle Cheira dominantní vitalita a pohostinnost, ale i sklon k žárlivosti, když jsou city zasaženy.',
+          personality: 'Jste velkorysí a pohostinní, ale když se dotknou vašich citů, reagujete intenzivně.',
+          source: [cheiro('The Mount of Venus and its Meaning')],
         },
       },
     },
@@ -44,35 +59,43 @@ export const MOUNTS: MountContent[] = [
     key: 'jupiter',
     nameCs: 'Pahorek Jupitera',
     nameEn: 'Mount of Jupiter',
-    location: 'Pod ukazovákem',
-    description: 'Souvisí s ctižádostí, sebedůvěrou a přirozenou autoritou.',
+    location: 'Vyvýšenina u kořene ukazováku',
+    description:
+      'Cheiro ho spojuje s touhou vést, organizovat a řídit — na dobré dlani (s jasnou čárou hlavy) nejlepší možné znamení úspěchu z vlastní síly charakteru.',
     meanings: {
       size: {
         small: {
-          meaning: 'Skromnější ctižádost.',
-          personality: 'Nepotřebujete být vidět, stačí vám dobře odvedená práce.',
+          meaning: 'Málo vyvinutý pahorek — menší potřeba vést nebo být středem dění.',
+          personality: 'Vedení přenecháváte raději druhým, spokojíte se s méně viditelnou rolí.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
         medium: {
-          meaning: 'Zdravá míra ctižádosti.',
-          personality: 'Cíle si stavíte přiměřeně a plníte je.',
+          meaning: 'Zřetelně, ale ne přehnaně vyvinutý pahorek.',
+          personality: 'Máte přirozenou autoritu, aniž byste ji museli okázale prosazovat.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
         large: {
-          meaning: 'Silná ctižádost a vůdčí sklon.',
-          personality: 'Přirozeně přebíráte odpovědnost za skupinu.',
+          meaning:
+            'Velký pahorek — touha dominovat, vést a organizovat; se slabou čárou hlavy podle Cheira spíš pýcha a domýšlivost, se silnou nejlepší znamení úspěchu z charakteru.',
+          personality: 'Máte silnou ambici vést a rozhodovat — do jaké míry vám to slouží, záleží na tom, jak jasně myslíte.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Sebedůvěra kolísá.',
-          personality: 'Své schopnosti podceňujete častěji, než by bylo namístě.',
+          meaning: 'Plochý pahorek.',
+          personality: 'Ambice u vás není hnacím motorem — spokojenost hledáte jinde.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
         normal: {
-          meaning: 'Vyrovnaná sebedůvěra.',
-          personality: 'Znáte svou cenu a nemusíte ji dokazovat.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Vaše ambice je zdravá a přiměřená.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
         prominent: {
-          meaning: 'Výrazná autorita a rozhodnost.',
-          personality: 'Ve skupině se k vám lidé obracejí pro rozhodnutí.',
+          meaning: 'Pevný, výrazný pahorek — Cheiro spojuje s poctivostí, přímočarostí a nesnášenlivostí k podvádění, ale i se sklonem přehánět to do extrémů.',
+          personality: 'Jste přímočaří a čestní až do morku kosti — a nesnesete, když to tak druzí nejsou.',
+          source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
       },
     },
@@ -81,35 +104,42 @@ export const MOUNTS: MountContent[] = [
     key: 'saturn',
     nameCs: 'Pahorek Saturna',
     nameEn: 'Mount of Saturn',
-    location: 'Pod prostředníkem',
-    description: 'Souvisí s odpovědností, rozvahou, kázní a vážností.',
+    location: 'Vyvýšenina u kořene prostředníku',
+    description:
+      'Cheiro ho spojuje s láskou k samotě, opatrností, klidnou rozhodností a sklonem k vážným, přemítavým tématům. Úplná absence podle něj ukazuje lehkovážnější pohled na život.',
     meanings: {
       size: {
         small: {
-          meaning: 'Volnější vztah k závazkům.',
-          personality: 'Nesvazujete se víc, než musíte.',
+          meaning: 'Málo vyvinutý pahorek — lehčí, méně introspektivní pohled na věci.',
+          personality: 'Váš přístup k životu je odlehčenější — nezatěžujete se přemítáním nad každou volbou.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
         medium: {
-          meaning: 'Zdravá odpovědnost.',
-          personality: 'Na co kývnete, to dotáhnete.',
+          meaning: 'Zřetelně vyvinutý pahorek bez přehánění.',
+          personality: 'Máte zdravou dávku opatrnosti a vážnosti, aniž by vás ovládala.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
         large: {
-          meaning: 'Silný smysl pro povinnost.',
-          personality: 'Beřete věci vážně, někdy až příliš.',
+          meaning: 'Výrazně vyvinutý pahorek — silná vůle, ale i sklon k pocitu osamělosti a k tomu nechat se vést fatalismem.',
+          personality: 'Jste nezávislí a hluboce přemýšliví — jen si hlídejte, aby vás to neizolovalo od druhých.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Kázeň spíš podle nálady.',
-          personality: 'Fungujete líp v pružném režimu než v pevném řádu.',
+          meaning: 'Plochý pahorek — podle Cheira lehkovážnější pohled na život.',
+          personality: 'Život berete odlehčeně — nehledáte za vším hlubší smysl.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
         normal: {
-          meaning: 'Vyrovnaná sebekázeň.',
-          personality: 'Řád si umíte nastavit sami.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Vaše vážnost a smysl pro odpovědnost jsou přiměřené.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
         prominent: {
-          meaning: 'Výrazná kázeň a vytrvalost.',
-          personality: 'Dokážete jít za cílem i bez vnější motivace.',
+          meaning: 'Pevný, výrazný pahorek — hluboká oddanost tomu, čemu věříte, ale i sklon k zasmušilosti a přehnané izolaci.',
+          personality: 'Pro to, čemu věříte, uděláte téměř cokoliv — jen nezapomeňte, že blízkost s druhými vám neubírá na síle.',
+          source: [cheiro('The Mount of Saturn and its Meaning')],
         },
       },
     },
@@ -117,36 +147,43 @@ export const MOUNTS: MountContent[] = [
   {
     key: 'apollo',
     nameCs: 'Pahorek Apollóna',
-    nameEn: 'Mount of Apollo',
-    location: 'Pod prsteníkem',
-    description: 'Souvisí s tvořivostí, vkusem, radostí a sebevyjádřením.',
+    nameEn: 'Mount of the Sun (Apollo)',
+    location: 'Vyvýšenina u kořene prsteníku',
+    description:
+      'Cheiro: „vždy dobrý pahorek, mít ho velký" — touha zazářit, smysl pro krásu, širokorysá a slunná povaha. Řekové mu dávali i jméno Apollónův.',
     meanings: {
       size: {
         small: {
-          meaning: 'Tvořivost v skrytu.',
-          personality: 'Tvoříte pro sebe a nepotřebujete potlesk.',
+          meaning: 'Málo vyvinutý pahorek — menší potřeba veřejného uznání.',
+          personality: 'Uznání okolí pro vás není hnacím motorem — spokojenost hledáte jinde.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
         medium: {
-          meaning: 'Zdravý tvůrčí projev.',
-          personality: 'Máte cit pro formu a děláte věci pěkně.',
+          meaning: 'Zřetelně vyvinutý pahorek.',
+          personality: 'Máte cit pro krásu a širokorysost, aniž byste to museli okázale předvádět.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
         large: {
-          meaning: 'Silný talent a chuť ho ukazovat.',
-          personality: 'Baví vás tvořit a sdílet výsledek.',
+          meaning: 'Velký pahorek — touha zářit, smysl pro krásu ve všem, širokorysost a štědrost, slunná, silná osobnost.',
+          personality: 'Máte přirozenou zářivost a velkorysost — lidé se k vám stahují.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Tvůrčí energie na útlumu.',
-          personality: 'Potřebujete podnět zvenčí, abyste se rozjeli.',
+          meaning: 'Plochý pahorek.',
+          personality: 'Veřejná pozornost vás moc neláká — dáváte přednost soukromí.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
         normal: {
-          meaning: 'Stabilní tvořivost.',
-          personality: 'Nápady přicházejí pravidelně.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Máte přiměřenou míru sebevědomí a smyslu pro estetiku.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
         prominent: {
-          meaning: 'Výrazná tvůrčí síla.',
-          personality: 'Tvoření je pro vás způsob, jak přemýšlet.',
+          meaning: 'Pevný, výrazný pahorek — intenzivní city v obou směrech, hrdost a citlivost na křivdu, ale i sklon k melancholii, když se zklamou v druhých.',
+          personality: 'Milujete i odmítáte naplno — žádná polovičatost. Zraňuje vás, když se ve druhých zklamete.',
+          source: [cheiro('The Mount of the Sun and its Meaning')],
         },
       },
     },
@@ -155,36 +192,43 @@ export const MOUNTS: MountContent[] = [
     key: 'mercury',
     nameCs: 'Pahorek Merkura',
     nameEn: 'Mount of Mercury',
-    location: 'Pod malíčkem',
+    location: 'Vyvýšenina u kořene malíku',
     description:
-      'Souvisí s obratností v jednání, komunikací, obchodním citem a pohotovostí.',
+      'Cheiro ho spojuje hlavně s myslí — rychlostí úsudku, výřečností a schopností přizpůsobit se vědě i obchodu. Na dobré dlani prospěšný, na dlani se špatnými znaky zesiluje i jejich stinné stránky.',
     meanings: {
       size: {
         small: {
-          meaning: 'Zdrženlivost v jednání.',
-          personality: 'Raději posloucháte, než mluvíte.',
+          meaning: 'Málo vyvinutý pahorek — pomalejší, rozvážnější myšlení.',
+          personality: 'Přemýšlíte pomaleji, ale důkladněji — rychlost pro vás není prioritou.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
         medium: {
-          meaning: 'Dobrá schopnost domluvy.',
-          personality: 'Umíte najít společnou řeč.',
+          meaning: 'Zřetelně vyvinutý pahorek.',
+          personality: 'Máte bystrou mysl a přirozenou výřečnost, kterou umíte použít, kdy je potřeba.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
         large: {
-          meaning: 'Výrazný dar řeči a obchodní cit.',
-          personality: 'V jednání jste ve svém živlu.',
+          meaning:
+            'Velký pahorek — rychlost myšlení, vtip, výřečnost, přizpůsobivost vědě i obchodu; se slabou čárou hlavy podle Cheira riziko roztěkanosti a nespolehlivosti.',
+          personality: 'Vaše mysl je rychlá a přizpůsobivá — ideální pro obchod, vědu i komunikaci s lidmi.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Pohotovost kolísá.',
-          personality: 'Nejlepší odpověď vás napadne až po rozhovoru.',
+          meaning: 'Plochý pahorek.',
+          personality: 'Komunikace a rychlé reagování nejsou vaše silná stránka — spíš promýšlíte věci do hloubky.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
         normal: {
-          meaning: 'Vyrovnaná pohotovost.',
-          personality: 'V debatě obstojíte.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Vaše myšlení je pružné a přiměřeně rychlé.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
         prominent: {
-          meaning: 'Vysoká pohotovost a přesvědčivost.',
-          personality: 'Reagujete rychle a trefně.',
+          meaning: 'Pevný, výrazný pahorek — silná adaptabilita a bystrost, ale u afligovaných znaků i sklon k trikům a nervozitě.',
+          personality: 'Umíte se rychle přizpůsobit novým situacím a lidem — dávejte pozor, aby vás rychlost nesvedla ke zkratkám.',
+          source: [cheiro('The Mount of Mercury and its Meaning')],
         },
       },
     },
@@ -192,37 +236,43 @@ export const MOUNTS: MountContent[] = [
   {
     key: 'luna',
     nameCs: 'Pahorek Luny',
-    nameEn: 'Mount of Luna',
-    location: 'Spodní vnější část dlaně naproti palci',
+    nameEn: 'Mount of the Moon (Luna)',
+    location: 'Vyvýšenina na vnější hraně dlaně u zápěstí',
     description:
-      'Souvisí s představivostí, vnímavostí, sny a vnitřním světem.',
+      'Cheiro ho spojuje s představivostí, romantikou, ideály a touhou po změně a cestování — vyvinutý pahorek Luny je u něj častý u vynálezců, umělců a lidí s mimořádně živou fantazií.',
     meanings: {
       size: {
         small: {
-          meaning: 'Věcný, prakticky založený pohled.',
-          personality: 'Držíte se toho, co je vidět a ověřitelné.',
+          meaning: 'Plochý pahorek — praktičtější, méně snivá povaha.',
+          personality: 'Držíte se pevně na zemi — fantazie u vás ustupuje praktickému uvažování.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
         medium: {
-          meaning: 'Vyvážená představivost.',
-          personality: 'Umíte snít, aniž byste ztratili půdu pod nohama.',
+          meaning: 'Zřetelně vyvinutý pahorek.',
+          personality: 'Máte živou představivost, kterou umíte propojit s praktickým uvažováním.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
         large: {
-          meaning: 'Bohatá představivost a vnitřní svět.',
-          personality: 'Váš vnitřní život je stejně živý jako ten vnější.',
+          meaning: 'Vysoký, dobře vyvinutý pahorek — silná představivost, vynalézavost, touha po změně a cestování, časté u vynálezců a umělců.',
+          personality: 'Vaše představivost je vaší hnací silou — táhne vás to k novému, neobvyklému a k cestování.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Fantazie spíš v pozadí.',
-          personality: 'Přemýšlíte v konkrétních věcech.',
+          meaning: 'Plochý pahorek — Cheiro ho spojuje s klidnějším, méně rozkolísaným založením.',
+          personality: 'Vaše rozpoložení je stabilnější — méně podléháte výkyvům nálad.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
         normal: {
-          meaning: 'Stabilní vnímavost.',
-          personality: 'Máte cit pro atmosféru.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Kombinujete fantazii s dostatečnou stabilitou.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
         prominent: {
-          meaning: 'Silná intuice a tvořivá představivost.',
-          personality: 'Nápady k vám přicházejí obrazy, ne větami.',
+          meaning: 'Výrazně vyvinutý pahorek — mimořádná citlivost na okolí a náladovost, ale i inventivnost a schopnost překonávat nezdary.',
+          personality: 'Jste citliví na atmosféru kolem sebe víc, než si možná uvědomujete — a přesto se po pádu rychle zvednete.',
+          source: [cheiro('The Mount of the Moon and its Meaning')],
         },
       },
     },
@@ -231,36 +281,42 @@ export const MOUNTS: MountContent[] = [
     key: 'marsLower',
     nameCs: 'Dolní pahorek Marsu',
     nameEn: 'Lower Mount of Mars',
-    location: 'Mezi palcem a čárou života, nad pahorkem Venuše',
+    location: 'Mezi palcem a začátkem čáry života',
     description:
-      'Souvisí s aktivní odvahou, průbojností a schopností postavit se za sebe.',
+      'Cheiro ho nazývá „pozitivní" Mars — tělesná odvaha, bojovnost a schopnost vést. Leží při horní části čáry života.',
     meanings: {
       size: {
         small: {
-          meaning: 'Konflikty raději obcházíte.',
-          personality: 'Hledáte řešení dohodou, ne silou.',
+          meaning: 'Málo vyvinutý pahorek — menší sklon k přímé konfrontaci.',
+          personality: 'Konfliktům se raději vyhýbáte, než abyste do nich šli po hlavě.',
+          source: [cheiro('The First Mount of Mars')],
         },
         medium: {
-          meaning: 'Zdravá průbojnost.',
-          personality: 'Ozvete se, když je potřeba, ale nevyhledáváte střet.',
+          meaning: 'Zřetelně vyvinutý pahorek.',
+          personality: 'Máte odvahu postavit se za to, na čem vám záleží, aniž byste hledali konflikt.',
+          source: [cheiro('The First Mount of Mars')],
         },
         large: {
-          meaning: 'Výrazná odvaha a bojovnost.',
-          personality: 'Do střetu jdete přímo a bez okolků.',
+          meaning: 'Výrazně vyvinutý pahorek — bojovná povaha, silná potřeba vést a nesnášenlivost vůči zasahování do vlastních plánů.',
+          personality: 'Jste přirození bojovníci — jdete si za svým a špatně snášíte, když vám do toho někdo mluví.',
+          source: [cheiro('The First Mount of Mars')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Průbojnost na útlumu.',
-          personality: 'Své zájmy prosazujete až po delším váhání.',
+          meaning: 'Plochý pahorek.',
+          personality: 'Vaše energie je klidnější, míň konfrontační.',
+          source: [cheiro('The First Mount of Mars')],
         },
         normal: {
-          meaning: 'Vyrovnaná asertivita.',
-          personality: 'Hranice si umíte nastavit.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Umíte se prosadit, aniž byste zbytečně vyostřovali situace.',
+          source: [cheiro('The First Mount of Mars')],
         },
         prominent: {
-          meaning: 'Silná aktivní odvaha.',
-          personality: 'Když jde o věc, jdete do ní naplno.',
+          meaning: 'Pevný, výrazný pahorek — prudká, ale rychle odeznívající povaha; velkorysost a odvaha ve spojení s impulzivitou.',
+          personality: 'Váš temperament je prudký, ale spravedlivý — bouře rychle přejde a vy litujete, co jste v ní řekli.',
+          source: [cheiro('The First Mount of Mars')],
         },
       },
     },
@@ -269,36 +325,42 @@ export const MOUNTS: MountContent[] = [
     key: 'marsUpper',
     nameCs: 'Horní pahorek Marsu',
     nameEn: 'Upper Mount of Mars',
-    location: 'Na vnější hraně dlaně mezi čárou srdce a pahorkem Luny',
+    location: 'Mezi čárou srdce a čárou hlavy, na vnější hraně dlaně',
     description:
-      'Souvisí s pasivní odvahou — výdrží, odolností a schopností vydržet tlak.',
+      'Cheiro ho nazývá „negativní" nebo mentální Mars — stejné bojovné vlastnosti jako dolní Mars, ale přenesené do mysli: vytrvalost, taktika a mentální odvaha místo fyzické.',
     meanings: {
       size: {
         small: {
-          meaning: 'Menší odolnost vůči dlouhodobému tlaku.',
-          personality: 'Potřebujete přestávky, jinak se vyčerpáte.',
+          meaning: 'Málo vyvinutý pahorek — menší sklon k mentálnímu „boji" v diskusi.',
+          personality: 'Debatám a prosazování názorů silou argumentu dáváte přednost před vyhrocováním.',
+          source: [cheiro('The Second Mount of Mars')],
         },
         medium: {
-          meaning: 'Zdravá odolnost.',
-          personality: 'Nápor vydržíte a pak se srovnáte.',
+          meaning: 'Zřetelně vyvinutý pahorek.',
+          personality: 'V diskusi umíte argumentovat vytrvale, aniž byste museli zvyšovat hlas.',
+          source: [cheiro('The Second Mount of Mars')],
         },
         large: {
-          meaning: 'Vysoká odolnost a trpělivost.',
-          personality: 'V krizi jste ten, kdo zůstane klidný.',
+          meaning: 'Výrazně vyvinutý pahorek — mentální vytrvalost, taktické myšlení, výborní organizátoři a stratégové.',
+          personality: 'Vaše síla je v hlavě, ne v hlasitosti — myslíte v tazích dopředu a málokdy vás něco zaskočí.',
+          source: [cheiro('The Second Mount of Mars')],
         },
       },
       strength: {
         weak: {
-          meaning: 'Snadnější vyčerpání.',
-          personality: 'Dlouhý tlak vás dostane dřív než prudký náraz.',
+          meaning: 'Plochý pahorek.',
+          personality: 'Vaše přístup ke konfliktu je smířlivější, míň strategický.',
+          source: [cheiro('The Second Mount of Mars')],
         },
         normal: {
-          meaning: 'Stabilní výdrž.',
-          personality: 'Umíte vydržet, dokud to má smysl.',
+          meaning: 'Vyvážená pevnost.',
+          personality: 'Máte zdravou dávku vytrvalosti v prosazování svých názorů.',
+          source: [cheiro('The Second Mount of Mars')],
         },
         prominent: {
-          meaning: 'Mimořádná houževnatost.',
-          personality: 'Vzdát se pro vás není první možnost.',
+          meaning: 'Pevný, výrazný pahorek — silný magnetismus a schopnost přesvědčit druhé, ale i sklon k skryté tvrdohlavosti.',
+          personality: 'Máte přirozenou přesvědčivost — jen si hlídejte, aby se z trpělivosti nestala tichá tvrdohlavost.',
+          source: [cheiro('The Second Mount of Mars')],
         },
       },
     },

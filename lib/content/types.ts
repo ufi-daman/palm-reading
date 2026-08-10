@@ -32,10 +32,36 @@ export type MountKey =
   | 'marsLower'
   | 'marsUpper'
 
-/** Jeden význam: co daný znak znamená a co říká o osobnosti. */
+/** Odkaz na pramen, ze kterého tvrzení vychází. */
+export interface Source {
+  work: string
+  year: number
+  /** Kapitola nebo oddíl, kde se tvrzení nachází — ne číslo strany (OCR/HTML zdroje ho nedávají spolehlivě). */
+  locator: string
+}
+
+/**
+ * Jeden význam: co daný znak znamená a co říká o osobnosti, se zdrojem.
+ * Když se prameny rozcházejí, `meaning`/`personality` to řeknou výslovně
+ * (např. "Podle Cheira X, Benham ale tentýž rys čte jako Y") a `source`
+ * uvede všechny prameny, které se k tvrzení vyjadřují — ne jen ten, se
+ * kterým souhlasím.
+ */
 export interface Meaning {
   meaning: string
   personality: string
+  source: Source[]
+}
+
+/**
+ * "Čára chybí" není tvrzení konkrétního pramene, ale schématem vyžadovaný
+ * fallback — zdroj je proto nepovinný (u některých čar ho Cheiro výslovně
+ * řeší, u jiných jde o rozumné doplnění mezery ve schématu).
+ */
+export interface AbsentMeaning {
+  meaning: string
+  personality: string
+  source?: Source[]
 }
 
 /**
@@ -46,7 +72,7 @@ export interface LineCharacteristics {
   strength: Record<LineStrength, Meaning>
   length: Record<LineLength, Meaning>
   quality: Record<LineQuality, Meaning>
-  absent: Meaning
+  absent: AbsentMeaning
 }
 
 export interface MountMeanings {

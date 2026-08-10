@@ -16,3 +16,7 @@ next-env.d.ts
 # User uploads
 /public/uploads/*
 !/public/uploads/.gitkeep
+
+# OCR/extraction scratch cache (fáze 4) — mezivýsledky, ne výstup
+/.ocr-cache/
+tsconfig.tsbuildinfo
