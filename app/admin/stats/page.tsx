@@ -48,17 +48,30 @@ export default async function AdminStatsPage() {
     )
   }
 
-  const [total, byHandType, byInputType, aiCount, recent] = await Promise.all([
-    prisma.analysisStat.count(),
-    prisma.analysisStat.groupBy({ by: ['handType'], _count: true }),
-    prisma.analysisStat.groupBy({ by: ['inputType'], _count: true }),
-    prisma.analysisStat.count({ where: { usedAi: true } }),
-    prisma.analysisStat.findMany({
-      select: { detectionDetail: true, linesDetected: true, linesManual: true },
-      orderBy: { createdAt: 'desc' },
-      take: 500,
-    }),
-  ])
+  let total, byHandType, byInputType, aiCount, recent
+  try {
+    ;[total, byHandType, byInputType, aiCount, recent] = await Promise.all([
+      prisma.analysisStat.count(),
+      prisma.analysisStat.groupBy({ by: ['handType'], _count: true }),
+      prisma.analysisStat.groupBy({ by: ['inputType'], _count: true }),
+      prisma.analysisStat.count({ where: { usedAi: true } }),
+      prisma.analysisStat.findMany({
+        select: { detectionDetail: true, linesDetected: true, linesManual: true },
+        orderBy: { createdAt: 'desc' },
+        take: 500,
+      }),
+    ])
+  } catch {
+    return (
+      <div className="max-w-3xl mx-auto py-16 px-4">
+        <h1 className="text-2xl font-bold mb-4">Statistiky jsou dočasně nedostupné</h1>
+        <p className="text-gray-600">
+          Databázi se nepodařilo kontaktovat. Aplikace jinak funguje normálně
+          — statistika je jen doplňková. Zkuste stránku načíst znovu za chvíli.
+        </p>
+      </div>
+    )
+  }
 
   const detectionStats = aggregateDetection(recent)
   const totalDetected = recent.reduce((sum, r) => sum + r.linesDetected, 0)
@@ -102,26 +115,28 @@ export default async function AdminStatsPage() {
             Zatím žádná data — detekce ještě neběžela nebo neukládá podrobnosti.
           </p>
         ) : (
-          <table className="w-full text-sm bg-white rounded-lg border border-palm-200 overflow-hidden">
-            <thead className="bg-palm-50 text-left">
-              <tr>
-                <th className="px-4 py-2">Znak</th>
-                <th className="px-4 py-2">Nalezeno</th>
-                <th className="px-4 py-2">Celkem pokusů</th>
-                <th className="px-4 py-2">Úspěšnost</th>
-              </tr>
-            </thead>
-            <tbody>
-              {detectionStats.map((row) => (
-                <tr key={row.key} className="border-t border-palm-100">
-                  <td className="px-4 py-2 font-medium">{row.key}</td>
-                  <td className="px-4 py-2">{row.found}</td>
-                  <td className="px-4 py-2">{row.total}</td>
-                  <td className="px-4 py-2">{Math.round(row.rate * 100)} %</td>
+          <div className="overflow-x-auto rounded-lg border border-palm-200">
+            <table className="w-full text-sm bg-white overflow-hidden">
+              <thead className="bg-palm-50 text-left">
+                <tr>
+                  <th className="px-4 py-2">Znak</th>
+                  <th className="px-4 py-2">Nalezeno</th>
+                  <th className="px-4 py-2">Celkem pokusů</th>
+                  <th className="px-4 py-2">Úspěšnost</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {detectionStats.map((row) => (
+                  <tr key={row.key} className="border-t border-palm-100">
+                    <td className="px-4 py-2 font-medium whitespace-nowrap">{row.key}</td>
+                    <td className="px-4 py-2">{row.found}</td>
+                    <td className="px-4 py-2">{row.total}</td>
+                    <td className="px-4 py-2">{Math.round(row.rate * 100)} %</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
 
