@@ -19,13 +19,6 @@ export interface AnalysisResult {
   alternatives: { personality: string; confidence: number }[]
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  handType: 'Typ ruky',
-  line: 'Čára',
-  mount: 'Pahorek',
-  additional: 'Doplňující znak',
-}
-
 export function ResultCard({ result }: { result: AnalysisResult }) {
   const confidencePercent = Math.round(result.confidence * 100)
 
@@ -92,14 +85,27 @@ export function ResultCard({ result }: { result: AnalysisResult }) {
                   className="border-l-4 border-palm-300 pl-4 py-1"
                 >
                   <p className="text-sm font-semibold text-palm-800">
-                    {CATEGORY_LABELS[item.category] ?? item.category} · {item.label}
+                    {item.label}
+                    {item.detail && (
+                      <span className="font-normal text-palm-600">
+                        {' '}
+                        · {item.detail}
+                      </span>
+                    )}
                   </p>
-                  {/* `meaning` popisuje samotný znak, `personality` říká, co
-                      z něj plyne pro čtenáře. Zobrazovat jen to první je
-                      k ničemu — je to encyklopedický údaj místo výkladu. */}
-                  <p className="text-gray-600 text-sm">{item.meaning}</p>
-                  {item.personality && item.personality !== item.meaning && (
-                    <p className="text-gray-800 mt-1">{item.personality}</p>
+                  {/* Pořadí není kosmetika: `personality` říká, co znak
+                      znamená pro čtenáře, `meaning` jen popisuje jeho tvar.
+                      Popis jako první četl uživatel právem jako „obecný
+                      poznatek o čáře, nikoliv význam zjištění" — proto vede
+                      výklad a popis je až podklad pod ním. */}
+                  {item.personality && (
+                    <p className="text-gray-800">{item.personality}</p>
+                  )}
+                  {item.meaning && item.meaning !== item.personality && (
+                    <p className="text-gray-500 text-sm mt-1">
+                      <span className="text-palm-500">Proč: </span>
+                      {item.meaning}
+                    </p>
                   )}
                 </li>
               ))}

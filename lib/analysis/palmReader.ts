@@ -29,9 +29,70 @@ const MAX_MATCH_SCORE = WEIGHTS.lines + WEIGHTS.handType + WEIGHTS.mounts
 export interface Highlight {
   category: 'handType' | 'line' | 'mount' | 'additional'
   label: string
+  /** Čitelný popis nalezené varianty, např. „síla — výrazná". */
   detail: string
   meaning: string
   personality: string
+}
+
+/**
+ * Osy a hodnoty vstupují do výsledku jako anglické klíče (`strength`,
+ * `medium`). Uživateli se ale ukazuje, co konkrétně jsme na dlani našli —
+ * tak to musí být čitelné česky. Čáry a pahorky mají vlastní sady, protože
+ * „čára" je rodu ženského a „pahorek" mužského.
+ */
+const LINE_AXIS_LABELS: Record<string, string> = {
+  strength: 'síla',
+  length: 'délka',
+  quality: 'kvalita',
+}
+
+const LINE_VALUE_LABELS: Record<string, string> = {
+  weak: 'slabá',
+  medium: 'střední',
+  strong: 'výrazná',
+  short: 'krátká',
+  long: 'dlouhá',
+  clear: 'souvislá',
+  broken: 'přerušená',
+  chained: 'řetízkovitá',
+  island: 's ostrůvkem',
+}
+
+const MOUNT_AXIS_LABELS: Record<string, string> = {
+  size: 'velikost',
+  strength: 'výraznost',
+}
+
+const MOUNT_VALUE_LABELS: Record<string, string> = {
+  small: 'malý',
+  medium: 'střední',
+  large: 'velký',
+  weak: 'slabý',
+  normal: 'normální',
+  prominent: 'výrazný',
+}
+
+/** Hodnoty chirognomických os (délka prstů, nehty, barva, kůže). */
+const CHIROGNOMY_VALUE_LABELS: Record<string, string> = {
+  short: 'krátké',
+  normal: 'normální',
+  long: 'dlouhé',
+  wide: 'široké',
+  narrow: 'úzké',
+  pale: 'bledá',
+  ruddy: 'zčervenalá',
+  fine: 'jemná',
+  coarse: 'hrubší',
+}
+
+function detailLabel(
+  axisLabels: Record<string, string>,
+  valueLabels: Record<string, string>,
+  axis: string,
+  value: string,
+): string {
+  return `${axisLabels[axis] ?? axis} — ${valueLabels[value] ?? value}`
 }
 
 export interface AnalysisOutcome {
@@ -163,7 +224,7 @@ function buildHighlights(
       highlights.push({
         category: 'line',
         label: line.nameCs,
-        detail: selected,
+        detail: detailLabel(LINE_AXIS_LABELS, LINE_VALUE_LABELS, axis, selected),
         meaning: meaning.meaning,
         personality: meaning.personality,
       })
@@ -190,7 +251,12 @@ function buildHighlights(
       highlights.push({
         category: 'mount',
         label: mount.nameCs,
-        detail: selected,
+        detail: detailLabel(
+          MOUNT_AXIS_LABELS,
+          MOUNT_VALUE_LABELS,
+          axis,
+          selected,
+        ),
         meaning: meaning.meaning,
         personality: meaning.personality,
       })
@@ -204,7 +270,7 @@ function buildHighlights(
     highlights.push({
       category: 'additional',
       label: CHIROGNOMY_AXIS_LABELS[key] ?? 'Doplňující znak',
-      detail: value,
+      detail: CHIROGNOMY_VALUE_LABELS[value] ?? value,
       meaning: entry.meaning,
       personality: entry.personality,
     })
