@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HandDiagram, LINE_LABELS, MOUNT_LABELS } from './HandDiagram'
 import { FeatureModal, type OptionGroup } from './FeatureModal'
 import { ResultCard, type AnalysisResult } from './ResultCard'
@@ -118,16 +118,31 @@ export function AnalyzerWizard({
   variant,
   backgroundImage,
   hasPhoto,
+  initialHandType,
+  initialLines,
+  initialMounts,
+  detectedCount = 0,
 }: {
-  variant: 'interactive' | 'text'
+  /** "panel" = korekční panel pod výsledkem z fotky, bez kroků, s okamžitým přepočtem. */
+  variant: 'interactive' | 'text' | 'panel'
   backgroundImage?: string
   /** Fotka byla vstupem, ale samotný obrázek se na server neposílá. */
   hasPhoto?: boolean
+  initialHandType?: string
+  initialLines?: Partial<Record<LineKey, LineValue>>
+  initialMounts?: Partial<Record<MountKey, MountValue>>
+  /** Kolik znaků dodala automatická detekce (pro poměr detekce/ruční úprava ve statistice). */
+  detectedCount?: number
 }) {
+  const isPanel = variant === 'panel'
   const [step, setStep] = useState(0)
-  const [handType, setHandType] = useState<string>()
-  const [lines, setLines] = useState<Partial<Record<LineKey, LineValue>>>({})
-  const [mounts, setMounts] = useState<Partial<Record<MountKey, MountValue>>>({})
+  const [handType, setHandType] = useState<string | undefined>(initialHandType)
+  const [lines, setLines] = useState<Partial<Record<LineKey, LineValue>>>(
+    initialLines ?? {},
+  )
+  const [mounts, setMounts] = useState<Partial<Record<MountKey, MountValue>>>(
+    initialMounts ?? {},
+  )
   const [additional, setAdditional] = useState<Record<string, string>>({})
   const [openLine, setOpenLine] = useState<LineKey>()
   const [openMount, setOpenMount] = useState<MountKey>()
@@ -160,7 +175,11 @@ export function AnalyzerWizard({
     setDraft({})
   }
 
-  async function submit() {
+  const filledLines = Object.keys(lines).length
+  const filledMounts = Object.keys(mounts).length
+
+  async function runAnalysis() {
+    if (!handType) return
     setLoading(true)
     setError(undefined)
     try {
@@ -175,11 +194,9 @@ export function AnalyzerWizard({
             mounts,
             additionalFeatures: additional,
           },
-          // Detekce ještě není zapojena (přijde ve fázi 3) — zatím je
-          // vše ruční vyplnění, proto linesManual = počet vyplněných znaků.
           detection: {
-            linesDetected: 0,
-            linesManual: filledLines + filledMounts,
+            linesDetected: detectedCount,
+            linesManual: Math.max(0, filledLines + filledMounts - detectedCount),
             usedAi: false,
           },
         }),
@@ -196,6 +213,197 @@ export function AnalyzerWizard({
     } finally {
       setLoading(false)
     }
+  }
+
+  // V panelovém režimu se čtení přepočítá samo při každé úpravě, s malým
+  // zpožděním, aby rychlé klikání nezpůsobilo zástup požadavků.
+  useEffect(() => {
+    if (!isPanel || !handType) return
+    const timeout = setTimeout(() => {
+      runAnalysis()
+    }, 400)
+    return () => clearTimeout(timeout)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPanel, handType, JSON.stringify(lines), JSON.stringify(mounts), JSON.stringify(additional)])
+
+  const modals = (
+    <>
+      {openLine && (
+        <FeatureModal
+          title={LINE_LABELS[openLine]}
+          description="Popište, jak čára vypadá na vaší dlani. Vyplnit můžete jen část."
+          groups={LINE_GROUPS}
+          values={draft}
+          onChange={(axis, value) =>
+            setDraft((prev) => ({ ...prev, [axis]: value }))
+          }
+          onClose={() => {
+            setOpenLine(undefined)
+            setDraft({})
+          }}
+          onConfirm={confirmLine}
+          onSkip={() => {
+            setLines((prev) => ({ ...prev, [openLine]: { present: false } }))
+            setOpenLine(undefined)
+            setDraft({})
+          }}
+        />
+      )}
+
+      {openMount && (
+        <FeatureModal
+          title={MOUNT_LABELS[openMount]}
+          description="Nahmatejte vyvýšeninu palcem druhé ruky a porovnejte s okolím."
+          groups={MOUNT_GROUPS}
+          values={draft}
+          onChange={(axis, value) =>
+            setDraft((prev) => ({ ...prev, [axis]: value }))
+          }
+          onClose={() => {
+            setOpenMount(undefined)
+            setDraft({})
+          }}
+          onConfirm={confirmMount}
+        />
+      )}
+    </>
+  )
+
+  if (isPanel) {
+    return (
+      <div className="space-y-8">
+        {result ? (
+          <ResultCard result={result} />
+        ) : loading ? (
+          <div className="bg-white rounded-xl border border-palm-200 p-8 text-center text-gray-500">
+            Sestavuji čtení…
+          </div>
+        ) : (
+          <div className="bg-white rounded-xl border border-palm-200 p-8 text-center text-gray-500">
+            Vyberte typ ruky níže pro zobrazení čtení.
+          </div>
+        )}
+
+        {error && (
+          <p className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            {error}
+          </p>
+        )}
+
+        <section className="bg-white rounded-xl border border-palm-200 p-6 space-y-8">
+          <div>
+            <h2 className="text-2xl font-bold text-palm-800 mb-1">Upřesnit čtení</h2>
+            <p className="text-gray-600 text-sm">
+              Doplňte nebo opravte, co detekce z fotky nenašla nebo našla
+              špatně. Čtení nahoře se po každé změně samo přepočítá.
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-palm-700 mb-3">Typ ruky</h3>
+            <div className="flex flex-wrap gap-3">
+              {HAND_TYPES.map((type) => (
+                <button
+                  key={type.value}
+                  type="button"
+                  onClick={() => setHandType(type.value)}
+                  title={type.hint}
+                  aria-pressed={handType === type.value}
+                  className={`px-4 py-2 rounded-lg border-2 text-left transition ${
+                    handType === type.value
+                      ? 'bg-palm-600 border-palm-700 text-white'
+                      : 'bg-white border-palm-200 hover:border-palm-400'
+                  }`}
+                >
+                  <span className="block text-sm font-semibold">{type.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-palm-700 mb-3">
+              Čáry ({filledLines} z {Object.keys(LINE_LABELS).length})
+            </h3>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {(Object.keys(LINE_LABELS) as LineKey[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => openLineModal(key)}
+                  className={`px-4 py-3 rounded-lg border-2 text-left text-sm ${
+                    lines[key]
+                      ? 'bg-palm-100 border-palm-400'
+                      : 'bg-white border-palm-200 hover:border-palm-400'
+                  }`}
+                >
+                  {lines[key] ? '✓ ' : ''}
+                  {LINE_LABELS[key]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-palm-700 mb-3">
+              Pahorky ({filledMounts} z {Object.keys(MOUNT_LABELS).length})
+            </h3>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {(Object.keys(MOUNT_LABELS) as MountKey[]).map((key) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => openMountModal(key)}
+                  className={`px-4 py-3 rounded-lg border-2 text-left text-sm ${
+                    mounts[key]
+                      ? 'bg-palm-100 border-palm-400'
+                      : 'bg-white border-palm-200 hover:border-palm-400'
+                  }`}
+                >
+                  {mounts[key] ? '✓ ' : ''}
+                  {MOUNT_LABELS[key]}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-palm-700 mb-3">Doplňující znaky</h3>
+            <div className="space-y-4">
+              {ADDITIONAL_GROUPS.map((group) => (
+                <fieldset key={group.axis}>
+                  <legend className="text-sm text-gray-600 mb-2">{group.legend}</legend>
+                  <div className="flex flex-wrap gap-2">
+                    {group.options.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        aria-pressed={additional[group.axis] === option.value}
+                        onClick={() =>
+                          setAdditional((prev) => ({
+                            ...prev,
+                            [group.axis]: option.value,
+                          }))
+                        }
+                        className={`px-3 py-1.5 rounded-lg border-2 text-sm ${
+                          additional[group.axis] === option.value
+                            ? 'bg-palm-600 border-palm-700 text-white'
+                            : 'bg-white border-palm-200 hover:border-palm-400'
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {modals}
+      </div>
+    )
   }
 
   if (result) {
@@ -215,9 +423,6 @@ export function AnalyzerWizard({
       </div>
     )
   }
-
-  const filledLines = Object.keys(lines).length
-  const filledMounts = Object.keys(mounts).length
 
   return (
     <div className="space-y-6">
@@ -440,7 +645,7 @@ export function AnalyzerWizard({
 
           <button
             type="button"
-            onClick={submit}
+            onClick={runAnalysis}
             disabled={loading || !handType}
             className="mt-6 bg-palm-700 hover:bg-palm-800 disabled:bg-gray-300 text-white px-8 py-3 rounded-lg font-semibold"
           >
@@ -474,44 +679,7 @@ export function AnalyzerWizard({
         </button>
       </div>
 
-      {openLine && (
-        <FeatureModal
-          title={LINE_LABELS[openLine]}
-          description="Popište, jak čára vypadá na vaší dlani. Vyplnit můžete jen část."
-          groups={LINE_GROUPS}
-          values={draft}
-          onChange={(axis, value) =>
-            setDraft((prev) => ({ ...prev, [axis]: value }))
-          }
-          onClose={() => {
-            setOpenLine(undefined)
-            setDraft({})
-          }}
-          onConfirm={confirmLine}
-          onSkip={() => {
-            setLines((prev) => ({ ...prev, [openLine]: { present: false } }))
-            setOpenLine(undefined)
-            setDraft({})
-          }}
-        />
-      )}
-
-      {openMount && (
-        <FeatureModal
-          title={MOUNT_LABELS[openMount]}
-          description="Nahmatejte vyvýšeninu palcem druhé ruky a porovnejte s okolím."
-          groups={MOUNT_GROUPS}
-          values={draft}
-          onChange={(axis, value) =>
-            setDraft((prev) => ({ ...prev, [axis]: value }))
-          }
-          onClose={() => {
-            setOpenMount(undefined)
-            setDraft({})
-          }}
-          onConfirm={confirmMount}
-        />
-      )}
+      {modals}
     </div>
   )
 }

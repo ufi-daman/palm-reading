@@ -1,4 +1,4 @@
-import { ImageUploadAnalyzer } from '@/components/ImageUploadAnalyzer'
+import { PhotoFirstFlow } from '@/components/PhotoFirstFlow'
 
 export const metadata = {
   title: 'Čtení z dlaně z fotografie',
@@ -11,10 +11,10 @@ export default function ImageUploadPage() {
         Čtení z fotografie
       </h1>
       <p className="text-palm-700 mb-8">
-        Nahrajte fotku dlaně. Zobrazí se jako podklad pod diagramem, takže znaky
-        označíte přímo podle své ruky.
+        Vyfoťte dlaň a čtení se sestaví automaticky z toho, co se na fotce
+        rozpozná. Cokoliv chcete upřesnit, doplníte pod výsledkem.
       </p>
-      <ImageUploadAnalyzer />
+      <PhotoFirstFlow />
     </div>
   )
 }

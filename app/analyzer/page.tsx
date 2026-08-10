@@ -2,19 +2,19 @@ import Link from 'next/link'
 
 const METHODS = [
   {
+    href: '/analyzer/image-upload',
+    icon: '📷',
+    title: 'Vyfotit dlaň',
+    description:
+      'Čtení se sestaví rovnou z fotky — typ ruky se rozpozná automaticky, cokoliv chcete upřesnit doplníte pod výsledkem.',
+    recommended: true,
+  },
+  {
     href: '/analyzer/interactive',
     icon: '🎨',
     title: 'Interaktivní čtení',
     description:
-      'Klikáte přímo do diagramu dlaně a u každé čáry i pahorku popíšete, jak vypadá. Nejnázornější cesta.',
-    recommended: true,
-  },
-  {
-    href: '/analyzer/image-upload',
-    icon: '📷',
-    title: 'Nahrát fotografii',
-    description:
-      'Nahrajete fotku dlaně, ta se zobrazí pod diagramem a vy podle ní označíte jednotlivé znaky.',
+      'Bez focení — klikáte přímo do diagramu dlaně a u každé čáry i pahorku popíšete, jak vypadá.',
     recommended: false,
   },
   {

@@ -1,27 +1,7 @@
 import Link from 'next/link'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
-
-const METHODS = [
-  {
-    href: '/analyzer/image-upload',
-    icon: '📷',
-    title: 'Nahrát fotografii',
-    description: 'Vyfoťte dlaň a označte znaky přímo podle své ruky.',
-  },
-  {
-    href: '/analyzer/interactive',
-    icon: '🎨',
-    title: 'Interaktivní čtení',
-    description: 'Klikejte do diagramu dlaně a popisujte, co na ní vidíte.',
-  },
-  {
-    href: '/analyzer/text-input',
-    icon: '📝',
-    title: 'Textový formulář',
-    description: 'Vyberte znaky ze seznamu, bez diagramu.',
-  },
-]
+import { PhotoFirstFlow } from '@/components/PhotoFirstFlow'
 
 export default function Home() {
   return (
@@ -29,47 +9,51 @@ export default function Home() {
       <Navigation />
 
       <main className="flex-1 bg-gradient-to-br from-palm-50 to-palm-100">
-        <section className="container mx-auto py-20 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-palm-900 mb-6">
+        <section className="container mx-auto pt-16 pb-10 text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold text-palm-900 mb-4">
             Co všechno je vepsané ve vaší dlani?
           </h1>
-          <p className="text-lg sm:text-xl text-palm-700 mb-12 max-w-2xl mx-auto">
-            Popište čáry, pahorky a tvar své ruky. Aplikace je poskládá do
-            souvislého osobnostního profilu podle tradičních výkladových
-            postupů.
+          <p className="text-lg text-palm-700 mb-2 max-w-2xl mx-auto">
+            Vyfoťte dlaň — čtení se sestaví rovnou z toho, co se na fotce
+            rozpozná.
           </p>
+          <p className="text-sm text-palm-600 max-w-2xl mx-auto">
+            Fotografie zůstává ve vašem prohlížeči a nikdy se neodesílá na
+            server.
+          </p>
+        </section>
 
-          <div className="grid gap-6 md:grid-cols-3 max-w-4xl mx-auto mb-12">
-            {METHODS.map((method) => (
+        <section className="container mx-auto pb-16 max-w-2xl">
+          <PhotoFirstFlow />
+        </section>
+
+        <section className="bg-white py-14 border-t border-palm-100">
+          <div className="container mx-auto max-w-3xl text-center">
+            <h2 className="text-xl font-bold text-palm-800 mb-2">
+              Bez focení nebo bez kamery?
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Stejný výklad jde sestavit i ručně — klikáním do diagramu nebo
+              výběrem ze seznamu.
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
               <Link
-                key={method.href}
-                href={method.href}
-                className="bg-palm-600 hover:bg-palm-700 text-white py-8 px-6 rounded-xl shadow-lg transition hover:-translate-y-1"
+                href="/analyzer/interactive"
+                className="bg-white text-palm-700 border-2 border-palm-700 px-6 py-3 rounded-lg hover:bg-palm-50 transition"
               >
-                <div className="text-4xl mb-4">{method.icon}</div>
-                <h2 className="text-xl font-bold mb-2">{method.title}</h2>
-                <p className="text-sm text-palm-50">{method.description}</p>
+                🎨 Interaktivní diagram
               </Link>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/library/guide"
-              className="bg-white text-palm-700 border-2 border-palm-700 px-8 py-3 rounded-lg hover:bg-palm-50 transition"
-            >
-              📚 Jak se čte z dlaně
-            </Link>
-            <Link
-              href="/library"
-              className="bg-white text-palm-700 border-2 border-palm-700 px-8 py-3 rounded-lg hover:bg-palm-50 transition"
-            >
-              🔍 Knihovna znaků
-            </Link>
+              <Link
+                href="/analyzer/text-input"
+                className="bg-white text-palm-700 border-2 border-palm-700 px-6 py-3 rounded-lg hover:bg-palm-50 transition"
+              >
+                📝 Textový formulář
+              </Link>
+            </div>
           </div>
         </section>
 
-        <section className="bg-white py-16">
+        <section className="bg-palm-50 py-14">
           <div className="container mx-auto grid gap-12 md:grid-cols-3 max-w-4xl">
             <div>
               <h2 className="text-xl font-bold text-palm-800 mb-3">
@@ -94,10 +78,27 @@ export default function Home() {
                 🔐 Soukromí
               </h2>
               <p className="text-gray-600">
-                Bez registrace. Nahrané fotografie se automaticky mažou po 30
-                dnech.
+                Fotografie se zpracuje jen ve vašem prohlížeči. Na server jde
+                jen výsledek rozpoznávání, nikdy obrázek samotný.
               </p>
             </div>
+          </div>
+        </section>
+
+        <section className="container mx-auto py-10 text-center">
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/library/guide"
+              className="bg-white text-palm-700 border-2 border-palm-700 px-8 py-3 rounded-lg hover:bg-palm-50 transition"
+            >
+              📚 Jak se čte z dlaně
+            </Link>
+            <Link
+              href="/library"
+              className="bg-white text-palm-700 border-2 border-palm-700 px-8 py-3 rounded-lg hover:bg-palm-50 transition"
+            >
+              🔍 Knihovna znaků
+            </Link>
           </div>
         </section>
       </main>
