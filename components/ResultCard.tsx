@@ -94,7 +94,13 @@ export function ResultCard({ result }: { result: AnalysisResult }) {
                   <p className="text-sm font-semibold text-palm-800">
                     {CATEGORY_LABELS[item.category] ?? item.category} · {item.label}
                   </p>
-                  <p className="text-gray-700">{item.meaning}</p>
+                  {/* `meaning` popisuje samotný znak, `personality` říká, co
+                      z něj plyne pro čtenáře. Zobrazovat jen to první je
+                      k ničemu — je to encyklopedický údaj místo výkladu. */}
+                  <p className="text-gray-600 text-sm">{item.meaning}</p>
+                  {item.personality && item.personality !== item.meaning && (
+                    <p className="text-gray-800 mt-1">{item.personality}</p>
+                  )}
                 </li>
               ))}
             </ul>

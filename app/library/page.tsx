@@ -31,6 +31,14 @@ export default function LibraryHub() {
       description:
         'Rozdělení podle živlů — tvar dlaně a délka prstů jako základ celého čtení.',
     },
+    {
+      href: '/library/chirognomy',
+      icon: '💅',
+      title: 'Chirognomie',
+      count: 4,
+      description:
+        'Prsty, nehty, barva a struktura kůže — znaky, které nepotřebují rozpoznávání z fotky.',
+    },
   ]
 
   return (
@@ -41,7 +49,7 @@ export default function LibraryHub() {
         i výkladem jednotlivých variant.
       </p>
 
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {sections.map((section) => (
           <Link
             key={section.href}

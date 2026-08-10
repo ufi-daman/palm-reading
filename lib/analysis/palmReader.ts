@@ -1,4 +1,5 @@
 import type { Characteristics } from '@/lib/validators/characteristics'
+import { CHIROGNOMY, CHIROGNOMY_AXIS_LABELS } from '@/lib/content/chirognomy'
 import type {
   HandTypeContent,
   InterpretationContent,
@@ -42,28 +43,6 @@ export interface AnalysisOutcome {
   highlights: Highlight[]
   matchedCombinations: number
   alternatives: { personality: string; confidence: number }[]
-}
-
-const ADDITIONAL_LABELS: Record<string, Record<string, string>> = {
-  fingerLengths: {
-    short: 'Krátké prsty — rychlý úsudek a tah na celek, detail vás nezdržuje.',
-    normal: 'Přiměřeně dlouhé prsty — rovnováha mezi celkem a detailem.',
-    long: 'Dlouhé prsty — smysl pro detail a záliba v důkladnosti.',
-  },
-  nails: {
-    normal: 'Pravidelné nehty — vyrovnaná povaha bez výrazných výkyvů.',
-    wide: 'Široké nehty — otevřenost a přímé jednání.',
-    narrow: 'Úzké nehty — zdrženlivost a citlivost na okolí.',
-  },
-  palmColor: {
-    pale: 'Bledá dlaň — nižší úroveň energie, potřeba šetřit silami.',
-    normal: 'Přirozeně prokrvená dlaň — vyrovnaná vitalita.',
-    ruddy: 'Zčervenalá dlaň — vysoká energie a rychlé reakce.',
-  },
-  skinTexture: {
-    fine: 'Jemná kůže — vyšší citlivost a vnímavost k prostředí.',
-    coarse: 'Hrubší kůže — odolnost a praktické založení.',
-  },
 }
 
 function unique(values: string[]): string[] {
@@ -220,14 +199,14 @@ function buildHighlights(
 
   for (const [key, value] of Object.entries(input.additionalFeatures ?? {})) {
     if (!value) continue
-    const text = ADDITIONAL_LABELS[key]?.[value]
-    if (!text) continue
+    const entry = CHIROGNOMY[key]?.[value]
+    if (!entry) continue
     highlights.push({
       category: 'additional',
-      label: 'Doplňující znak',
+      label: CHIROGNOMY_AXIS_LABELS[key] ?? 'Doplňující znak',
       detail: value,
-      meaning: text,
-      personality: text,
+      meaning: entry.meaning,
+      personality: entry.personality,
     })
   }
 
