@@ -1,7 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { PalmOutline } from '@/components/PalmOutline'
 import { checkImageQuality, type QualityCheck } from '@/lib/vision/imageQuality'
+import {
+  checkHandPose,
+  frameToGuide,
+  type HandPoseCheck,
+} from '@/lib/vision/handPose'
+import {
+  detectHandLandmarksInFrame,
+  preloadHandLandmarker,
+} from '@/lib/vision/mediapipe'
 
 const MAX_DIMENSION = 1568
 const JPEG_QUALITY = 0.85
@@ -51,6 +61,13 @@ function resizeFileToDataUrl(file: File): Promise<CaptureResult> {
 type CameraState = 'checking' | 'available' | 'unavailable' | 'denied'
 
 /**
+ * Stav navádění podle rozpoznaných bodů ruky. `failed` znamená, že se model
+ * nepodařilo načíst — focení tím nekončí, jen se vrátí ke kontrole ostrosti
+ * a expozice, kterou navádění doplňuje, ne nahrazuje.
+ */
+type GuideState = 'off' | 'loading' | 'active' | 'failed'
+
+/**
  * Naváděné focení: živý náhled z kamery s průběžnou kontrolou ostrosti a
  * expozice, spoušť fotoaparátu se zpřístupní až po splnění obou. Kdykoliv
  * je k dispozici i nahrání souboru — jak jako záložní cesta pro zařízení
@@ -65,9 +82,13 @@ export function GuidedCapture({
   onCapture: (result: CaptureResult) => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const frameRef = useRef<HTMLDivElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const [cameraState, setCameraState] = useState<CameraState>('checking')
   const [quality, setQuality] = useState<QualityCheck | null>(null)
+  const [pose, setPose] = useState<HandPoseCheck | null>(null)
+  const [handSeen, setHandSeen] = useState(false)
+  const [guideState, setGuideState] = useState<GuideState>('off')
   const [error, setError] = useState<string>()
   const [processing, setProcessing] = useState(false)
 
@@ -129,6 +150,55 @@ export function GuidedCapture({
     return () => clearInterval(interval)
   }, [cameraState])
 
+  /**
+   * Navádění podle skutečné polohy ruky. Model se stahuje hned při otevření
+   * kamery — nejsou to data navíc, analýza snímku ho potřebuje stejně tak;
+   * jen se těch 18 MB přesune do doby, kdy si uživatel rovná ruku, místo
+   * aby čekal až po stisku spouště.
+   */
+  useEffect(() => {
+    if (cameraState !== 'available') return
+    let cancelled = false
+    let interval: ReturnType<typeof setInterval> | undefined
+
+    setGuideState('loading')
+    preloadHandLandmarker()
+      .then(() => {
+        if (cancelled) return
+        setGuideState('active')
+        interval = setInterval(async () => {
+          const video = videoRef.current
+          const frame = frameRef.current
+          if (!video || !frame) return
+          const landmarks = await detectHandLandmarksInFrame(video)
+          if (cancelled || landmarks === undefined) return
+          if (!landmarks) {
+            setHandSeen(false)
+            setPose(null)
+            return
+          }
+          const box = frame.getBoundingClientRect()
+          const mapped = landmarks.map((point) =>
+            frameToGuide(
+              point,
+              { width: video.videoWidth, height: video.videoHeight },
+              { width: box.width, height: box.height },
+            ),
+          )
+          setHandSeen(true)
+          setPose(checkHandPose(mapped, landmarks))
+        }, 250)
+      })
+      .catch(() => {
+        if (!cancelled) setGuideState('failed')
+      })
+
+    return () => {
+      cancelled = true
+      if (interval) clearInterval(interval)
+    }
+  }, [cameraState])
+
   async function capture() {
     const video = videoRef.current
     if (!video || video.videoWidth === 0) return
@@ -169,21 +239,66 @@ export function GuidedCapture({
     }
   }
 
-  const canShoot = quality?.ok ?? false
+  const qualityOk = quality?.ok ?? false
+  // Navádění spoušť zpřísňuje jen tehdy, když skutečně běží. Dokud se model
+  // načítá nebo se načíst nepodařilo, platí původní kritérium — jinak by
+  // selhání pomocné funkce zablokovalo focení úplně.
+  const poseOk = guideState === 'active' ? (pose?.ok ?? false) : true
+  const canShoot = qualityOk && poseOk
+
+  const outlineState: 'idle' | 'adjust' | 'ready' =
+    guideState !== 'active' || !handSeen
+      ? 'idle'
+      : pose?.ok
+        ? 'ready'
+        : 'adjust'
+
+  function guidanceMessage(): { text: string; tone: 'ok' | 'warn' | 'muted' } {
+    if (quality === null) return { text: 'Kontroluji obraz…', tone: 'muted' }
+    if (!quality.isSharp)
+      return { text: 'Přidržte telefon klidně, obraz je rozmazaný.', tone: 'warn' }
+    if (!quality.isWellExposed)
+      return {
+        text: 'Upravte osvětlení — je moc tmavo nebo přesvětleno. Světlo ze strany, ne zezadu.',
+        tone: 'warn',
+      }
+    if (guideState === 'loading')
+      return { text: 'Načítám navádění podle ruky…', tone: 'muted' }
+    if (guideState === 'active' && !handSeen)
+      return { text: 'Ruku zatím nevidím — vložte dlaň do obrysu.', tone: 'warn' }
+    if (guideState === 'active' && pose && !pose.ok)
+      return { text: pose.hint ?? 'Zarovnejte dlaň s obrysem.', tone: 'warn' }
+    if (guideState === 'active')
+      return { text: '✓ Dlaň sedí v obrysu, obraz je ostrý', tone: 'ok' }
+    return { text: '✓ Obraz je dost ostrý a dobře osvětlený', tone: 'ok' }
+  }
+
+  const guidance = guidanceMessage()
 
   return (
     <div className="bg-white rounded-xl border border-palm-200 p-6 space-y-5">
       <div>
         <h2 className="text-2xl font-bold text-palm-800 mb-2">Vyfoťte dlaň</h2>
-        <p className="text-gray-600 text-sm">
-          Otevřenou dlaň, celou v záběru, světlo ze strany nebo zepředu — ne
-          zezadu proti objektivu. Fotografie zůstává ve vašem prohlížeči.
+        {/* Rozptyl ve způsobu focení se dřív propisoval až do detekce, kde
+            se dal jen těžko dohnat. Proto je postup daný takhle natvrdo. */}
+        <ol className="text-gray-600 text-sm space-y-1 list-decimal list-inside">
+          <li>Dlaň otevřete naplno, prsty narovnané a mírně od sebe.</li>
+          <li>Prsty míří nahoru, dlaň kolmo k objektivu.</li>
+          <li>Zarovnejte dlaň do obrysu — palec může zůstat mimo.</li>
+          <li>Světlo ze strany nebo zepředu, nikdy zezadu proti objektivu.</li>
+          <li>Fotografii pořiďte na neutrálním pozadí, ne na vzorované ploše.</li>
+        </ol>
+        <p className="text-gray-500 text-xs mt-2">
+          Fotografie zůstává ve vašem prohlížeči.
         </p>
       </div>
 
       {cameraState === 'available' && (
         <div className="space-y-3">
-          <div className="relative rounded-lg overflow-hidden bg-black aspect-[3/4] max-w-sm mx-auto">
+          <div
+            ref={frameRef}
+            className="relative rounded-lg overflow-hidden bg-black aspect-[3/4] max-w-sm mx-auto"
+          >
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
             <video
               ref={videoRef}
@@ -192,20 +307,21 @@ export function GuidedCapture({
               muted
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-6 border-2 border-dashed border-white/60 rounded-lg pointer-events-none" />
+            <PalmOutline state={outlineState} />
           </div>
 
-          <div className="text-center text-sm">
-            {quality === null ? (
-              <span className="text-gray-500">Kontroluji obraz…</span>
-            ) : canShoot ? (
-              <span className="text-green-700">✓ Obraz je dost ostrý a dobře osvětlený</span>
-            ) : (
-              <span className="text-amber-700">
-                {!quality.isSharp && 'Přidržte telefon klidně, obraz je rozmazaný. '}
-                {!quality.isWellExposed && 'Upravte osvětlení — je moc tmavo nebo přesvětleno.'}
-              </span>
-            )}
+          <div className="text-center text-sm" role="status" aria-live="polite">
+            <span
+              className={
+                guidance.tone === 'ok'
+                  ? 'text-green-700'
+                  : guidance.tone === 'warn'
+                    ? 'text-amber-700'
+                    : 'text-gray-500'
+              }
+            >
+              {guidance.text}
+            </span>
           </div>
 
           <div className="flex flex-col items-center gap-2">
@@ -273,9 +389,10 @@ export function GuidedCapture({
           server — pokud si výslovně nevyžádáte AI rozbor.
         </p>
         <p>
-          Právě proto se po prvním vyfocení stáhne asi 18 MB rozpoznávacího
-          modelu. Děje se to jednou a pak si ho prohlížeč pamatuje — na mobilních
-          datech s tím ale počítejte.
+          Právě proto se při otevření kamery stáhne asi 18 MB rozpoznávacího
+          modelu — navádí vás při focení a pak z fotky čte body ruky. Děje se to
+          jednou a pak si ho prohlížeč pamatuje; na mobilních datech s tím ale
+          počítejte.
         </p>
       </div>
     </div>
