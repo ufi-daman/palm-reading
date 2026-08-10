@@ -108,6 +108,7 @@ export interface HandTypeContent {
   characteristics: string[]
   strengths: string[]
   challenges: string[]
+  source: Source[]
 }
 
 /** Kritéria kombinace. Uvedené klíče musí všechny sedět, aby byla použitelná. */
