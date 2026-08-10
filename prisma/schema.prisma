@@ -27,3 +27,14 @@ model AnalysisStat {
   @@index([createdAt])
   @@map("analysis_stats")
 }
+
+/// Jeden řádek = jedno volání AI rozboru (/api/vision), bez ohledu na to,
+/// jestli z něj vzniklo dokončené čtení. Jediný účel: tvrdý denní strop
+/// volání Anthropic API — v paměti by na serverless nefungoval spolehlivě.
+model AiCallLog {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@map("ai_call_log")
+}

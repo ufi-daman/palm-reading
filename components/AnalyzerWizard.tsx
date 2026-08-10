@@ -122,6 +122,7 @@ export function AnalyzerWizard({
   initialLines,
   initialMounts,
   detectedCount = 0,
+  usedAi = false,
 }: {
   /** "panel" = korekční panel pod výsledkem z fotky, bez kroků, s okamžitým přepočtem. */
   variant: 'interactive' | 'text' | 'panel'
@@ -133,6 +134,8 @@ export function AnalyzerWizard({
   initialMounts?: Partial<Record<MountKey, MountValue>>
   /** Kolik znaků dodala automatická detekce (pro poměr detekce/ruční úprava ve statistice). */
   detectedCount?: number
+  /** Znaky pocházejí (aspoň zčásti) z AI rozboru — jde do statistiky. */
+  usedAi?: boolean
 }) {
   const isPanel = variant === 'panel'
   const [step, setStep] = useState(0)
@@ -197,7 +200,7 @@ export function AnalyzerWizard({
           detection: {
             linesDetected: detectedCount,
             linesManual: Math.max(0, filledLines + filledMounts - detectedCount),
-            usedAi: false,
+            usedAi,
           },
         }),
       })
