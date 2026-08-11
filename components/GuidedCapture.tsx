@@ -12,6 +12,7 @@ import {
   detectHandLandmarksInFrame,
   preloadHandLandmarker,
 } from '@/lib/vision/mediapipe'
+import { checkLighting, type LightingCheck } from '@/lib/vision/lighting'
 
 const MAX_DIMENSION = 1568
 const JPEG_QUALITY = 0.85
@@ -154,6 +155,7 @@ export function GuidedCapture({
   const [cameraState, setCameraState] = useState<CameraState>('checking')
   const [quality, setQuality] = useState<QualityCheck | null>(null)
   const [pose, setPose] = useState<HandPoseCheck | null>(null)
+  const [lighting, setLighting] = useState<LightingCheck | null>(null)
   const [handSeen, setHandSeen] = useState(false)
   const [guideState, setGuideState] = useState<GuideState>('off')
   const [error, setError] = useState<string>()
@@ -242,6 +244,7 @@ export function GuidedCapture({
           if (!landmarks) {
             setHandSeen(false)
             setPose(null)
+            setLighting(null)
             return
           }
           const box = frame.getBoundingClientRect()
@@ -254,6 +257,7 @@ export function GuidedCapture({
           )
           setHandSeen(true)
           setPose(checkHandPose(mapped, landmarks))
+          setLighting(checkLighting(video, landmarks))
         }, 250)
       })
       .catch(() => {
@@ -361,12 +365,25 @@ export function GuidedCapture({
           <li>Fotografii pořiďte na neutrálním pozadí, ne na vzorované ploše.</li>
         </ol>
         {/* Pahorky jsou vyvýšeniny — do fotky se promítnou jedině stínem.
-            Při rovnoměrném světle v místnosti tam ta informace není. */}
-        <p className="text-gray-600 text-sm mt-2">
-          <strong>Chcete-li i pahorky:</strong> posviťte na dlaň zřetelně
-          z jedné strany, aby vyvýšeniny vrhaly stín. Při rovnoměrném světle
-          v místnosti je od fotky nepoznáte ani vy, ani aplikace.
-        </p>
+            Při rovnoměrném světle v místnosti tam ta informace není. Když
+            běží navádění, ukáže se místo statického textu živé měření —
+            dřív se osvětlení nikdy neověřovalo proti skutečnému snímku. */}
+        {guideState === 'active' && handSeen && lighting ? (
+          <p
+            className={`text-sm mt-2 ${lighting.directional ? 'text-green-700' : 'text-gray-600'}`}
+          >
+            <strong>Pahorky:</strong>{' '}
+            {lighting.directional
+              ? '✓ boční světlo je dost výrazné, mělo by jít vyhodnotit.'
+              : 'světlo je moc rovnoměrné — posviťte na dlaň zřetelně z jedné strany, ať vyvýšeniny vrhají stín.'}
+          </p>
+        ) : (
+          <p className="text-gray-600 text-sm mt-2">
+            <strong>Chcete-li i pahorky:</strong> posviťte na dlaň zřetelně
+            z jedné strany, aby vyvýšeniny vrhaly stín. Při rovnoměrném světle
+            v místnosti je od fotky nepoznáte ani vy, ani aplikace.
+          </p>
+        )}
         <p className="text-gray-500 text-xs mt-2">
           Fotografie zůstává ve vašem prohlížeči.
         </p>

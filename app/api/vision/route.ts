@@ -11,6 +11,9 @@ export const maxDuration = 60
 const RequestSchema = z.object({
   // Data URL vzniklá v prohlížeči (viz GuidedCapture) — "data:image/jpeg;base64,...".
   image: z.string().min(100),
+  // Narovnaný výřez dlaně z normalizePalm() (viz PhotoFirstFlow) — nepovinný,
+  // chybí když se nenašly landmarky. Jde k AI jako druhý, čitelnější obrázek.
+  normalizedImage: z.string().min(100).optional(),
   // Bez explicitního souhlasu se fotka na server vůbec neposílá (biometrický
   // údaj dle čl. 9 GDPR) — endpoint to i tak vynucuje jako druhou pojistku.
   consent: z.literal(true),
@@ -19,6 +22,10 @@ const RequestSchema = z.object({
 const DATA_URL_PATTERN = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/
 
 const PROMPT = `Podívej se na fotografii dlaně a popiš, co je na ní VIDĚT — žádné dohady.
+
+Může přijít i druhý obrázek: narovnaný a oříznutý výřez samotné dlaně,
+vzniklý automaticky z první fotky. Slouží jako bližší, rovný pohled na
+detail — použij ho jako doplněk k první fotce, ne místo ní.
 
 Pro typ ruky (handType) vyber jednu z: fire, air, earth, water, mixed — podle
 poměru délky dlaně k šířce a délky prstů.
@@ -103,6 +110,17 @@ export async function POST(request: Request) {
   }
   const [, mediaType, data] = match
 
+  // Nepovinný druhý obrázek — když je neplatný, jen se zahodí, hlavní fotka
+  // sama o sobě stačí (viz PROMPT), takže kvůli tomu žádost nepadá.
+  let normalizedImagePart: { inlineData: { data: string; mimeType: string } } | undefined
+  if (parsed.normalizedImage) {
+    const normalizedMatch = parsed.normalizedImage.match(DATA_URL_PATTERN)
+    if (normalizedMatch) {
+      const [, normalizedMediaType, normalizedData] = normalizedMatch
+      normalizedImagePart = { inlineData: { data: normalizedData, mimeType: normalizedMediaType } }
+    }
+  }
+
   const reserved = await tryReserveAiCall()
   if (reserved === 'no-database') {
     return NextResponse.json(
@@ -134,6 +152,7 @@ export async function POST(request: Request) {
       model,
       contents: [
         { inlineData: { data, mimeType: mediaType } },
+        ...(normalizedImagePart ? [normalizedImagePart] : []),
         { text: PROMPT },
       ],
       config: {

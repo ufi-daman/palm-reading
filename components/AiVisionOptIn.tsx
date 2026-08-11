@@ -25,9 +25,13 @@ const ERROR_MESSAGES: Record<string, string> = {
  */
 export function AiVisionOptIn({
   dataUrl,
+  normalizedDataUrl,
   onResult,
 }: {
   dataUrl: string
+  // Narovnaný výřez dlaně z normalizePalm() — když existuje, jde k AI jako
+  // druhý, čitelnější obrázek vedle syrové fotky (viz app/api/vision/route.ts).
+  normalizedDataUrl?: string
   onResult: (characteristics: Characteristics) => void
 }) {
   const [consent, setConsent] = useState(false)
@@ -42,7 +46,11 @@ export function AiVisionOptIn({
       const response = await fetch('/api/vision', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: dataUrl, consent: true }),
+        body: JSON.stringify({
+          image: dataUrl,
+          normalizedImage: normalizedDataUrl,
+          consent: true,
+        }),
       })
       const data: VisionResponse = await response.json()
       if (!response.ok || !data.characteristics) {

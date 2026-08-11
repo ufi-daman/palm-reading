@@ -103,3 +103,70 @@ export function assignLinesToZones(
 
   return result
 }
+
+/**
+ * Diagnostický rozpad pro kalibraci prahů — nepoužívá se za běhu appky,
+ * jen v `scripts/calibrate-lines.mjs`. Mirroruje reálné přiřazení
+ * (komponenta jde jen do svojí nejlepší zóny), navíc ale hlásí
+ * `bestFractionSeen`: nejvyšší shodu, jakou pro tu zónu předvedla
+ * JAKÁKOLIV komponenta, i když to pro ni nebyla nejlepší zóna — ukáže,
+ * jestli je poblíž prázdné zóny aspoň nějaký blízký kandidát, nebo nic.
+ */
+export function debugZoneScores(
+  components: Component[],
+  response: Float32Array,
+  width: number,
+): Array<{
+  zoneKey: LineKey
+  assignedComponents: number
+  bestFractionSeen: number
+  coverage: number
+  avgResponse: number
+  score: number
+  accepted: boolean
+}> {
+  const zoneKeys = Object.keys(LINE_ZONES) as LineKey[]
+  const byZone = new Map<LineKey, Component[]>()
+  const bestFractionSeen = new Map<LineKey, number>()
+
+  for (const component of components) {
+    let bestZone: LineKey | null = null
+    let bestFraction = 0
+    for (const zoneKey of zoneKeys) {
+      const fraction = componentMatchesZone(component, zoneKey)
+      if (fraction > (bestFractionSeen.get(zoneKey) ?? 0)) bestFractionSeen.set(zoneKey, fraction)
+      if (fraction > bestFraction) {
+        bestFraction = fraction
+        bestZone = zoneKey
+      }
+    }
+    if (bestZone && bestFraction >= MIN_MATCH_FRACTION) {
+      const list = byZone.get(bestZone) ?? []
+      list.push(component)
+      byZone.set(bestZone, list)
+    }
+  }
+
+  return zoneKeys.map((zoneKey) => {
+    const zone = LINE_ZONES[zoneKey]!
+    const zoneComponents = byZone.get(zoneKey) ?? []
+    const totalPixels = zoneComponents.reduce((sum, c) => sum + c.pixels.length, 0)
+    const pathLength = zonePathLength(zone)
+    const coverage = totalPixels > 0 ? Math.min(1, totalPixels / pathLength) : 0
+    let responseSum = 0
+    for (const component of zoneComponents) {
+      responseSum += averageResponse(component, response, width) * component.pixels.length
+    }
+    const avgResponse = totalPixels > 0 ? responseSum / totalPixels : 0
+    const score = totalPixels > 0 ? coverage * 0.6 + avgResponse * 0.4 : 0
+    return {
+      zoneKey,
+      assignedComponents: zoneComponents.length,
+      bestFractionSeen: bestFractionSeen.get(zoneKey) ?? 0,
+      coverage,
+      avgResponse,
+      score,
+      accepted: totalPixels > 0 && score >= CONFIDENCE_THRESHOLD,
+    }
+  })
+}

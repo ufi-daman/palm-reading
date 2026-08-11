@@ -8,6 +8,7 @@ import { AiVisionOptIn } from './AiVisionOptIn'
 import { detectHandLandmarks } from '@/lib/vision/mediapipe'
 import { classifyHandType } from '@/lib/vision/handType'
 import { detectLines } from '@/lib/vision/lines/detect'
+import { normalizePalm } from '@/lib/vision/lines/normalize'
 import type { LineKey, MountKey } from '@/lib/content/types'
 import type { Characteristics } from '@/lib/validators/characteristics'
 
@@ -20,6 +21,10 @@ type FlowState =
   | {
       phase: 'found'
       dataUrl: string
+      // Narovnaný výřez dlaně z normalizePalm() — jde jako druhý obrázek do
+      // AI rozboru, aby model viděl detail zblízka a rovně, ne pod úhlem
+      // fotky. Chybí, když se nepodařilo najít landmarky (viz not-found).
+      normalizedDataUrl?: string
       handType: string
       lines: Partial<Record<LineKey, PanelLineValue>>
       mounts: Partial<Record<MountKey, PanelMountValue>>
@@ -29,6 +34,16 @@ type FlowState =
     }
   | { phase: 'not-found'; dataUrl: string }
   | { phase: 'detection-failed'; dataUrl: string; message: string }
+
+/** ImageData → JPEG data URL, stejný vzor jako drawToCanvas/toDataURL v GuidedCapture.tsx. */
+function imageDataToDataUrl(image: ImageData): string {
+  const canvas = document.createElement('canvas')
+  canvas.width = image.width
+  canvas.height = image.height
+  const ctx = canvas.getContext('2d')!
+  ctx.putImageData(image, 0, 0)
+  return canvas.toDataURL('image/jpeg', 0.9)
+}
 
 function characteristicsToPanelLines(
   characteristics: Characteristics,
@@ -98,9 +113,22 @@ export function PhotoFirstFlow() {
         detectedCount = 0
       }
 
+      // Narovnaný výřez pro pozdější AI rozbor — nekritické, selhání se
+      // jen přeskočí, AI pak dostane jen syrovou fotku jako dřív.
+      let normalizedDataUrl: string | undefined
+      try {
+        const normalized = normalizePalm(image, landmarks)
+        if (normalized) {
+          normalizedDataUrl = imageDataToDataUrl(normalized)
+        }
+      } catch {
+        normalizedDataUrl = undefined
+      }
+
       setState({
         phase: 'found',
         dataUrl: result.dataUrl,
+        normalizedDataUrl,
         handType,
         lines,
         mounts: {},
@@ -134,6 +162,7 @@ export function PhotoFirstFlow() {
       return {
         phase: 'found',
         dataUrl,
+        normalizedDataUrl: prev.phase === 'found' ? prev.normalizedDataUrl : undefined,
         handType: prev.phase === 'found' ? prev.handType : characteristics.handType,
         lines,
         mounts: aiMounts,
@@ -246,6 +275,7 @@ export function PhotoFirstFlow() {
       {!state.usedAi && (
         <AiVisionOptIn
           dataUrl={state.dataUrl}
+          normalizedDataUrl={state.normalizedDataUrl}
           onResult={(characteristics) => applyAiResult(state.dataUrl, characteristics)}
         />
       )}

@@ -8,13 +8,15 @@ import {
 } from './enhance'
 import { multiScaleFrangi } from './ridges'
 import { otsuThreshold, threshold, zhangSuenThin, connectedComponents } from './skeleton'
-import { assignLinesToZones, type DetectedLine } from './assign'
+import { assignLinesToZones, debugZoneScores, type DetectedLine } from './assign'
 import type { ImageSourceLike, Point } from '../mediapipe'
 
 export interface LineDetectionResult {
   lines: Partial<Record<LineKey, DetectedLine>>
   /** Kolik znaků detekce vůbec našla nad prahem — jde do statistiky. */
   detectedCount: number
+  /** Jen když se vyžádá — rozpad skóre pro kalibraci, viz assign.ts. */
+  debug?: ReturnType<typeof debugZoneScores>
 }
 
 /**
@@ -31,6 +33,7 @@ export function detectLines(
   image: ImageSourceLike,
   landmarks: Point[],
   grayscaleMode: GrayscaleMode = 'green',
+  withDebug = false,
 ): LineDetectionResult | null {
   const normalized = normalizePalm(image, landmarks)
   if (!normalized) return null
@@ -56,5 +59,9 @@ export function detectLines(
 
   const lines = assignLinesToZones(components, response, FRAME_SIZE)
 
-  return { lines, detectedCount: Object.keys(lines).length }
+  return {
+    lines,
+    detectedCount: Object.keys(lines).length,
+    debug: withDebug ? debugZoneScores(components, response, FRAME_SIZE) : undefined,
+  }
 }
