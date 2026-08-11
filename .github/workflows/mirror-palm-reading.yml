@@ -1,0 +1,25 @@
+name: Mirror do palm-reading
+
+# Přenáší claude/palm-reading-library-bsvvnl do ufi-daman/palm-reading (main).
+# Nezávisí na zařízení ani relaci, ze které se pushne do protocol — proto
+# tenhle workflow existuje: přenos má být vlastnost repa, ne kroku, který
+# je potřeba pokaždé ručně zopakovat z jiného terminálu.
+on:
+  push:
+    branches: [claude/palm-reading-library-bsvvnl]
+  workflow_dispatch: {}
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/palm-reading-library-bsvvnl
+          fetch-depth: 0
+
+      - name: Push do palm-reading
+        run: |
+          git push --force "https://${PALM_READING_TOKEN}@github.com/ufi-daman/palm-reading.git" HEAD:main
+        env:
+          PALM_READING_TOKEN: ${{ secrets.PALM_READING_TOKEN }}
