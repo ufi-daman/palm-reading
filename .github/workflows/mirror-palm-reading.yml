@@ -17,6 +17,7 @@ jobs:
         with:
           ref: claude/palm-reading-library-bsvvnl
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Push do palm-reading
         run: |
