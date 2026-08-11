@@ -1,4 +1,5 @@
 import { computeAffine, warpImage, type Point } from './homography'
+import { sourceSize, type ImageSourceLike } from '../mediapipe'
 
 export const FRAME_SIZE = 512
 
@@ -116,24 +117,22 @@ export function insidePalmCore(x: number, y: number): boolean {
  * (degenerovaný trojúhelník).
  */
 export function normalizePalm(
-  image: HTMLImageElement,
+  image: ImageSourceLike,
   landmarks: Point[],
 ): ImageData | null {
   const src = [landmarks[WRIST], landmarks[INDEX_MCP], landmarks[PINKY_MCP]]
   const dst = [CANONICAL.wrist, CANONICAL.index, CANONICAL.pinky]
+  const { width, height } = sourceSize(image)
 
   // Normalizované souřadnice MediaPipe (0–1) → pixely zdrojového obrázku.
-  const srcPixels = src.map((p) => ({
-    x: p.x * image.naturalWidth,
-    y: p.y * image.naturalHeight,
-  }))
+  const srcPixels = src.map((p) => ({ x: p.x * width, y: p.y * height }))
 
   try {
     const transform = computeAffine(srcPixels, dst)
     const warped = warpImage(
       image,
-      image.naturalWidth,
-      image.naturalHeight,
+      width,
+      height,
       transform,
       FRAME_SIZE,
       FRAME_SIZE,

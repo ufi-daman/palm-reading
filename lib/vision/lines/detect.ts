@@ -1,10 +1,15 @@
 import type { LineKey } from '@/lib/content/types'
 import { normalizePalm, insidePalmCore, FRAME_SIZE } from './normalize'
-import { toGrayscale, claheApprox, bilateralFilter } from './enhance'
+import {
+  toGrayscale,
+  claheApprox,
+  bilateralFilter,
+  type GrayscaleMode,
+} from './enhance'
 import { multiScaleFrangi } from './ridges'
 import { otsuThreshold, threshold, zhangSuenThin, connectedComponents } from './skeleton'
 import { assignLinesToZones, type DetectedLine } from './assign'
-import type { Point } from '../mediapipe'
+import type { ImageSourceLike, Point } from '../mediapipe'
 
 export interface LineDetectionResult {
   lines: Partial<Record<LineKey, DetectedLine>>
@@ -22,11 +27,15 @@ export interface LineDetectionResult {
  * (lib/vision index) to zachytí a vrátí uživatele k ručnímu doplnění,
  * detekce se nikdy nesmí tvářit jistě, když selhala.
  */
-export function detectLines(image: HTMLImageElement, landmarks: Point[]): LineDetectionResult | null {
+export function detectLines(
+  image: ImageSourceLike,
+  landmarks: Point[],
+  grayscaleMode: GrayscaleMode = 'green',
+): LineDetectionResult | null {
   const normalized = normalizePalm(image, landmarks)
   if (!normalized) return null
 
-  const gray = toGrayscale(normalized)
+  const gray = toGrayscale(normalized, grayscaleMode)
   const enhanced = claheApprox(gray, FRAME_SIZE, FRAME_SIZE)
   const smoothed = bilateralFilter(enhanced, FRAME_SIZE, FRAME_SIZE)
 

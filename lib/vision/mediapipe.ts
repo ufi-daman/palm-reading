@@ -30,10 +30,28 @@ export interface Point {
 }
 
 /**
+ * Zdroj obrazu pro detekci. Canvas je tu proto, že snímek z kamery se do
+ * analýzy předává nekomprimovaný — viz `CaptureResult.frame`.
+ */
+export type ImageSourceLike = HTMLImageElement | HTMLCanvasElement
+
+/** Rozměry zdroje; `<img>` je hlásí jinak než canvas. */
+export function sourceSize(source: ImageSourceLike): {
+  width: number
+  height: number
+} {
+  return source instanceof HTMLCanvasElement
+    ? { width: source.width, height: source.height }
+    : { width: source.naturalWidth, height: source.naturalHeight }
+}
+
+/**
  * Detekuje 21 bodů ruky na obrázku. Vrací null, pokud ruka nebyla
  * nalezena vůbec — volající se v tom případě vrátí k ručnímu průvodci.
  */
-export async function detectHandLandmarks(image: HTMLImageElement): Promise<Point[] | null> {
+export async function detectHandLandmarks(
+  image: ImageSourceLike,
+): Promise<Point[] | null> {
   const landmarker = await loadHandLandmarker()
   const result = landmarker.detect(image)
   const landmarks = result.landmarks[0]

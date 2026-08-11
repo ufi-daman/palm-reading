@@ -11,15 +11,6 @@ import { detectLines } from '@/lib/vision/lines/detect'
 import type { LineKey, MountKey } from '@/lib/content/types'
 import type { Characteristics } from '@/lib/validators/characteristics'
 
-function loadImage(dataUrl: string): Promise<HTMLImageElement> {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.onload = () => resolve(img)
-    img.onerror = () => reject(new Error('Obrázek se nepodařilo načíst.'))
-    img.src = dataUrl
-  })
-}
-
 type PanelLineValue = { present: boolean; strength?: string; length?: string; quality?: string }
 type PanelMountValue = { size?: string; strength?: string }
 
@@ -74,7 +65,9 @@ export function PhotoFirstFlow() {
   async function handleCapture(result: CaptureResult) {
     setState({ phase: 'detecting', dataUrl: result.dataUrl })
     try {
-      const image = await loadImage(result.dataUrl)
+      // Detekce jede z nekomprimovaného canvasu (`frame`), ne z JPEG
+      // náhledu — ten je jen pro zobrazení a pro AI rozbor.
+      const image = result.frame
       const landmarks = await detectHandLandmarks(image)
       if (!landmarks) {
         setState({ phase: 'not-found', dataUrl: result.dataUrl })

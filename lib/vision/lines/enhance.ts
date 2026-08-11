@@ -1,9 +1,50 @@
 /** Odstíny šedi, CLAHE (dlaždicová ekvalizace s ořezem) a bilaterální filtr. */
 
-export function toGrayscale(imageData: ImageData): Float32Array {
+/**
+ * Jak z barevného snímku udělat jednokanálový vstup pro hřebenový filtr.
+ *
+ * **Výchozí je `green`, ne standardní luminance — rozhodlo měření.**
+ * Kůže pohlcuje modrou nejsilněji a červené světlo se v ní rozptyluje
+ * nejhlouběji; zelený kanál proto nese nejvíc povrchového detailu.
+ * Relativní vysokofrekvenční kontrast R/G/B vyšel 0,080 / 0,120 / 0,119
+ * na jedné reálné fotce a 0,047 / 0,074 / 0,072 na druhé.
+ *
+ * Skóre detekovaných čar na týchž dvou fotkách (luma → green):
+ *
+ * | čára | palm-01 | palm-02 |
+ * |---|---|---|
+ * | život | 0,836 → 0,842 | 0,847 → 0,832 |
+ * | srdce | 0,687 → 0,726 | 0,817 → 0,816 |
+ * | osud | 0,673 → 0,593 | — |
+ * | hlava | 0,476 → **0,732** | — |
+ * | Apollo | 0,494 → 0,386 | 0,498 → **0,815** |
+ * | průměr | 0,633 → 0,656 | 0,721 → 0,821 |
+ *
+ * Počet nalezených čar zůstal stejný; zlepšení je soustředěné do slabých
+ * čar u prahu, což je přesně tam, kde rozhoduje mezi „nalezeno" a „nic".
+ *
+ * **Co bylo zkoušeno a zamítnuto:** odečíst od jasu barevnou složku
+ * `log R − log B` (krev a melanin pohlcují modrou silněji než červenou),
+ * s koeficientem z regrese na témž snímku. Ztratilo to dvě čáry z pěti
+ * na palm-01 a jednu ze tří na palm-02 — kód se proto nepřenáší, jen
+ * záznam, že se to měřilo.
+ */
+export type GrayscaleMode = 'luma' | 'green'
+
+export function toGrayscale(
+  imageData: ImageData,
+  mode: GrayscaleMode = 'green',
+): Float32Array {
   const { data, width, height } = imageData
-  const gray = new Float32Array(width * height)
-  for (let i = 0; i < width * height; i++) {
+  const count = width * height
+  const gray = new Float32Array(count)
+
+  if (mode === 'green') {
+    for (let i = 0; i < count; i++) gray[i] = data[i * 4 + 1]
+    return gray
+  }
+
+  for (let i = 0; i < count; i++) {
     gray[i] = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2]
   }
   return gray

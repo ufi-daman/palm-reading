@@ -30,9 +30,14 @@ present:true a strength/length/quality. Pokud ji nevidíš zřetelně, nebo si
 nejsi jistý, nastav present:false a ostatní pole na null — NEHÁDEJ. Radši
 méně nalezených čar s jistotou než víc s dohadem.
 
-Pro pahorky (mounts) totéž: size/strength jen tam, kde je vyvýšenina na
-fotce z jednoho úhlu vůbec rozeznatelná (což bývá zřídka — u plochého snímku
-to obvykle nejde, v tom případě nech pole null).
+Pro pahorky (mounts) platí stejné pravidlo „nehádej", ale navaž ho na to,
+co je na snímku vidět. Nejdřív posuď osvětlení: jde světlo ze strany a vrhají
+vyvýšeniny na dlani stín? Pokud ano, vyhodnoť ty pahorky, u kterých rozeznáš
+světlý bok a stín na protilehlé straně. Pokud je dlaň nasvícená rovnoměrně
+a stíny nikde nejsou, nech všechny pahorky null — z takového snímku se
+vyvýšenina od jinak zbarveného místa odlišit nedá.
+
+Barva ani zarudnutí samy o sobě pahorek neurčují.
 
 additionalFeatures vyplň jen tam, kde je to z fotky jasně čitelné (délka
 prstů, tvar nehtů, barva kůže, struktura kůže).`
@@ -70,7 +75,17 @@ export async function POST(request: Request) {
   const [, mediaType, data] = match
 
   const reserved = await tryReserveAiCall()
-  if (!reserved) {
+  if (reserved === 'no-database') {
+    return NextResponse.json(
+      {
+        error:
+          'AI rozbor potřebuje kromě API klíče i databázi (DATABASE_URL) — bez ní nejde vynutit denní strop volání, takže zůstává vypnutý.',
+        code: 'AI_NO_DATABASE',
+      },
+      { status: 503 },
+    )
+  }
+  if (reserved === 'cap-reached') {
     return NextResponse.json(
       { error: 'AI rozbor je pro dnešek vyčerpaný. Zkuste to prosím zítra, nebo pokračujte ručně.', code: 'DAILY_CAP' },
       { status: 429 },

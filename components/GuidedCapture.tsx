@@ -19,22 +19,82 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
 const MAX_FILE_SIZE = 15 * 1024 * 1024
 
 export interface CaptureResult {
+  /** JPEG pro náhled a pro případné odeslání do AI rozboru. */
   dataUrl: string
+  /**
+   * Nekomprimovaný snímek pro místní analýzu. JPEG kvantuje jas a
+   * podvzorkovává barvu na 4:2:0 — u detekce, která stojí na jemných
+   * rozdílech v obraze, je to ztráta, kterou si nemusíme přidávat: data
+   * z canvasu už v ruce máme, stačí je nezabalovat.
+   */
+  frame: HTMLCanvasElement
   width: number
   height: number
 }
 
-function resizeCanvasToDataUrl(source: CanvasImageSource, width: number, height: number): string {
+/** Počet snímků série; průměrem klesne šum o ≈ √BURST_FRAMES. */
+const BURST_FRAMES = 8
+const BURST_INTERVAL_MS = 60
+
+function scaledSize(width: number, height: number) {
   const scale = Math.min(1, MAX_DIMENSION / Math.max(width, height))
-  const outWidth = Math.round(width * scale)
-  const outHeight = Math.round(height * scale)
+  return {
+    width: Math.round(width * scale),
+    height: Math.round(height * scale),
+  }
+}
+
+function drawToCanvas(
+  source: CanvasImageSource,
+  width: number,
+  height: number,
+): HTMLCanvasElement {
+  const out = scaledSize(width, height)
   const canvas = document.createElement('canvas')
-  canvas.width = outWidth
-  canvas.height = outHeight
-  const ctx = canvas.getContext('2d')
+  canvas.width = out.width
+  canvas.height = out.height
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
   if (!ctx) throw new Error('Canvas není podporován.')
-  ctx.drawImage(source, 0, 0, outWidth, outHeight)
-  return canvas.toDataURL('image/jpeg', JPEG_QUALITY)
+  ctx.drawImage(source, 0, 0, out.width, out.height)
+  return canvas
+}
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+/**
+ * Průměr série snímků z živého náhledu. Šum senzoru je mezi snímky
+ * nezávislý, obraz ne — průměrování ho tedy potlačí, aniž by rozmazalo
+ * rýhy. Cena je ~0,5 s držení telefonu v klidu; drobný třes za tu dobu
+ * průměr spíš změkčí, proto série záměrně není delší.
+ */
+async function captureBurst(video: HTMLVideoElement): Promise<HTMLCanvasElement> {
+  const out = scaledSize(video.videoWidth, video.videoHeight)
+  const accumulator = new Float32Array(out.width * out.height * 4)
+  let frames = 0
+
+  for (let i = 0; i < BURST_FRAMES; i++) {
+    const canvas = drawToCanvas(video, video.videoWidth, video.videoHeight)
+    const ctx = canvas.getContext('2d', { willReadFrequently: true })
+    if (!ctx) break
+    const { data } = ctx.getImageData(0, 0, out.width, out.height)
+    for (let p = 0; p < accumulator.length; p++) accumulator[p] += data[p]
+    frames++
+    if (i < BURST_FRAMES - 1) await sleep(BURST_INTERVAL_MS)
+  }
+
+  if (frames === 0) return drawToCanvas(video, video.videoWidth, video.videoHeight)
+
+  const canvas = document.createElement('canvas')
+  canvas.width = out.width
+  canvas.height = out.height
+  const ctx = canvas.getContext('2d', { willReadFrequently: true })
+  if (!ctx) throw new Error('Canvas není podporován.')
+  const image = ctx.createImageData(out.width, out.height)
+  for (let p = 0; p < accumulator.length; p++) {
+    image.data[p] = Math.round(accumulator[p] / frames)
+  }
+  ctx.putImageData(image, 0, 0)
+  return canvas
 }
 
 function resizeFileToDataUrl(file: File): Promise<CaptureResult> {
@@ -44,8 +104,15 @@ function resizeFileToDataUrl(file: File): Promise<CaptureResult> {
     img.onload = () => {
       URL.revokeObjectURL(objectUrl)
       try {
-        const dataUrl = resizeCanvasToDataUrl(img, img.width, img.height)
-        resolve({ dataUrl, width: img.width, height: img.height })
+        // U nahraného souboru je ztráta kompresí už v něm, canvas ji
+        // nevrátí — ale dál v řetězci se aspoň nepřidává další.
+        const frame = drawToCanvas(img, img.width, img.height)
+        resolve({
+          dataUrl: frame.toDataURL('image/jpeg', JPEG_QUALITY),
+          frame,
+          width: img.width,
+          height: img.height,
+        })
       } catch (error) {
         reject(error)
       }
@@ -205,8 +272,13 @@ export function GuidedCapture({
     setProcessing(true)
     setError(undefined)
     try {
-      const dataUrl = resizeCanvasToDataUrl(video, video.videoWidth, video.videoHeight)
-      onCapture({ dataUrl, width: video.videoWidth, height: video.videoHeight })
+      const frame = await captureBurst(video)
+      onCapture({
+        dataUrl: frame.toDataURL('image/jpeg', JPEG_QUALITY),
+        frame,
+        width: video.videoWidth,
+        height: video.videoHeight,
+      })
     } catch {
       setError('Snímek se nepodařilo zpracovat. Zkuste to znovu.')
     } finally {
@@ -288,6 +360,13 @@ export function GuidedCapture({
           <li>Světlo ze strany nebo zepředu, nikdy zezadu proti objektivu.</li>
           <li>Fotografii pořiďte na neutrálním pozadí, ne na vzorované ploše.</li>
         </ol>
+        {/* Pahorky jsou vyvýšeniny — do fotky se promítnou jedině stínem.
+            Při rovnoměrném světle v místnosti tam ta informace není. */}
+        <p className="text-gray-600 text-sm mt-2">
+          <strong>Chcete-li i pahorky:</strong> posviťte na dlaň zřetelně
+          z jedné strany, aby vyvýšeniny vrhaly stín. Při rovnoměrném světle
+          v místnosti je od fotky nepoznáte ani vy, ani aplikace.
+        </p>
         <p className="text-gray-500 text-xs mt-2">
           Fotografie zůstává ve vašem prohlížeči.
         </p>
@@ -331,7 +410,7 @@ export function GuidedCapture({
               disabled={!canShoot || processing}
               className="bg-palm-700 hover:bg-palm-800 disabled:bg-gray-300 text-white px-8 py-3 rounded-full font-semibold"
             >
-              {processing ? 'Zpracovávám…' : '📸 Vyfotit'}
+              {processing ? 'Snímám sérii, držte klid…' : '📸 Vyfotit'}
             </button>
             {!canShoot && (
               <button
