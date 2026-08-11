@@ -23,6 +23,12 @@ export const CharacteristicsSchema = z.object({
     mercuryLine: LinneCharacteristicSchema.optional(),
     intuitionLine: LinneCharacteristicSchema.optional(),
     venusLine: LinneCharacteristicSchema.optional(),
+    marsLine: LinneCharacteristicSchema.optional(),
+    saturnRing: LinneCharacteristicSchema.optional(),
+    solomonRing: LinneCharacteristicSchema.optional(),
+    viaLascivia: LinneCharacteristicSchema.optional(),
+    travelLine: LinneCharacteristicSchema.optional(),
+    relationshipLine: LinneCharacteristicSchema.optional(),
   }).optional(),
   mounts: z.object({
     venus: MountCharacteristicSchema.optional(),

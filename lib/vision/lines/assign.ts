@@ -16,6 +16,7 @@ const MIN_MATCH_FRACTION = 0.6
 
 function componentMatchesZone(component: Component, zoneKey: LineKey): number {
   const zone = LINE_ZONES[zoneKey]
+  if (!zone) return 0
   let withinTolerance = 0
   for (const pixel of component.pixels) {
     if (distanceToZone(pixel, zone) <= ZONE_TOLERANCE) withinTolerance++
@@ -77,8 +78,10 @@ export function assignLinesToZones(
   const result: Partial<Record<LineKey, DetectedLine>> = {}
 
   for (const [zoneKey, zoneComponents] of Array.from(byZone.entries())) {
+    const zone = LINE_ZONES[zoneKey]
+    if (!zone) continue
     const totalPixels = zoneComponents.reduce((sum, c) => sum + c.pixels.length, 0)
-    const pathLength = zonePathLength(LINE_ZONES[zoneKey])
+    const pathLength = zonePathLength(zone)
     const coverage = Math.min(1, totalPixels / pathLength)
 
     let responseSum = 0

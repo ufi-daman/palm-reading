@@ -610,4 +610,253 @@ export const PALM_LINES: PalmLineContent[] = [
       },
     },
   },
+
+  // ————————————————————————————————————————————————————————————
+  // VEDLEJŠÍ ZNAKY (Cheiro, kapitoly IV a XI–XIV)
+  //
+  // Prameny je popisují mnohem stručněji než hlavní čáry a u většiny řeší
+  // jen to, jestli znak je, nebo není — proto mají vyplněnou osu síly a
+  // osy délky a kvality vynechávají. Vymýšlet je by znamenalo psát obsah,
+  // který v pramenech není.
+  //
+  // TŘI EDITORSKÉ ŘEZY, které tu dělám vědomě — a proto je jich u těchto
+  // znaků víc než u hlavních čar: Cheiro u vedlejších znaků skoro přestává
+  // popisovat povahu a přechází k věštění.
+  //
+  // 1. **Předpovědi nepřebírám.** U cestovních čar Cheiro předpovídá
+  //    konkrétní cesty, ztráty a smrt v cizině, u vztahových čar úmrtí
+  //    partnera, rozvod a data událostí. Nic z toho není popis povahy a
+  //    nic z toho nemá oporu; přebírám jen to, co vypovídá o založení.
+  // 2. **Osudové odsudky nepřebírám.** O Saturnově prstenu píše, že jeho
+  //    nositel nikdy nic nedokončí a život mu skončí v bídě nebo tragédii
+  //    („nejnešťastnější znamení, jaké lze najít"). To není čtení povahy,
+  //    to je kletba.
+  // 3. **Lékařská a moralizující tvrzení nepřebírám.** U Via Lascivia
+  //    Cheiro mluví o závislosti na opiu a morfinu, o šílenství a
+  //    „degeneraci"; u náramků o neplodnosti žen kvůli „vnitřní vadě".
+  //
+  // DVA ZNAKY JSEM VYNECHAL ÚPLNĚ, protože po těchto řezech nezbylo nic:
+  // - **Čáry dětí** — Cheiro z nich odečítá počet a pohlaví dětí a u
+  //   ostrůvku na čáře tvrdí, že „dítě nedospěje". Nic o povaze nositele
+  //   tam není, jen předpovědi; a tuhle konkrétní bych nikomu nezobrazil.
+  // - **Náramky** — legenda o třech řeckých náramcích zdraví, bohatství
+  //   a štěstí plus ono tvrzení o neplodnosti. Žádný výklad povahy.
+  // ————————————————————————————————————————————————————————————
+
+  {
+    key: 'marsLine',
+    nameCs: 'Čára Marsu',
+    nameEn: 'Line of Mars (Inner Life Line)',
+    type: 'minor',
+    description:
+      'Druhá čára vedená uvnitř oblouku čáry života, blíž k palci. Cheiro ji čte jako posilu čáry života: „všechna přerušení a špatná znamení na čáře života jsou na rukou, které mají tuto vnitřní čáru, zmírněna."',
+    anatomy: 'Uvnitř čáry života, mezi ní a palcem, obepíná pahorek Venuše.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning: 'Slabě znatelná vnitřní čára — náznak druhé zásoby sil, ne výrazný rys.',
+          personality: 'Rezervu k dispozici máte, ale spoléhat se na ni jako na samozřejmost by bylo neopatrné.',
+          source: [cheiro('The Line of Mars or Inner Life Line')],
+        },
+        medium: {
+          meaning: 'Zřetelná vnitřní čára doprovázející čáru života.',
+          personality: 'Když dojdou první síly, obvykle najdete ještě druhé — zvlášť v situacích, kde jde o hodně.',
+          source: [cheiro('The Line of Mars or Inner Life Line')],
+        },
+        strong: {
+          meaning:
+            'Jasná a silná vnitřní čára. Cheiro ji spojuje s velkou vitalitou a odolností vůči nemoci a považuje ji za výborné znamení u lidí, kteří dělají nebezpečnou práci.',
+          personality:
+            'Máte bojovné založení a odolnost, která se ukáže právě pod tlakem. Rub téhož: do konfliktů a rizik se pouštíte snáz, než by bylo nutné.',
+          source: [cheiro('The Line of Mars or Inner Life Line')],
+        },
+      },
+      absent: {
+        meaning: 'Čára Marsu chybí na většině rukou — Cheiro sám uvádí, že se najde jen na některých.',
+        personality: 'Vaši odolnost je třeba číst z čáry života samotné, ne z její posily.',
+        source: [cheiro('The Line of Mars or Inner Life Line')],
+      },
+    },
+  },
+
+  {
+    key: 'saturnRing',
+    nameCs: 'Saturnův prsten',
+    nameEn: 'Ring of Saturn',
+    type: 'minor',
+    description:
+      'Vzácný obloučkovitý znak ležící napříč pahorkem Saturna. Cheiro o něm píše krajně odsudečně — že jeho nositel nikdy nic nedotáhne a skončí v bídě. Tenhle osudový výklad nepřebíráme: je to kletba, ne popis povahy. Zůstává to, co Cheiro popisuje jako povahový rys — silná uzavřenost a odstup od okolí.',
+    anatomy: 'Obloučkem pod prostředníkem, napříč pahorkem Saturna.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning: 'Náznak oblouku pod prostředníkem.',
+          personality: 'Občas se stáhnete do sebe víc, než okolí čeká — ale je to nálada, ne způsob života.',
+          source: [cheiro('The Ring of Saturn')],
+        },
+        medium: {
+          meaning: 'Zřetelný oblouk na pahorku Saturna.',
+          personality: 'Svůj prostor si držíte a rady zvenčí přijímáte nerad. Samota vám nevadí, spíš vám vyhovuje.',
+          source: [cheiro('The Ring of Saturn')],
+        },
+        strong: {
+          meaning:
+            'Výrazný uzavřený prsten. Cheiro popisuje tyto lidi jako „odříznuté od svých bližních zvláštním způsobem", nesmírně zatvrzelé a odmítající jakýkoli zásah do svých plánů.',
+          personality:
+            'Jdete si svou cestou bez ohledu na to, co si o ní kdo myslí. Silná stránka i past zároveň — odstup, který vás chrání, vás také může připravit o pomoc, kterou byste jinak dostal.',
+          source: [cheiro('The Ring of Saturn')],
+        },
+      },
+      absent: {
+        meaning: 'Saturnův prsten na drtivé většině rukou není — Cheiro sám uvádí, že se nachází „velmi zřídka".',
+        personality: 'Nic to neznamená; jeho nepřítomnost je běžný stav.',
+        source: [cheiro('The Ring of Saturn')],
+      },
+    },
+  },
+
+  {
+    key: 'solomonRing',
+    nameCs: 'Šalomounův prsten',
+    nameEn: 'Ring of Solomon',
+    type: 'minor',
+    description:
+      'Obloučkovitý znak u kořene ukazováku, na pahorku Jupitera. Cheiro ho řadí ke znakům zájmu o skryté a nesamozřejmé a u této varianty zdůrazňuje, že nositel „usiluje o postavení mistra" v takových oborech — tedy nejen zájem, ale ambice v něm vyniknout.',
+    anatomy: 'Oblouček obepínající kořen ukazováku, na pahorku Jupitera.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning: 'Slabý oblouček u kořene ukazováku.',
+          personality: 'Otázky po smyslu a po tom, co se skrývá pod povrchem, vás zajímají — zatím spíš jako koníček.',
+          source: [cheiro('The Ring of Solomon')],
+        },
+        medium: {
+          meaning: 'Zřetelný Šalomounův prsten.',
+          personality: 'Máte cit pro to, co lidé neřeknou nahlas, a lidé za vámi chodí, když si potřebují něco srovnat v hlavě.',
+          source: [cheiro('The Ring of Solomon')],
+        },
+        strong: {
+          meaning:
+            'Výrazný uzavřený prsten na pahorku Jupitera — u Cheira nejen zájem o skryté, ale ambice v tom obstát a vést druhé.',
+          personality:
+            'Chcete věcem rozumět do hloubky a to porozumění předávat. Přitahuje vás role toho, kdo vykládá a učí, ne toho, kdo jen naslouchá.',
+          source: [cheiro('"La Croix Mystique", The Ring of Solomon')],
+        },
+      },
+      absent: {
+        meaning: 'Šalomounův prsten chybí na většině rukou.',
+        personality: 'Zájem o hlubší otázky se u vás projeví jinými znaky, tenhle konkrétní k nim nepatří.',
+      },
+    },
+  },
+
+  {
+    key: 'viaLascivia',
+    nameCs: 'Via Lascivia',
+    nameEn: 'Via Lasciva',
+    type: 'minor',
+    description:
+      'Obloučkovitý znak v dolní vnější části dlaně, spojující oblast Luny s pahorkem Venuše nebo mířící od Luny k zápěstí. Cheiro k němu váže nevázanou smyslnost, závislost na opiu a morfinu, šílenství a „degeneraci" — nic z toho nepřebíráme. Jsou to nepodložené odsudky, ne popis povahy. Zůstává jádro, na kterém se prameny shodují: silná potřeba intenzity a podnětů.',
+    anatomy: 'V dolní vnější čtvrtině dlaně, od oblasti Luny směrem k zápěstí nebo k pahorku Venuše.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning: 'Slabě znatelný znak v dolní vnější části dlaně.',
+          personality: 'Máte rád, když se něco děje, ale klidnější období vás netíží.',
+          source: [cheiro('The Via Lasciva')],
+        },
+        medium: {
+          meaning: 'Zřetelný znak v dolní vnější části dlaně.',
+          personality: 'Potřebujete přísun podnětů — nuda vás vyčerpává víc než práce. Hledejte pro to výstupy, se kterými budete spokojený i zpětně.',
+          source: [cheiro('The Via Lasciva')],
+        },
+        strong: {
+          meaning:
+            'Výrazný znak. Cheiro tuhle podobu spojuje s nejsilnějšími touhami a představami; jeho morální i lékařské závěry z toho ale nepřebíráme.',
+          personality:
+            'Intenzita je pro vás potřeba, ne rozmar. To je zdroj energie i největší riziko — záleží hodně na tom, kam ji nasměrujete.',
+          source: [cheiro('The Via Lasciva')],
+        },
+      },
+      absent: {
+        meaning: 'Via Lascivia na většině rukou není.',
+        personality: 'Nic to neznamená; jeho nepřítomnost je běžný stav.',
+      },
+    },
+  },
+
+  {
+    key: 'travelLine',
+    nameCs: 'Cestovní čáry',
+    nameEn: 'Lines of Travel',
+    type: 'minor',
+    description:
+      'Jemné čárky odbočující z čáry života směrem k pahorku Luny, případně čáry na Luně samotné. Cheiro z nich odečítá konkrétní cesty a jejich nebezpečí a váže je i na datum narození — to nepřebíráme. Zůstává rozdíl, který popisuje srozumitelně: mezi životem plným změny a životem zapuštěným na jednom místě.',
+    anatomy: 'Krátké čáry odbočující z čáry života ven, k dolní vnější části dlaně.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning:
+            'Málo odboček z čáry života. Cheiro: když čára života „zůstane půlkruhem kolem pahorku Venuše" bez odboček, je život „pozoruhodně prostý změn".',
+          personality: 'Máte rád zapuštěné kořeny. Stabilita vám dává sílu, ne že by vám chyběla odvaha.',
+          source: [cheiro('Travels, Voyages and Accidents')],
+        },
+        medium: {
+          meaning: 'Několik zřetelných odboček směrem k vnější části dlaně.',
+          personality: 'Změnu vyhledáváte v dávkách — vyrazíte a pak se rád vracíte k tomu, co znáte.',
+          source: [cheiro('Travels, Voyages and Accidents')],
+        },
+        strong: {
+          meaning:
+            'Výrazné odbočky, případně samotná čára života se stáčí k pahorku Luny — u Cheira znak života „plného změny".',
+          personality:
+            'Usadit se natrvalo na jednom místě pro vás není samozřejmost. Potřebujete pohyb a nové prostředí, jinak začnete být neklidný.',
+          source: [cheiro('Travels, Voyages and Accidents')],
+        },
+      },
+      absent: {
+        meaning: 'Žádné zřetelné odbočky z čáry života.',
+        personality: 'Vaše vazba na místo a prostředí je pevná.',
+        source: [cheiro('Travels, Voyages and Accidents')],
+      },
+    },
+  },
+
+  {
+    key: 'relationshipLine',
+    nameCs: 'Čáry vztahů',
+    nameEn: 'Lines of Marriage',
+    type: 'minor',
+    description:
+      'Krátké vodorovné čárky na vnější hraně dlaně pod malíkem. Cheiro z nich předpovídá sňatky, rozvody, úmrtí partnera i data událostí — nic z toho nepřebíráme; nejsou to popisy povahy a nemají oporu. Zůstává to, co je z pramene čitelné jako založení: jakou váhu ve vašem životě mají blízké vazby. Ani počet čar neznamená počet vztahů.',
+    anatomy: 'Na vnější hraně dlaně mezi čárou srdce a kořenem malíku.',
+    characteristics: {
+      strength: {
+        weak: {
+          meaning:
+            'Slabé nebo velmi krátké čárky. Cheiro rozlišuje, že jen zřetelně utvořené čáry se týkají trvalých svazků, krátké „hlubokého citu".',
+          personality: 'Blízkost prožíváte spíš uvnitř než navenek. Že se váš cit neprojevuje okázale, neznamená, že je slabý.',
+          source: [cheiro('Signs Relating to Marriage')],
+        },
+        medium: {
+          meaning: 'Zřetelná čára nebo čáry na hraně dlaně.',
+          personality: 'Blízké vztahy jsou pro vás jedna z hlavních os života, ale ne jediná, kolem které se všechno točí.',
+          source: [cheiro('Signs Relating to Marriage')],
+        },
+        strong: {
+          meaning:
+            'Výrazná, hluboká a rovná čára. Cheiro považuje rovnost a čistotu čáry, bez přerušení a nepravidelností, za znak souladu ve vztahu.',
+          personality:
+            'Vztahy berete vážně a vážete se naplno. Když do někoho jdete, jdete celý — s tím, že vás to zasáhne hlouběji než ostatní.',
+          source: [cheiro('Signs Relating to Marriage')],
+        },
+      },
+      absent: {
+        meaning:
+          'Na hraně dlaně nejsou zřetelné čárky. Cheiro sám upozorňuje, že bývají velmi jemné a někdy je vidět až po stisknutí kůže nebo lupou — nepřítomnost proto může být otázkou viditelnosti.',
+        personality: 'Z tohoto znaku o vašich vazbách nic číst nelze — ne že by chyběly.',
+        source: [cheiro('Signs Relating to Marriage')],
+      },
+    },
+  },
 ]

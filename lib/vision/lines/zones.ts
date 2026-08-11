@@ -23,7 +23,17 @@ export interface ZonePoint {
  * Původní hodnoty byly odhad z textových popisů a zóny čar srdce a Venuše
  * kvůli tomu ležely úplně mimo dlaň — nemohly nikdy sednout.
  */
-export const LINE_ZONES: Record<LineKey, ZonePoint[]> = {
+/**
+ * Záměrně `Partial`: zóny má jen těch osm čar, pro které jsou souřadnice
+ * odvozené z reálných snímků. Šest vedlejších znaků doplněných z Cheira
+ * (čára Marsu, Saturnův a Šalomounův prsten, Via Lascivia, cestovní a
+ * vztahové čáry) zóny nemá a detekce je proto nehledá — dokud je nezměřím,
+ * byl by to odhad, a odhadnuté zóny se tu už jednou vymstily: čáry srdce
+ * a Venuše ležely mimo dlaň a nemohly sednout nikdy.
+ *
+ * Uživatel je zatím vyplní ručně v panelu oprav, případně je dodá AI rozbor.
+ */
+export const LINE_ZONES: Partial<Record<LineKey, ZonePoint[]>> = {
   // Obíhá val palce; průběh naměřený na kalibračních snímcích.
   lifeLine: [
     { x: 145, y: 225 },

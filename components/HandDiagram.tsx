@@ -11,6 +11,12 @@ export const LINE_LABELS: Record<LineKey, string> = {
   mercuryLine: 'Čára Merkurova',
   intuitionLine: 'Čára intuice',
   venusLine: 'Venušin pás',
+  marsLine: 'Čára Marsu',
+  saturnRing: 'Saturnův prsten',
+  solomonRing: 'Šalomounův prsten',
+  viaLascivia: 'Via Lascivia',
+  travelLine: 'Cestovní čáry',
+  relationshipLine: 'Čáry vztahů',
 }
 
 export const MOUNT_LABELS: Record<MountKey, string> = {
@@ -33,6 +39,14 @@ const LINE_PATHS: Record<LineKey, string> = {
   mercuryLine: 'M 226 332 C 230 292, 232 250, 234 216',
   intuitionLine: 'M 244 306 C 258 272, 250 238, 220 214',
   venusLine: 'M 118 152 C 150 128, 200 128, 228 152',
+  // Vedlejší znaky doplněné z Cheira. Schéma, ne měřená poloha — detekce
+  // je nehledá (viz LINE_ZONES), slouží k orientaci v knihovně.
+  marsLine: 'M 96 198 C 106 250, 116 300, 138 340',
+  saturnRing: 'M 134 132 C 142 116, 162 116, 170 134',
+  solomonRing: 'M 87 144 C 94 126, 116 126, 123 146',
+  viaLascivia: 'M 240 304 C 224 330, 194 344, 164 348',
+  travelLine: 'M 116 304 L 144 316 M 124 330 L 154 344',
+  relationshipLine: 'M 250 190 L 234 190 M 250 202 L 238 202',
 }
 
 const MOUNT_POSITIONS: Record<MountKey, { cx: number; cy: number; r: number }> = {

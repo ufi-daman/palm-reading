@@ -31,6 +31,12 @@ export const VisionCharacteristicsSchema = z.object({
     mercuryLine: lineCharacteristic.nullable(),
     intuitionLine: lineCharacteristic.nullable(),
     venusLine: lineCharacteristic.nullable(),
+    marsLine: lineCharacteristic.nullable(),
+    saturnRing: lineCharacteristic.nullable(),
+    solomonRing: lineCharacteristic.nullable(),
+    viaLascivia: lineCharacteristic.nullable(),
+    travelLine: lineCharacteristic.nullable(),
+    relationshipLine: lineCharacteristic.nullable(),
   }),
   mounts: z.object({
     venus: mountCharacteristic.nullable(),

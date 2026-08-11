@@ -5,6 +5,7 @@ import { HandDiagram, LINE_LABELS, MOUNT_LABELS } from './HandDiagram'
 import { FeatureModal, type OptionGroup } from './FeatureModal'
 import { ResultCard, type AnalysisResult } from './ResultCard'
 import type { LineKey, MountKey } from '@/lib/content/types'
+import { getPalmLines } from '@/lib/content'
 
 type LineValue = {
   present?: boolean
@@ -44,6 +45,23 @@ const LINE_GROUPS: OptionGroup[] = [
     ],
   },
 ]
+
+/**
+ * Které osy dané čáře vůbec nabídnout. Vedlejší znaky (Saturnův prsten,
+ * cestovní čáry…) mají v pramenech popsanou jen výraznost — nabízet u nich
+ * délku a průběh by uživatele nechalo vyplnit pole, ze kterého ve výkladu
+ * nic nevznikne, protože pro ně žádný význam neexistuje.
+ */
+function lineGroupsFor(key: LineKey): OptionGroup[] {
+  const characteristics = getPalmLines().find((line) => line.key === key)
+    ?.characteristics
+  if (!characteristics) return LINE_GROUPS
+  return LINE_GROUPS.filter((group) =>
+    group.axis === 'strength'
+      ? true
+      : Boolean(characteristics[group.axis as 'length' | 'quality']),
+  )
+}
 
 const MOUNT_GROUPS: OptionGroup[] = [
   {
@@ -235,7 +253,7 @@ export function AnalyzerWizard({
         <FeatureModal
           title={LINE_LABELS[openLine]}
           description="Popište, jak čára vypadá na vaší dlani. Vyplnit můžete jen část."
-          groups={LINE_GROUPS}
+          groups={lineGroupsFor(openLine)}
           values={draft}
           onChange={(axis, value) =>
             setDraft((prev) => ({ ...prev, [axis]: value }))

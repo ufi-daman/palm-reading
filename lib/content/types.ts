@@ -21,6 +21,12 @@ export type LineKey =
   | 'mercuryLine'
   | 'intuitionLine'
   | 'venusLine'
+  | 'marsLine'
+  | 'saturnRing'
+  | 'solomonRing'
+  | 'viaLascivia'
+  | 'travelLine'
+  | 'relationshipLine'
 
 export type MountKey =
   | 'venus'
@@ -68,10 +74,17 @@ export interface AbsentMeaning {
  * Významy čáry po jednotlivých osách. Osy odpovídají polím ve
  * `CharacteristicsSchema`, takže vstup od uživatele lze mapovat přímo.
  */
+/**
+ * `length` a `quality` jsou nepovinné. U hlavních čar je prameny rozebírají
+ * podrobně, u vedlejších znaků často vůbec — Saturnův prsten se nepopisuje
+ * jako „krátký" ani „přerušený", je buď vidět, nebo ne. Kdyby byly osy
+ * povinné, musel bych je vyplnit textem, který v žádném prameni není; radši
+ * je vynechám, než abych je vymyslel.
+ */
 export interface LineCharacteristics {
   strength: Record<LineStrength, Meaning>
-  length: Record<LineLength, Meaning>
-  quality: Record<LineQuality, Meaning>
+  length?: Record<LineLength, Meaning>
+  quality?: Record<LineQuality, Meaning>
   absent: AbsentMeaning
 }
 

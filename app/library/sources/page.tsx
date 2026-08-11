@@ -40,12 +40,28 @@ export default function SourcesPage() {
           sloučené do jednoho tvrzení, které neříká ani jeden z nich.
         </p>
         <p>
-          <strong>Stav zpracování:</strong> čáry, pahorky a typy rukou
-          v knihovně čerpají zatím hlavně z Cheira (nejsystematičtější a
-          nejobsáhlejší popis těchto tří oblastí ze čtyř pramenů).
-          Křížové porovnání s Benhamem, Dale a Markunem, rozšíření na
-          vedlejší čáry nad rámec současných osmi a doplnění chirognomie a
-          znamení jsou navazující práce.
+          <strong>Co z pramenů vědomě nepřebíráme.</strong> U vedlejších
+          znaků Cheiro z velké části přestává popisovat povahu a přechází
+          k věštění: z cestovních čar odečítá konkrétní cesty a nehody,
+          z vztahových čar rozvody, úmrtí partnera a data událostí,
+          o Saturnově prstenu píše, že jeho nositel skončí v bídě.
+          Přebíráme z těchto kapitol jen to, co vypovídá o povaze.
+        </p>
+        <p>
+          Dva znaky proto v knihovně nenajdete vůbec, protože po tomhle
+          řezu z nich nezbylo nic: <strong>čáry dětí</strong> (Cheiro z nich
+          odečítá počet a pohlaví dětí a u jedné varianty tvrdí, že dítě
+          nedospěje) a <strong>náramky</strong> (legenda o zdraví, bohatství
+          a štěstí plus tvrzení o neplodnosti žen). Stejně tak vynecháváme
+          jeho lékařská tvrzení — o závislostech a duševních nemocech.
+        </p>
+        <p>
+          <strong>Stav zpracování:</strong> knihovna čerpá zatím hlavně
+          z Cheira (nejsystematičtější popis čar, pahorků a typů rukou ze
+          čtyř pramenů), chirognomie z Markuna a Cheira. Čar je{' '}
+          <strong>14</strong> — osm hlavních a šest vedlejších. Křížové
+          porovnání s Benhamem a Dale a doplnění znamení (kříž, hvězda,
+          čtverec, ostrov…) jsou navazující práce.
         </p>
       </div>
     </div>
