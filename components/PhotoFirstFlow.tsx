@@ -122,18 +122,26 @@ export function PhotoFirstFlow() {
   }
 
   function applyAiResult(dataUrl: string, characteristics: Characteristics) {
-    const lines = characteristicsToPanelLines(characteristics)
-    const mounts = characteristicsToPanelMounts(characteristics)
-    setState((prev) => ({
-      phase: 'found',
-      dataUrl,
-      handType: characteristics.handType,
-      lines,
-      mounts,
-      detectedCount: Object.keys(lines).length + Object.keys(mounts).length,
-      usedAi: true,
-      revision: prev.phase === 'found' ? prev.revision + 1 : 1,
-    }))
+    const aiLines = characteristicsToPanelLines(characteristics)
+    const aiMounts = characteristicsToPanelMounts(characteristics)
+    setState((prev) => {
+      // Lokální detekce (kalibrovaný filtr) a AI jsou dva nezávislé odhady —
+      // AI výsledek se doplňuje k tomu, co už našla lokální detekce, ne že by
+      // ho nahrazoval. Kde obě metody trefí stejnou čáru, zůstává přesnější
+      // lokální měření; AI přidává jen to, co lokální detekce nenašla.
+      const localLines = prev.phase === 'found' ? prev.lines : {}
+      const lines = { ...aiLines, ...localLines }
+      return {
+        phase: 'found',
+        dataUrl,
+        handType: prev.phase === 'found' ? prev.handType : characteristics.handType,
+        lines,
+        mounts: aiMounts,
+        detectedCount: Object.keys(lines).length + Object.keys(aiMounts).length,
+        usedAi: true,
+        revision: prev.phase === 'found' ? prev.revision + 1 : 1,
+      }
+    })
   }
 
   const manualAlternatives = (
