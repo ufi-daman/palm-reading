@@ -19,7 +19,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 }
 
 /**
- * Opt-in AI rozbor: fotka se pošle na server (a odtud k Anthropic API) jen
+ * Opt-in AI rozbor: fotka se pošle na server (a odtud ke Gemini na Vertex AI) jen
  * po explicitním souhlasu — jde o biometrický údaj dle čl. 9 GDPR. Zbytek
  * aplikace (detekce v prohlížeči, ruční vyplnění) na tomhle nezávisí.
  */
@@ -75,7 +75,7 @@ export function AiVisionOptIn({
         <h3 className="font-semibold text-palm-800 mb-1">AI rozbor fotografie</h3>
         <p className="text-sm text-gray-600">
           Fotografie dlaně je biometrický údaj. Odesláním na AI rozbor ji
-          pošlete na server a odtud k vyhodnocení přes Anthropic API — mimo
+          pošlete na server a odtud k vyhodnocení přes Gemini na Vertex AI — mimo
           tuto volbu fotka nikdy neopouští váš prohlížeč. Nic se neukládá,
           výsledek jsou jen znaky (typ ruky, čáry, pahorky), ne obrázek.
         </p>

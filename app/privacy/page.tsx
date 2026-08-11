@@ -40,12 +40,13 @@ export default function PrivacyPage() {
               <p>
                 Pokud si výslovně vyžádáte AI rozbor (tlačítko „Zkusit
                 přesnější rozbor pomocí AI“), fotografie se pošle na náš
-                server a odtud jednorázově k vyhodnocení přes Anthropic API.
-                Jde o předání zvláštní kategorie údajů třetí straně — proto
-                to vyžaduje samostatný, výslovný souhlas (zaškrtávací pole
-                před odesláním), ne obecný souhlas s podmínkami užití.
-                Fotografie se při tom nikde neukládá — ani na našem serveru,
-                ani u Anthropic — vrací se jen rozpoznané znaky. Server
+                server a odtud jednorázově k vyhodnocení přes Gemini na
+                Vertex AI (Google Cloud). Jde o předání zvláštní kategorie
+                údajů třetí straně — proto to vyžaduje samostatný, výslovný
+                souhlas (zaškrtávací pole před odesláním), ne obecný souhlas
+                s podmínkami užití. Fotografie se při tom nikde neukládá —
+                ani na našem serveru, ani u Google — vrací se jen rozpoznané
+                znaky. Server
                 eviduje pouze počet volání za den (bez fotografie, bez
                 obsahu), aby šlo hlídat bezpečnostní strop.
               </p>

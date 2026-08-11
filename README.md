@@ -37,7 +37,8 @@ textový formulář (`/analyzer/text-input`) — obě cesty jsou z domovské
 stránky viditelně nabídnuté, ne schované jako záložní řešení.
 
 **Volitelný AI rozbor** (`/api/vision`) pošle fotku k vyhodnocení přes
-Anthropic API, pokud o to uživatel výslovně požádá (viz Souhlas a AI níže).
+Gemini na Vertex AI, pokud o to uživatel výslovně požádá (viz Souhlas a AI
+níže).
 
 ## Spuštění
 
@@ -58,13 +59,14 @@ statistiky a AI rozbor (viz níže).
 |---|---|---|
 | `DATABASE_URL` | PostgreSQL pro provozní statistiky (`/admin/stats`) | zápis statistik se tiše přeskočí |
 | `ADMIN_PASSWORD` | HTTP basic auth pro `/admin/*` | `/admin` vrací 503 |
-| `ANTHROPIC_API_KEY` | AI rozbor fotky (`/api/vision`) | tlačítko AI rozboru vrací 503 |
+| `GOOGLE_SERVICE_ACCOUNT_JSON`, `GOOGLE_CLOUD_PROJECT`, `GOOGLE_CLOUD_LOCATION`, `VISION_MODEL` | AI rozbor fotky přes Gemini na Vertex AI (`/api/vision`) | tlačítko AI rozboru vrací 503 |
 | `VISION_DAILY_CAP` | denní strop volání AI (výchozí 20) | platí výchozí hodnota |
 
-`DATABASE_URL` a `ANTHROPIC_API_KEY` musí být nastavené obě zároveň, aby
-AI rozbor fungoval — bez databáze nejde vynutit denní strop volání, takže
+`DATABASE_URL` a proměnné pro AI rozbor musí být nastavené zároveň, aby AI
+rozbor fungoval — bez databáze nejde vynutit denní strop volání, takže
 endpoint zůstává schválně vypnutý (bezpečnostní pojistka proti nekontrolo-
-vanému utrácení API kreditu).
+vanému utrácení API kreditu). Servisní účet potřebuje jen roli **Vertex AI
+User** (`roles/aiplatform.user`), nic víc — postup založení viz `.env.example`.
 
 Pro `DATABASE_URL` funguje libovolný hostovaný Postgres s free tier, např.
 [Neon](https://neon.tech) nebo Vercel Postgres.
@@ -75,10 +77,9 @@ Pro `DATABASE_URL` funguje libovolný hostovaný Postgres s free tier, např.
 - **Prisma 7** + PostgreSQL přes driver adapter `@prisma/adapter-pg`
 - **Tailwind CSS 3**
 - **@mediapipe/tasks-vision** — rozpoznání bodů ruky (self-hosted)
-- **@anthropic-ai/sdk** — volitelný AI rozbor fotky, structured outputs
-- **Zod** pro validaci vstupů (v3 v aplikaci, v4 jen pro strukturovaný
-  výstup Claude — SDK helper `zodOutputFormat` to vyžaduje, viz
-  `lib/vision/visionSchema.ts`)
+- **@google/genai** — volitelný AI rozbor fotky přes Gemini na Vertex AI,
+  structured output přes `responseSchema`
+- **Zod** pro validaci vstupů
 
 ## API
 
@@ -165,9 +166,9 @@ co chcete zapnout navíc:
 |---|---|---|
 | `ADMIN_PASSWORD` | `/admin/stats` | stránka vrací 503 |
 | `DATABASE_URL` | ukládání statistik | zápis se tiše přeskočí |
-| `ANTHROPIC_API_KEY` **+** `DATABASE_URL` | AI rozbor fotky | endpoint vrací 503 |
+| `GOOGLE_SERVICE_ACCOUNT_JSON` + `GOOGLE_CLOUD_PROJECT` + `GOOGLE_CLOUD_LOCATION` + `VISION_MODEL` **+** `DATABASE_URL` | AI rozbor fotky | endpoint vrací 503 |
 
-`ANTHROPIC_API_KEY` bez `DATABASE_URL` AI rozbor **nezapne** — je to
+Proměnné pro AI rozbor bez `DATABASE_URL` AI rozbor **nezapnou** — je to
 záměrná pojistka, bez databáze nejde vynutit denní strop volání.
 
 Po nasazení běží aplikace na HTTPS, což je nutná podmínka pro přístup ke
@@ -182,8 +183,9 @@ aplikace s vlastní ikonou a spouští se na celou obrazovku bez adresního
 
 **Limit Hobby tarifu:** serverless funkce má strop 10 s. `/api/vision` má
 nastavené `maxDuration = 60`, ale na Hobby tarifu ho Vercel stejně ořízne na
-10 s — `effort: 'low'` u AI rozboru je zvolený mimo jiné proto, aby se do
-toho vešel. Na Pro tarifu lze `maxDuration` využít celý.
+10 s — proto je u AI rozboru vypnuté uvažování (`thinkingConfig.thinkingBudget: 0`),
+aby se odpověď spolehlivě vešla do limitu. Na Pro tarifu lze `maxDuration`
+využít celý.
 
 **Velikost self-hosted assetů:** WASM (MediaPipe) + model dohromady ~18,5 MB,
 stahují se až při prvním focení, ne při načtení stránky. Reálná velikost
@@ -191,10 +193,10 @@ změřená z produkčního buildu.
 
 ## Cena AI rozboru
 
-Při `effort: 'low'` jde o levné volání (řádově jednotky haléřů až korun za
-rozbor, přesná cena závisí na aktuálním ceníku Anthropic API — ověřte si ji
-prosím na [anthropic.com](https://www.anthropic.com) před nasazením do
-provozu s reálným provozem).
+AI rozbor běží přes Gemini na Vertex AI s vypnutým uvažováním, takže jde
+o levné volání — přesná cena závisí na zvoleném modelu a aktuálním ceníku
+Vertex AI, ověřte si ji prosím na [cloud.google.com/vertex-ai/generative-ai/pricing](https://cloud.google.com/vertex-ai/generative-ai/pricing)
+před nasazením do provozu s reálným provozem.
 
 ## Upozornění
 

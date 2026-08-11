@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z, ZodError } from 'zod'
-import Anthropic from '@anthropic-ai/sdk'
-import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod'
-import { VisionCharacteristicsSchema } from '@/lib/vision/visionSchema'
+import { GoogleGenAI, FinishReason } from '@google/genai'
+import { VISION_RESPONSE_SCHEMA, type VisionCharacteristics } from '@/lib/vision/visionSchema'
 import { visionResultToCharacteristics } from '@/lib/vision/visionConvert'
 import { CharacteristicsSchema } from '@/lib/validators/characteristics'
 import { tryReserveAiCall } from '@/lib/db/aiCap'
@@ -24,10 +23,11 @@ const PROMPT = `Podívej se na fotografii dlaně a popiš, co je na ní VIDĚT �
 Pro typ ruky (handType) vyber jednu z: fire, air, earth, water, mixed — podle
 poměru délky dlaně k šířce a délky prstů.
 
-Pro každou z 8 čar (lifeLine, heartLine, headLine, fateLine, apolloLine,
-mercuryLine, intuitionLine, venusLine): pokud ji na fotce jasně vidíš, vyplň
-present:true a strength/length/quality. Pokud ji nevidíš zřetelně, nebo si
-nejsi jistý, nastav present:false a ostatní pole na null — NEHÁDEJ. Radši
+Pro každou z 14 čar (lifeLine, heartLine, headLine, fateLine, apolloLine,
+mercuryLine, intuitionLine, venusLine, marsLine, saturnRing, solomonRing,
+viaLascivia, travelLine, relationshipLine): pokud ji na fotce jasně vidíš,
+vyplň present:true a strength/length/quality. Pokud ji nevidíš zřetelně, nebo
+si nejsi jistý, nastav present:false a ostatní pole na null — NEHÁDEJ. Radši
 méně nalezených čar s jistotou než víc s dohadem.
 
 Pro pahorky (mounts) platí stejné pravidlo „nehádej", ale navaž ho na to,
@@ -41,6 +41,17 @@ Barva ani zarudnutí samy o sobě pahorek neurčují.
 
 additionalFeatures vyplň jen tam, kde je to z fotky jasně čitelné (délka
 prstů, tvar nehtů, barva kůže, struktura kůže).`
+
+/** Post-generation zastavení, která znamenají, že výsledek nepoužívat. */
+const BLOCKING_FINISH_REASONS = new Set<FinishReason>([
+  FinishReason.SAFETY,
+  FinishReason.RECITATION,
+  FinishReason.BLOCKLIST,
+  FinishReason.PROHIBITED_CONTENT,
+  FinishReason.SPII,
+  FinishReason.LANGUAGE,
+  FinishReason.OTHER,
+])
 
 export async function POST(request: Request) {
   let parsed: z.infer<typeof RequestSchema>
@@ -57,10 +68,27 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Neplatný požadavek.', code: 'BAD_REQUEST' }, { status: 400 })
   }
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
-  if (!apiKey) {
+  const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON
+  const project = process.env.GOOGLE_CLOUD_PROJECT
+  const location = process.env.GOOGLE_CLOUD_LOCATION
+  const model = process.env.VISION_MODEL
+  if (!serviceAccountJson || !project || !location || !model) {
     return NextResponse.json(
-      { error: 'AI rozbor není na tomto nasazení k dispozici.', code: 'AI_DISABLED' },
+      {
+        error:
+          'AI rozbor není na tomto nasazení nastavený — chybí GOOGLE_SERVICE_ACCOUNT_JSON, GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION nebo VISION_MODEL.',
+        code: 'AI_DISABLED',
+      },
+      { status: 503 },
+    )
+  }
+
+  let credentials: Record<string, unknown>
+  try {
+    credentials = JSON.parse(serviceAccountJson)
+  } catch {
+    return NextResponse.json(
+      { error: 'GOOGLE_SERVICE_ACCOUNT_JSON neobsahuje platný JSON.', code: 'AI_DISABLED' },
       { status: 503 },
     )
   }
@@ -79,7 +107,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          'AI rozbor potřebuje kromě API klíče i databázi (DATABASE_URL) — bez ní nejde vynutit denní strop volání, takže zůstává vypnutý.',
+          'AI rozbor potřebuje kromě přístupových údajů i databázi (DATABASE_URL) — bez ní nejde vynutit denní strop volání, takže zůstává vypnutý.',
         code: 'AI_NO_DATABASE',
       },
       { status: 503 },
@@ -92,33 +120,27 @@ export async function POST(request: Request) {
     )
   }
 
-  const client = new Anthropic({ apiKey })
+  const client = new GoogleGenAI({
+    enterprise: true,
+    project,
+    location,
+    googleAuthOptions: { credentials },
+  })
 
   let response
   try {
-    response = await client.messages.parse({
-      model: 'claude-sonnet-5',
-      max_tokens: 2048,
-      output_config: {
-        format: zodOutputFormat(VisionCharacteristicsSchema),
-        effort: 'low',
-      },
-      messages: [
-        {
-          role: 'user',
-          content: [
-            {
-              type: 'image',
-              source: {
-                type: 'base64',
-                media_type: mediaType as 'image/jpeg' | 'image/png' | 'image/webp',
-                data,
-              },
-            },
-            { type: 'text', text: PROMPT },
-          ],
-        },
+    response = await client.models.generateContent({
+      model,
+      contents: [
+        { inlineData: { data, mimeType: mediaType } },
+        { text: PROMPT },
       ],
+      config: {
+        responseMimeType: 'application/json',
+        responseSchema: VISION_RESPONSE_SCHEMA,
+        thinkingConfig: { thinkingBudget: 0 },
+        maxOutputTokens: 4096,
+      },
     })
   } catch {
     return NextResponse.json(
@@ -127,24 +149,57 @@ export async function POST(request: Request) {
     )
   }
 
-  // Musí se zkontrolovat PŘED čtením obsahu — odmítnutí nemá parsed_output.
-  if (response.stop_reason === 'refusal') {
+  // Odmítnutí ještě před vznikem odpovědi — candidates je prázdné/chybí.
+  if (response.promptFeedback?.blockReason) {
     return NextResponse.json(
       { error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' },
       { status: 422 },
     )
   }
 
-  if (!response.parsed_output) {
+  const candidate = response.candidates?.[0]
+  if (!candidate) {
+    return NextResponse.json(
+      { error: 'AI rozbor nevrátil žádný výsledek.', code: 'AI_EMPTY' },
+      { status: 502 },
+    )
+  }
+
+  // Odmítnutí/oříznutí po zahájení generování.
+  if (candidate.finishReason && BLOCKING_FINISH_REASONS.has(candidate.finishReason)) {
+    return NextResponse.json(
+      { error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' },
+      { status: 422 },
+    )
+  }
+  if (candidate.finishReason === FinishReason.MAX_TOKENS) {
+    return NextResponse.json(
+      { error: 'AI rozbor byl useknutý kvůli limitu délky odpovědi.', code: 'AI_EMPTY' },
+      { status: 502 },
+    )
+  }
+
+  const text = response.text
+  if (!text) {
     return NextResponse.json(
       { error: 'AI rozbor nevrátil použitelný výsledek.', code: 'AI_EMPTY' },
       { status: 502 },
     )
   }
 
+  let visionResult: VisionCharacteristics
+  try {
+    visionResult = JSON.parse(text)
+  } catch {
+    return NextResponse.json(
+      { error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' },
+      { status: 502 },
+    )
+  }
+
   try {
     const characteristics = CharacteristicsSchema.parse(
-      visionResultToCharacteristics(response.parsed_output),
+      visionResultToCharacteristics(visionResult),
     )
     return NextResponse.json({ characteristics })
   } catch {
