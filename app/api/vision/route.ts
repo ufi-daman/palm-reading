@@ -86,7 +86,8 @@ export async function POST(request: Request) {
   let credentials: Record<string, unknown>
   try {
     credentials = JSON.parse(serviceAccountJson)
-  } catch {
+  } catch (error) {
+    console.error('[api/vision] GOOGLE_SERVICE_ACCOUNT_JSON parse selhal:', error)
     return NextResponse.json(
       { error: 'GOOGLE_SERVICE_ACCOUNT_JSON neobsahuje platný JSON.', code: 'AI_DISABLED' },
       { status: 503 },
@@ -142,7 +143,8 @@ export async function POST(request: Request) {
         maxOutputTokens: 4096,
       },
     })
-  } catch {
+  } catch (error) {
+    console.error('[api/vision] generateContent selhal:', error)
     return NextResponse.json(
       { error: 'AI rozbor se nepodařilo dokončit. Zkuste to prosím znovu.', code: 'AI_ERROR' },
       { status: 502 },
@@ -190,7 +192,8 @@ export async function POST(request: Request) {
   let visionResult: VisionCharacteristics
   try {
     visionResult = JSON.parse(text)
-  } catch {
+  } catch (error) {
+    console.error('[api/vision] JSON.parse(text) selhal:', error, text)
     return NextResponse.json(
       { error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' },
       { status: 502 },
@@ -202,7 +205,8 @@ export async function POST(request: Request) {
       visionResultToCharacteristics(visionResult),
     )
     return NextResponse.json({ characteristics })
-  } catch {
+  } catch (error) {
+    console.error('[api/vision] CharacteristicsSchema.parse selhal:', error)
     return NextResponse.json(
       { error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' },
       { status: 502 },
