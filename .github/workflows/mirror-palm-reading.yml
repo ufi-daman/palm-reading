@@ -19,6 +19,15 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      # test/fixtures/palms/ smí obsahovat fotky dlaní pro kalibraci —
+      # patří jen do soukromého protocol, nikdy do veřejného palm-reading.
+      # Vystříhne se z kopie, kterou tenhle krok pushne dál, ne z protocol
+      # samotného.
+      - name: Odstranit fotky dlaní z kopie pro veřejné zrcadlo
+        run: |
+          pip install --quiet git-filter-repo
+          git filter-repo --force --invert-paths --path test/fixtures/palms/
+
       - name: Push do palm-reading
         run: |
           git push --force "https://${PALM_READING_TOKEN}@github.com/ufi-daman/palm-reading.git" HEAD:main
