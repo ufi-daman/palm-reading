@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function Footer() {
   return (
-    <footer className="mt-auto bg-palm-900 text-white">
+    <footer className="mt-auto bg-palm-900 text-white print:hidden">
       <div className="container mx-auto py-10">
         <div className="max-w-2xl">
           <h2 className="text-lg font-bold mb-3">⚠️ Právní upozornění</h2>

@@ -306,12 +306,12 @@ export function AnalyzerWizard({
         )}
 
         {error && (
-          <p className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+          <p className="print:hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
             {error}
           </p>
         )}
 
-        <section className="bg-white rounded-xl border border-palm-200 p-6 space-y-8">
+        <section className="print:hidden bg-white rounded-xl border border-palm-200 p-6 space-y-8">
           <div>
             <h2 className="text-2xl font-bold text-palm-800 mb-1">Upřesnit čtení</h2>
             <p className="text-gray-600 text-sm">
@@ -437,7 +437,7 @@ export function AnalyzerWizard({
             setResult(undefined)
             setStep(0)
           }}
-          className="border-2 border-palm-300 text-palm-700 px-6 py-2 rounded-lg hover:bg-palm-50"
+          className="print:hidden border-2 border-palm-300 text-palm-700 px-6 py-2 rounded-lg hover:bg-palm-50"
         >
           Nová analýza
         </button>

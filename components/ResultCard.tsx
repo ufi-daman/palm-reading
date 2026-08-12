@@ -25,7 +25,16 @@ export function ResultCard({ result }: { result: AnalysisResult }) {
   return (
     <article className="bg-white rounded-xl shadow-lg border border-palm-200 overflow-hidden">
       <header className="bg-palm-700 text-white px-6 py-5">
-        <h2 className="text-2xl font-bold">Vaše čtení z dlaně</h2>
+        <div className="flex items-start justify-between gap-4">
+          <h2 className="text-2xl font-bold">Vaše čtení z dlaně</h2>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="print:hidden shrink-0 text-sm bg-palm-800 hover:bg-palm-900 text-white px-3 py-1.5 rounded-lg border border-palm-500"
+          >
+            Uložit jako PDF
+          </button>
+        </div>
         <p className="text-sm text-palm-100 mt-1">
           Jistota výkladu {confidencePercent} % · nalezeno{' '}
           {result.matchedCombinations} odpovídajících kombinací

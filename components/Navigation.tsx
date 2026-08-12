@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export function Navigation() {
   return (
-    <header className="bg-palm-800 text-white">
+    <header className="bg-palm-800 text-white print:hidden">
       <nav className="container mx-auto flex flex-wrap items-center justify-between gap-4 py-5">
         <Link href="/" className="text-2xl font-bold">
           ✋ Čtení z dlaně

@@ -249,7 +249,7 @@ export function PhotoFirstFlow() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-palm-100 border border-palm-300 rounded-lg px-4 py-3 text-palm-800 text-sm flex items-center justify-between gap-4">
+      <div className="print:hidden bg-palm-100 border border-palm-300 rounded-lg px-4 py-3 text-palm-800 text-sm flex items-center justify-between gap-4">
         <span>
           {state.usedAi ? 'Znaky doplněné AI rozborem' : 'Typ ruky rozpoznán z fotky'}
           {state.detectedCount > 0
@@ -273,13 +273,15 @@ export function PhotoFirstFlow() {
         usedAi={state.usedAi}
       />
       {!state.usedAi && (
-        <AiVisionOptIn
-          dataUrl={state.dataUrl}
-          normalizedDataUrl={state.normalizedDataUrl}
-          onResult={(characteristics) => applyAiResult(state.dataUrl, characteristics)}
-        />
+        <div className="print:hidden">
+          <AiVisionOptIn
+            dataUrl={state.dataUrl}
+            normalizedDataUrl={state.normalizedDataUrl}
+            onResult={(characteristics) => applyAiResult(state.dataUrl, characteristics)}
+          />
+        </div>
       )}
-      {manualAlternatives}
+      <div className="print:hidden">{manualAlternatives}</div>
     </div>
   )
 }
