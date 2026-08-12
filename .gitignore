@@ -21,5 +21,10 @@ next-env.d.ts
 /.ocr-cache/
 tsconfig.tsbuildinfo
 
-# Kalibrační fotky dlaní — biometrický údaj, do veřejného repa nepatří
-/test/fixtures/palms/
+# Kalibrační fotky dlaní — biometrický údaj, do veřejného repa nepatří.
+# relief/ je výjimka: kalibrační sada pro pahorky (Fáze 10 D) se sleduje
+# jen tady v soukromém protocol — mirror-palm-reading.yml tuhle cestu
+# z kopie pro veřejné palm-reading vždy vystřihne, viz ten workflow.
+/test/fixtures/palms/*
+!/test/fixtures/palms/relief/
+!/test/fixtures/palms/relief/**
