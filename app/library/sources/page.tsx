@@ -56,12 +56,22 @@ export default function SourcesPage() {
           jeho lékařská tvrzení — o závislostech a duševních nemocech.
         </p>
         <p>
-          <strong>Stav zpracování:</strong> knihovna čerpá zatím hlavně
-          z Cheira (nejsystematičtější popis čar, pahorků a typů rukou ze
-          čtyř pramenů), chirognomie z Markuna a Cheira. Čar je{' '}
-          <strong>14</strong> — osm hlavních a šest vedlejších. Křížové
-          porovnání s Benhamem a Dale a doplnění znamení (kříž, hvězda,
-          čtverec, ostrov…) jsou navazující práce.
+          <strong>Stav zpracování:</strong> páteří báze zůstává Cheiro
+          (nejsystematičtější popis čar, pahorků a typů rukou ze čtyř
+          pramenů) — u čar a pahorků z něj vychází naprostá většina
+          významů. Dale a Markun jsou teď dotažení jako křížová kontrola:
+          na 23 místech (8 u čar, 15 u pahorků), kde se věcně shodují nebo
+          smysluplně rozcházejí s Cheirem, je to u dané položky vidět
+          jmenovitě v textu. Většina obou knih ale byla nepoužitelná —
+          Dale je z velké části čistě astrologický a fatalistický
+          (předpovědi nemocí, smrti, bohatství podle planet), Markun celou
+          tradici otevřeně ironizuje jako „pseudo-vědu" a jeho kapitoly
+          o čarách jsou skoro výhradně diagnostika nemocí a konkrétní
+          předpovědi — přebíráme z něj tedy věcné shrnutí tradice, ne jeho
+          osobní přesvědčení (žádné nemá). Čar je <strong>14</strong> —
+          osm hlavních a šest vedlejších. <strong>Benham</strong> (sken,
+          670 stran, potřebuje OCR) a <strong>znamení</strong> (kříž,
+          hvězda, čtverec, ostrov…) čekají jako navazující práce.
         </p>
       </div>
     </div>
