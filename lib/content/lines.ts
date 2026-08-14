@@ -1,5 +1,5 @@
 import type { PalmLineContent } from './types'
-import { cheiro } from './sources'
+import { cheiro, dale } from './sources'
 
 /**
  * Čáry dlaně. Významy jsou rozepsané po osách (síla / délka / kvalita),
@@ -25,10 +25,10 @@ export const PALM_LINES: PalmLineContent[] = [
       strength: {
         weak: {
           meaning:
-            'Široká a mělká čára — podle Cheira svědčí spíš o svalové síle než o síle vůle, a při zátěži drží hůř než tenká hluboká čára.',
+            'Široká a mělká čára — podle Cheira svědčí spíš o svalové síle než o síle vůle, a při zátěži drží hůř než tenká hluboká čára. Dale ji čte opačně: širokou, živě zbarvenou čáru bere jako znamení dlouhého, zdravého života, ne slabšího odhodlání.',
           personality:
             'Vaše odolnost je spíš tělesná než nervová. Pod dlouhodobým tlakem potřebujete skutečný odpočinek, ne jen změnu činnosti.',
-          source: [cheiro('The Line of Life')],
+          source: [cheiro('The Line of Life'), dale('No. 10 — Line of Life')],
         },
         medium: {
           meaning: 'Vyrovnaná hloubka čáry bez výrazných výkyvů.',
@@ -46,9 +46,9 @@ export const PALM_LINES: PalmLineContent[] = [
       length: {
         short: {
           meaning:
-            'Kratší čára — Cheiro dlouhou nepřerušenou čáru spojuje s vitalitou a odolností; kratší proto čte jako signál dbát na zdraví a energii spíš cíleně než počítat s nekonečnou rezervou.',
+            'Kratší čára — Cheiro dlouhou nepřerušenou čáru spojuje s vitalitou a odolností; kratší proto čte jako signál dbát na zdraví a energii spíš cíleně než počítat s nekonečnou rezervou. Dale se v tomhle směru shoduje — krátkou nebo přerušenou čáru čte jako slabší konstituci.',
           personality: 'Energii si dávkujete cíleně — víte, že není nekonečná, a podle toho hospodaříte.',
-          source: [cheiro('The Line of Life and its Variations')],
+          source: [cheiro('The Line of Life and its Variations'), dale('No. 10 — Line of Life')],
         },
         medium: {
           meaning: 'Vyvážený životní rytmus.',
@@ -201,7 +201,8 @@ export const PALM_LINES: PalmLineContent[] = [
       },
       length: {
         short: {
-          meaning: 'Čára objevující se až vysoko na dlani — pozdější nástup vlastního směřování, ne jeho nedostatek.',
+          meaning:
+            'Čára objevující se až vysoko na dlani — pozdější nástup vlastního směřování, ne jeho nedostatek. Dale je přísnější: krátkou nebo klikatou čáru čte jako nedostatek stálosti, ne jako pozdější start.',
           personality: 'Váš životní směr se vykrystalizoval později — a o to jistěji, když přišel.',
           source: [cheiro('Rising from the Middle of the Palm')],
         },
@@ -211,9 +212,10 @@ export const PALM_LINES: PalmLineContent[] = [
           source: [cheiro('The Line of Destiny or Fate')],
         },
         long: {
-          meaning: 'Čára od zápěstí až k pahorku Saturna — nejúplnější podoba, osud patrný od raného věku.',
+          meaning:
+            'Čára od zápěstí až k pahorku Saturna — nejúplnější podoba, osud patrný od raného věku. Dale se shoduje: dost dlouhá čára bez přerušení znamená stálost a pevné směřování.',
           personality: 'Vaše směřování je čitelné odmalička a provází vás konzistentně celý život.',
-          source: [cheiro('The Line of Destiny or Fate')],
+          source: [cheiro('The Line of Destiny or Fate'), dale('No. 8 — Line of Fortune')],
         },
       },
       quality: {
@@ -487,9 +489,9 @@ export const PALM_LINES: PalmLineContent[] = [
         },
         strong: {
           meaning:
-            'Jasně vyznačený půlkruh — Cheiro ho spojuje s mimořádnými schopnostmi: živé sny, které se naplňují, inspirovaná řeč a psaní na nejvyšší úrovni.',
+            'Jasně vyznačený půlkruh — Cheiro ho spojuje s mimořádnými schopnostmi: živé sny, které se naplňují, inspirovaná řeč a psaní na nejvyšší úrovni. Dale se shoduje v podstatě — čte ji jako básnickou inteligenci, kterou nachází skoro výhradně u výrazně tvořivých a intelektuálních lidí.',
           personality: 'Vaše intuice je silná a spolehlivá — bere ji vážně, i když ji nedokážete vždy racionálně zdůvodnit.',
-          source: [cheiro('The Line of Intuition and the Via Lasciva')],
+          source: [cheiro('The Line of Intuition and the Via Lasciva'), dale('No. 55 — Line of Intuition')],
         },
       },
       length: {
