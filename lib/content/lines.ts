@@ -1,5 +1,5 @@
 import type { PalmLineContent } from './types'
-import { cheiro, dale } from './sources'
+import { cheiro, dale, markun } from './sources'
 
 /**
  * Čáry dlaně. Významy jsou rozepsané po osách (síla / délka / kvalita),
@@ -69,9 +69,10 @@ export const PALM_LINES: PalmLineContent[] = [
           source: [cheiro('The Line of Life and its Variations')],
         },
         broken: {
-          meaning: 'Přerušení v čáře — Cheiro ho čte jako místo tělesného oslabení, ne nutně jako trvalý stav.',
+          meaning:
+            'Přerušení v čáře — Cheiro ho čte jako místo tělesného oslabení, ne nutně jako trvalý stav. Markun se v základní tezi shoduje: čáru života spojuje s tělesným stavem a přerušení čte jako otisk nemoci.',
           personality: 'Prošli jste obdobím, které vás zasáhlo tělesně i psychicky — a dostali jste se z něj dál.',
-          source: [cheiro('The Line of Life')],
+          source: [cheiro('The Line of Life'), markun('The Lines')],
         },
         chained: {
           meaning:
@@ -115,9 +116,9 @@ export const PALM_LINES: PalmLineContent[] = [
         },
         strong: {
           meaning:
-            'Čistě vedená, hluboká čára — podle Cheira silnější znamení mentality než čára široká. Typická pro velké „mozkové pracovníky" s jemnými, čistými čarami.',
+            'Čistě vedená, hluboká čára — podle Cheira silnější znamení mentality než čára široká. Typická pro velké „mozkové pracovníky" s jemnými, čistými čarami. Markun ze stejné tradice shrnuje: čistá čára dobré barvy je znamením jasné mysli, obvykle spojené se silnou vůlí.',
           personality: 'Umíte se hluboce soustředit a myšlenku dotáhnout, i když to vyžaduje dlouhé nasazení.',
-          source: [cheiro('The Line of Head and its Variations')],
+          source: [cheiro('The Line of Head and its Variations'), markun('The Lines')],
         },
       },
       length: {
@@ -153,9 +154,9 @@ export const PALM_LINES: PalmLineContent[] = [
         },
         chained: {
           meaning:
-            'Souvislý řetěz ostrůvků po celé čáře — u Cheira znamení mentální únavy, často z chatrného zdraví, které vysává soustředění.',
+            'Souvislý řetěz ostrůvků po celé čáře — u Cheira znamení mentální únavy, často z chatrného zdraví, které vysává soustředění. Markun ji ze stejné tradice čte jako znamení duševní nestálosti.',
           personality: 'Vaše soustředění kolísá s tím, jak se cítíte celkově — péče o zdraví se vám přímo promítá do jasnosti myšlení.',
-          source: [cheiro('The Line of Head and its Secondary Signs')],
+          source: [cheiro('The Line of Head and its Secondary Signs'), markun('The Lines')],
         },
         island: {
           meaning:
@@ -378,9 +379,10 @@ export const PALM_LINES: PalmLineContent[] = [
           source: [cheiro('Rozbor jednotlivých znaků')],
         },
         chained: {
-          meaning: 'Čára jako řetěz drobných oček — u Cheira znamení flirtování a citové nestálosti spíš než hluboké, trvalé náklonnosti.',
+          meaning:
+            'Čára jako řetěz drobných oček — u Cheira znamení flirtování a citové nestálosti spíš než hluboké, trvalé náklonnosti. Markun se v tomhle bodě shoduje přesně — smyčkovitou čáru srdce čte stejně jako sklon k flirtování.',
           personality: 'Vaše city jsou proměnlivější — hledáte, spíš než se hned na dlouho upnout.',
-          source: [cheiro('The Line of Heart')],
+          source: [cheiro('The Line of Heart'), markun('The Lines')],
         },
         island: {
           meaning: 'Ostrůvek na čáře — ohraničené období citových zmatků.',

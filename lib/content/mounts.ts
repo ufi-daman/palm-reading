@@ -1,5 +1,5 @@
 import type { MountContent } from './types'
-import { cheiro, dale } from './sources'
+import { cheiro, dale, markun } from './sources'
 
 /**
  * Osm pahorků dlaně (oba Marsovy zvlášť). Zdroj: Cheiro, Palmistry for All
@@ -21,9 +21,14 @@ export const MOUNTS: MountContent[] = [
     meanings: {
       size: {
         small: {
-          meaning: 'Plochý nebo málo vyvinutý pahorek — city podle Cheira spíš duševní než tělesné povahy; Dale u plochého pahorku čte přímo citový chlad.',
+          meaning:
+            'Plochý nebo málo vyvinutý pahorek — city podle Cheira spíš duševní než tělesné povahy; Dale u plochého pahorku čte přímo citový chlad, stejně jako Markun u plochého pahorku.',
           personality: 'Vaše náklonnost je hlubší, než na první pohled ukazujete — méně sázíte na smyslové gesto.',
-          source: [cheiro('The Mount of Venus and its Meaning'), dale('No. 16 — Mount of Venus')],
+          source: [
+            cheiro('The Mount of Venus and its Meaning'),
+            dale('No. 16 — Mount of Venus'),
+            markun('The Mounts'),
+          ],
         },
         medium: {
           meaning: 'Dobře tvarovaný, ale ne příliš velký pahorek — u Cheira výborné znamení touhy po lásce a kráse bez přehnané smyslnosti.',
@@ -32,9 +37,13 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Výrazně vyvinutý pahorek — silná cirkulace, vitalita a podle Cheira i výraznější smyslová přitažlivost; Dale ke stejnému znaku dodává přísnější čtení — sklon k vrtkavosti a koketérii.',
+            'Výrazně vyvinutý pahorek — silná cirkulace, vitalita a podle Cheira i výraznější smyslová přitažlivost; Dale ke stejnému znaku dodává přísnější čtení — sklon k vrtkavosti a koketérii. Markun na stejném místě čte silnou touhu.',
           personality: 'Vyzařujete vitalitu a přitažlivost, kterou lidé kolem vás vnímají.',
-          source: [cheiro('The Mount of Venus and its Meaning'), dale('No. 16 — Mount of Venus')],
+          source: [
+            cheiro('The Mount of Venus and its Meaning'),
+            dale('No. 16 — Mount of Venus'),
+            markun('The Mounts'),
+          ],
         },
       },
       strength: {
@@ -77,9 +86,9 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Velký pahorek — touha dominovat, vést a organizovat; se slabou čárou hlavy podle Cheira spíš pýcha a domýšlivost, se silnou nejlepší znamení úspěchu z charakteru. Dale jde ve stejném směru přímočařeji: velmi vyvinutý pahorek u něj znamená pýchu až tyranii, slabě vyvinutý zas nečinnost.',
+            'Velký pahorek — touha dominovat, vést a organizovat; se slabou čárou hlavy podle Cheira spíš pýcha a domýšlivost, se silnou nejlepší znamení úspěchu z charakteru. Dale jde ve stejném směru přímočařeji: velmi vyvinutý pahorek u něj znamená pýchu až tyranii, slabě vyvinutý zas nečinnost — stejnou dvojici (hrdost/marnivost při přehnaném vývoji) shrnuje z tradice i Markun.',
           personality: 'Máte silnou ambici vést a rozhodovat — do jaké míry vám to slouží, záleží na tom, jak jasně myslíte.',
-          source: [cheiro('The Mount of Jupiter and its Meaning'), dale('No. 1 — Mount of Jupiter')],
+          source: [cheiro('The Mount of Jupiter and its Meaning'), dale('No. 1 — Mount of Jupiter'), markun('The Mounts')],
         },
       },
       strength: {
@@ -122,9 +131,13 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Výrazně vyvinutý pahorek — silná vůle, ale i sklon k pocitu osamělosti a k tomu nechat se vést fatalismem. Dale u velmi vyvinutého pahorku podobně čte mlčenlivost a smutek, u zřetelně vyvinutého moudrost a rozvahu.',
+            'Výrazně vyvinutý pahorek — silná vůle, ale i sklon k pocitu osamělosti a k tomu nechat se vést fatalismem. Dale u velmi vyvinutého pahorku podobně čte mlčenlivost a smutek, u zřetelně vyvinutého moudrost a rozvahu; stejný směr (samotářství, smutek, askeze) shrnuje z tradice i Markun.',
           personality: 'Jste nezávislí a hluboce přemýšliví — jen si hlídejte, aby vás to neizolovalo od druhých.',
-          source: [cheiro('The Mount of Saturn and its Meaning'), dale('No. 2 — Mount of Saturn')],
+          source: [
+            cheiro('The Mount of Saturn and its Meaning'),
+            dale('No. 2 — Mount of Saturn'),
+            markun('The Mounts'),
+          ],
         },
       },
       strength: {
@@ -167,9 +180,13 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Velký pahorek — touha zářit, smysl pro krásu ve všem, širokorysost a štědrost, slunná, silná osobnost. Dale je k výraznému pahorku přísnější — u přehnaně vyvinutého vidí spíš chamtivost a neupřímnost, kde Cheiro čte jen širokorysost.',
+            'Velký pahorek — touha zářit, smysl pro krásu ve všem, širokorysost a štědrost, slunná, silná osobnost. Dale je k výraznému pahorku přísnější — u přehnaně vyvinutého vidí spíš chamtivost a neupřímnost, kde Cheiro čte jen širokorysost; Markun ve stejném znaku shodně vidí bohatství, nadání a zálibu v okázalosti.',
           personality: 'Máte přirozenou zářivost a velkorysost — lidé se k vám stahují.',
-          source: [cheiro('The Mount of the Sun and its Meaning'), dale('No. 3 — Mount of the Sun, "Apollo"')],
+          source: [
+            cheiro('The Mount of the Sun and its Meaning'),
+            dale('No. 3 — Mount of the Sun, "Apollo"'),
+            markun('The Mounts'),
+          ],
         },
       },
       strength: {
@@ -212,9 +229,13 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Velký pahorek — rychlost myšlení, vtip, výřečnost, přizpůsobivost vědě i obchodu; se slabou čárou hlavy podle Cheira riziko roztěkanosti a nespolehlivosti. Dale je u přehnaně velkého pahorku přísnější a čte v tom sklon k neupřímnosti a vypočítavosti.',
+            'Velký pahorek — rychlost myšlení, vtip, výřečnost, přizpůsobivost vědě i obchodu; se slabou čárou hlavy podle Cheira riziko roztěkanosti a nespolehlivosti. Dale je u přehnaně velkého pahorku přísnější a čte v tom sklon k neupřímnosti a vypočítavosti — tutéž dvojici (řečnost a obchodní nadání na jedné straně, nespolehlivost při přehnání na druhé) shrnuje z tradice i Markun.',
           personality: 'Vaše mysl je rychlá a přizpůsobivá — ideální pro obchod, vědu i komunikaci s lidmi.',
-          source: [cheiro('The Mount of Mercury and its Meaning'), dale('No. 4 — Mount of Mercury')],
+          source: [
+            cheiro('The Mount of Mercury and its Meaning'),
+            dale('No. 4 — Mount of Mercury'),
+            markun('The Mounts'),
+          ],
         },
       },
       strength: {
@@ -257,9 +278,10 @@ export const MOUNTS: MountContent[] = [
           source: [cheiro('The Mount of the Moon and its Meaning')],
         },
         large: {
-          meaning: 'Vysoký, dobře vyvinutý pahorek — silná představivost, vynalézavost, touha po změně a cestování, časté u vynálezců a umělců.',
+          meaning:
+            'Vysoký, dobře vyvinutý pahorek — silná představivost, vynalézavost, touha po změně a cestování, časté u vynálezců a umělců. Markun ze stejné tradice shodně shrnuje: dobře vyvinutý pahorek Luny dává obraznost, lásku k tajemnu a touhu po dálkách.',
           personality: 'Vaše představivost je vaší hnací silou — táhne vás to k novému, neobvyklému a k cestování.',
-          source: [cheiro('The Mount of the Moon and its Meaning')],
+          source: [cheiro('The Mount of the Moon and its Meaning'), markun('The Mounts')],
         },
       },
       strength: {
