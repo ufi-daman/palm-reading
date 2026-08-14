@@ -1,5 +1,5 @@
 import type { MountContent } from './types'
-import { cheiro, dale, markun } from './sources'
+import { cheiro, dale, markun, benham } from './sources'
 
 /**
  * Osm pahorků dlaně (oba Marsovy zvlášť). Zdroj: Cheiro, Palmistry for All
@@ -86,9 +86,14 @@ export const MOUNTS: MountContent[] = [
         },
         large: {
           meaning:
-            'Velký pahorek — touha dominovat, vést a organizovat; se slabou čárou hlavy podle Cheira spíš pýcha a domýšlivost, se silnou nejlepší znamení úspěchu z charakteru. Dale jde ve stejném směru přímočařeji: velmi vyvinutý pahorek u něj znamená pýchu až tyranii, slabě vyvinutý zas nečinnost — stejnou dvojici (hrdost/marnivost při přehnaném vývoji) shrnuje z tradice i Markun.',
+            'Velký pahorek — touha dominovat, vést a organizovat; se slabou čárou hlavy podle Cheira spíš pýcha a domýšlivost, se silnou nejlepší znamení úspěchu z charakteru. Dale jde ve stejném směru přímočařeji: velmi vyvinutý pahorek u něj znamená pýchu až tyranii, slabě vyvinutý zas nečinnost — stejnou dvojici (hrdost/marnivost při přehnaném vývoji) shrnuje z tradice i Markun. Benham do stejného rejstříku přidává vřelost a štědrost — u dobře vyvinutého pahorku popisuje typ, kterému víc než peníze znamená moc a vliv, a který pohrdá malicherností; moc a vládu staví nad majetek, ne nad poctivost.',
           personality: 'Máte silnou ambici vést a rozhodovat — do jaké míry vám to slouží, záleží na tom, jak jasně myslíte.',
-          source: [cheiro('The Mount of Jupiter and its Meaning'), dale('No. 1 — Mount of Jupiter'), markun('The Mounts')],
+          source: [
+            cheiro('The Mount of Jupiter and its Meaning'),
+            dale('No. 1 — Mount of Jupiter'),
+            markun('The Mounts'),
+            benham('Chapter XIX — The Mount of Jupiter'),
+          ],
         },
       },
       strength: {
@@ -103,9 +108,10 @@ export const MOUNTS: MountContent[] = [
           source: [cheiro('The Mount of Jupiter and its Meaning')],
         },
         prominent: {
-          meaning: 'Pevný, výrazný pahorek — Cheiro spojuje s poctivostí, přímočarostí a nesnášenlivostí k podvádění, ale i se sklonem přehánět to do extrémů.',
+          meaning:
+            'Pevný, výrazný pahorek — Cheiro spojuje s poctivostí, přímočarostí a nesnášenlivostí k podvádění, ale i se sklonem přehánět to do extrémů. Benham dochází nezávisle na Cheirovi ke stejnému jádru: čest řadí mezi hlavní Jupiterovy rysy, spravedlnost a poctivost v obchodě i v soukromí, a stejně jako Cheiro zdůrazňuje odpor k podvodu a lsti.',
           personality: 'Jste přímočaří a čestní až do morku kosti — a nesnesete, když to tak druzí nejsou.',
-          source: [cheiro('The Mount of Jupiter and its Meaning')],
+          source: [cheiro('The Mount of Jupiter and its Meaning'), benham('Chapter XIX — The Mount of Jupiter')],
         },
       },
     },
