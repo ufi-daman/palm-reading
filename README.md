@@ -112,11 +112,22 @@ Detekce (z fotky nebo z AI) dodává jen **znaky** — výklad vždy skládá je
 
 ## Znalostní báze — stav pramenů
 
-`lib/content/` je typovaný kód v gitu (ne databáze) — dnes 8 čar, 8 pahorků
-a 5 typů rukou. Rozšíření na 15 čar a doplnění povinného zdroje (`source`)
-u každé položky podle volných pramenů (Benham, Cheiro, Dale, Markun) čeká na
-odblokování `gutenberg.org` a `archive.org` v síťové politice prostředí —
-zatím nedostupné.
+`lib/content/` je typovaný kód v gitu (ne databáze) — dnes **14 čar**
+(8 hlavních a 6 vedlejších), **8 pahorků**, 5 typů rukou, 4 chirognomické
+osy a 57 vícefaktorových kombinací.
+
+Všechny čtyři prameny jsou v repu a vytěžené: **Cheiro** je páteří báze
+(165 citací), **Dale** a **Markun** jsou dotažení jako křížová kontrola
+(12 a 16 citací) a **Benham** je rozjetý — je to sken 670 stran, takže
+potřebuje OCR, a hotová je zatím kapitola o pahorku Jupitera. Zbylých šest
+pahorkových kapitol a celá část o čarách čekají.
+
+Podrobný a průběžně aktualizovaný stav je na stránce `/library/sources`
+přímo v aplikaci — včetně toho, co se z pramenů nepřebírá a proč.
+
+> Pozor: 48 z 57 kombinací ve `lib/content/interpretations.ts` nemá uvedený
+> zdroj. Vznikly v rané fázi projektu, ještě než byly prameny k dispozici.
+> Netváří se ocitované — poznáte je právě podle chybějícího `source`.
 
 ## Struktura
 

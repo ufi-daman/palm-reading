@@ -30,7 +30,8 @@ model AnalysisStat {
 
 /// Jeden řádek = jedno volání AI rozboru (/api/vision), bez ohledu na to,
 /// jestli z něj vzniklo dokončené čtení. Jediný účel: tvrdý denní strop
-/// volání Anthropic API — v paměti by na serverless nefungoval spolehlivě.
+/// volání AI rozboru (Gemini na Vertex AI) — v paměti by na serverless
+/// nefungoval spolehlivě, každá instance má vlastní.
 model AiCallLog {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
