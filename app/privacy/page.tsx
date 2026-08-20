@@ -59,10 +59,18 @@ export default function PrivacyPage() {
               <p>
                 Po dokončení čtení se do databáze zapíše jeden řádek: typ
                 ruky, způsob vstupu (fotka/ruční/text), kolik znaků našla
-                detekce a kolik jich doplnil uživatel, a zda se použil AI
-                rozbor. Bez fotografie, bez osobních údajů, bez IP adresy a
-                bez vazby na vaši totožnost — slouží jen k ladění prahů
-                detekce a přehledu o používání na chráněné stránce{' '}
+                detekce a kolik jich doplnil uživatel, zda se použil AI
+                rozbor, spočtená míra jistoty výkladu a u fotky navíc
+                rozpad úspěšnosti po jednotlivých čarách — tedy u každé
+                čáry jen dvě čísla: jestli ji filtr našel a s jakým skóre.
+              </p>
+              <p>
+                Bez fotografie, bez osobních údajů, bez IP adresy a bez
+                vazby na vaši totožnost. Z uložených čísel nejde zpětně
+                poskládat obrázek dlaně ani nikoho identifikovat — jsou to
+                skóre filtru, ne obrys ruky. Slouží k ladění prahů detekce
+                na skutečných rukou (dosud se ladily jen na dvou testovacích
+                fotkách) a k přehledu o používání na chráněné stránce{' '}
                 <code>/admin/stats</code>.
               </p>
             </section>

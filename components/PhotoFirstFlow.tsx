@@ -7,7 +7,7 @@ import { AnalyzerWizard } from './AnalyzerWizard'
 import { AiVisionOptIn } from './AiVisionOptIn'
 import { detectHandLandmarks } from '@/lib/vision/mediapipe'
 import { classifyHandType } from '@/lib/vision/handType'
-import { detectLines } from '@/lib/vision/lines/detect'
+import { detectLines, type LineDetectionResult } from '@/lib/vision/lines/detect'
 import { normalizePalm } from '@/lib/vision/lines/normalize'
 import type { LineKey, MountKey } from '@/lib/content/types'
 import type { Characteristics } from '@/lib/validators/characteristics'
@@ -28,7 +28,12 @@ type FlowState =
       handType: string
       lines: Partial<Record<LineKey, PanelLineValue>>
       mounts: Partial<Record<MountKey, PanelMountValue>>
+      // Chirognomie (délka prstů, nehty, barva dlaně, kůže). Lokální detekce
+      // ji neumí — plní se jen z AI rozboru nebo ručně v panelu oprav.
+      additional: Record<string, string>
       detectedCount: number
+      /** Rozpad skóre po zónách pro statistiku, viz summarizeDetection. */
+      detectionDetail?: string
       usedAi: boolean
       revision: number
     }
@@ -74,6 +79,45 @@ function characteristicsToPanelMounts(
   return mounts
 }
 
+/**
+ * Rozpad detekce do tvaru, který čeká `aggregateDetection` na /admin/stats:
+ * `{ lifeLine: { found, score } }`. Skóre zaokrouhlujeme na dvě místa —
+ * na ladění prahů to stačí a řádek ve statistice zůstane malý.
+ *
+ * Obsahuje jen čísla z filtru: co našel a jak silně. Žádné souřadnice,
+ * žádný výřez, nic, z čeho by šla zpětně poskládat dlaň.
+ */
+function summarizeDetection(
+  debug: LineDetectionResult['debug'],
+): string | undefined {
+  if (!debug) return undefined
+  const summary: Record<string, { found: boolean; score: number }> = {}
+  for (const zone of debug) {
+    summary[zone.zoneKey] = {
+      found: zone.accepted,
+      score: Math.round(zone.score * 100) / 100,
+    }
+  }
+  return JSON.stringify(summary)
+}
+
+/**
+ * Chirognomie z AI rozboru. Model ji vrací (viz visionSchema), ale dřív se
+ * cestou do panelu zahazovala — jako jediná kategorie přitom nezávisí na
+ * kvalitě detekce čar, takže funguje i na fotce, kde se žádná čára nenajde.
+ */
+function characteristicsToPanelAdditional(
+  characteristics: Characteristics,
+): Record<string, string> {
+  const additional: Record<string, string> = {}
+  for (const [key, value] of Object.entries(
+    characteristics.additionalFeatures ?? {},
+  )) {
+    if (typeof value === 'string') additional[key] = value
+  }
+  return additional
+}
+
 export function PhotoFirstFlow() {
   const [state, setState] = useState<FlowState>({ phase: 'capture' })
 
@@ -94,10 +138,15 @@ export function PhotoFirstFlow() {
       // podle typu ruky, ne že celý tok spadne.
       let lines: Partial<Record<LineKey, PanelLineValue>> = {}
       let detectedCount = 0
+      let detectionDetail: string | undefined
       try {
-        const lineResult = detectLines(image, landmarks)
+        // withDebug = true: rozpad skóre po zónách je jediný způsob, jak
+        // změřit úspěšnost detekce na skutečných rukou místo na dvou
+        // kalibračních fotkách. Jde do statistiky, ne do výkladu.
+        const lineResult = detectLines(image, landmarks, 'green', true)
         if (lineResult) {
           detectedCount = lineResult.detectedCount
+          detectionDetail = summarizeDetection(lineResult.debug)
           for (const key of Object.keys(lineResult.lines) as LineKey[]) {
             const detected = lineResult.lines[key]!
             lines[key] = {
@@ -132,7 +181,9 @@ export function PhotoFirstFlow() {
         handType,
         lines,
         mounts: {},
+        additional: {},
         detectedCount,
+        detectionDetail,
         usedAi: false,
         revision: 0,
       })
@@ -152,6 +203,7 @@ export function PhotoFirstFlow() {
   function applyAiResult(dataUrl: string, characteristics: Characteristics) {
     const aiLines = characteristicsToPanelLines(characteristics)
     const aiMounts = characteristicsToPanelMounts(characteristics)
+    const aiAdditional = characteristicsToPanelAdditional(characteristics)
     setState((prev) => {
       // Lokální detekce (kalibrovaný filtr) a AI jsou dva nezávislé odhady —
       // AI výsledek se doplňuje k tomu, co už našla lokální detekce, ne že by
@@ -159,14 +211,30 @@ export function PhotoFirstFlow() {
       // lokální měření; AI přidává jen to, co lokální detekce nenašla.
       const localLines = prev.phase === 'found' ? prev.lines : {}
       const lines = { ...aiLines, ...localLines }
+      // Pahorky i chirognomii slučujeme stejným směrem jako čáry: co už ve
+      // stavu je, má přednost. Lokální detekce je zatím neplní, ale díky
+      // tomuhle pořadí je AI nepřepíše, kdyby se to změnilo.
+      const localMounts = prev.phase === 'found' ? prev.mounts : {}
+      const mounts = { ...aiMounts, ...localMounts }
+      const localAdditional = prev.phase === 'found' ? prev.additional : {}
+      const additional = { ...aiAdditional, ...localAdditional }
       return {
         phase: 'found',
         dataUrl,
         normalizedDataUrl: prev.phase === 'found' ? prev.normalizedDataUrl : undefined,
         handType: prev.phase === 'found' ? prev.handType : characteristics.handType,
         lines,
-        mounts: aiMounts,
-        detectedCount: Object.keys(lines).length + Object.keys(aiMounts).length,
+        mounts,
+        additional,
+        // Počet znaků dodaných automaticky — čáry, pahorky i chirognomie.
+        // Musí sedět se součtem, který nad ním počítá AnalyzerWizard, jinak
+        // by statistika ručních oprav vycházela záporně.
+        detectedCount:
+          Object.keys(lines).length +
+          Object.keys(mounts).length +
+          Object.keys(additional).length,
+        detectionDetail:
+          prev.phase === 'found' ? prev.detectionDetail : undefined,
         usedAi: true,
         revision: prev.phase === 'found' ? prev.revision + 1 : 1,
       }
@@ -269,7 +337,9 @@ export function PhotoFirstFlow() {
         initialHandType={state.handType}
         initialLines={state.lines}
         initialMounts={state.mounts}
+        initialAdditional={state.additional}
         detectedCount={state.detectedCount}
+        detectionDetail={state.detectionDetail}
         usedAi={state.usedAi}
       />
       {!state.usedAi && (

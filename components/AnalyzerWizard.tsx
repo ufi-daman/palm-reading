@@ -139,7 +139,9 @@ export function AnalyzerWizard({
   initialHandType,
   initialLines,
   initialMounts,
+  initialAdditional,
   detectedCount = 0,
+  detectionDetail,
   usedAi = false,
 }: {
   /** "panel" = korekční panel pod výsledkem z fotky, bez kroků, s okamžitým přepočtem. */
@@ -150,8 +152,12 @@ export function AnalyzerWizard({
   initialHandType?: string
   initialLines?: Partial<Record<LineKey, LineValue>>
   initialMounts?: Partial<Record<MountKey, MountValue>>
+  /** Chirognomie z AI rozboru (délka prstů, nehty, barva dlaně, kůže). */
+  initialAdditional?: Record<string, string>
   /** Kolik znaků dodala automatická detekce (pro poměr detekce/ruční úprava ve statistice). */
   detectedCount?: number
+  /** Rozpad úspěšnosti detekce po čarách (JSON) — jde jen do statistiky. */
+  detectionDetail?: string
   /** Znaky pocházejí (aspoň zčásti) z AI rozboru — jde do statistiky. */
   usedAi?: boolean
 }) {
@@ -164,7 +170,9 @@ export function AnalyzerWizard({
   const [mounts, setMounts] = useState<Partial<Record<MountKey, MountValue>>>(
     initialMounts ?? {},
   )
-  const [additional, setAdditional] = useState<Record<string, string>>({})
+  const [additional, setAdditional] = useState<Record<string, string>>(
+    initialAdditional ?? {},
+  )
   const [openLine, setOpenLine] = useState<LineKey>()
   const [openMount, setOpenMount] = useState<MountKey>()
   const [draft, setDraft] = useState<Record<string, string | undefined>>({})
@@ -198,6 +206,7 @@ export function AnalyzerWizard({
 
   const filledLines = Object.keys(lines).length
   const filledMounts = Object.keys(mounts).length
+  const filledAdditional = Object.keys(additional).length
 
   async function runAnalysis() {
     if (!handType) return
@@ -217,8 +226,15 @@ export function AnalyzerWizard({
           },
           detection: {
             linesDetected: detectedCount,
-            linesManual: Math.max(0, filledLines + filledMounts - detectedCount),
+            // detectedCount počítá čáry + pahorky + chirognomii z detekce/AI,
+            // takže se od něj musí odečítat stejný součet — jinak by ručních
+            // úprav vycházelo víc, než jich uživatel udělal.
+            linesManual: Math.max(
+              0,
+              filledLines + filledMounts + filledAdditional - detectedCount,
+            ),
             usedAi,
+            detectionDetail,
           },
         }),
       })
@@ -505,7 +521,7 @@ export function AnalyzerWizard({
             {variant === 'interactive'
               ? 'Klikněte na čáru v diagramu a popište, jak vypadá na vaší dlani. Vyplněné čáry ztmavnou.'
               : 'Vyberte čáru ze seznamu a popište ji. Vyplnit můžete jen ty, které na dlani rozeznáte.'}{' '}
-            Vyplněno: {filledLines} z 8.
+            Vyplněno: {filledLines} z {Object.keys(LINE_LABELS).length}.
           </p>
 
           {variant === 'interactive' && (
@@ -547,7 +563,7 @@ export function AnalyzerWizard({
           <h2 className="text-2xl font-bold text-palm-800 mb-2">Pahorky dlaně</h2>
           <p className="text-gray-600 mb-5">
             Vyvýšeniny na dlani. Nahmatejte je palcem druhé ruky. Vyplněno:{' '}
-            {filledMounts} z 8.
+            {filledMounts} z {Object.keys(MOUNT_LABELS).length}.
           </p>
 
           {variant === 'interactive' && (

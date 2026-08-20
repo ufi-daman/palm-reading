@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db/client'
+import { getPalmLines } from '@/lib/content'
 
 export const dynamic = 'force-dynamic'
 
@@ -6,6 +7,11 @@ interface DetectionEntry {
   found?: boolean
   score?: number
 }
+
+/** Anglické klíče čar → české názvy ze znalostní báze. */
+const LINE_NAMES: Record<string, string> = Object.fromEntries(
+  getPalmLines().map((line) => [line.key, line.nameCs]),
+)
 
 function aggregateDetection(rows: { detectionDetail: string | null }[]) {
   const perLine = new Map<string, { found: number; total: number }>()
@@ -128,7 +134,9 @@ export default async function AdminStatsPage() {
               <tbody>
                 {detectionStats.map((row) => (
                   <tr key={row.key} className="border-t border-palm-100">
-                    <td className="px-4 py-2 font-medium whitespace-nowrap">{row.key}</td>
+                    <td className="px-4 py-2 font-medium whitespace-nowrap">
+                      {LINE_NAMES[row.key] ?? row.key}
+                    </td>
                     <td className="px-4 py-2">{row.found}</td>
                     <td className="px-4 py-2">{row.total}</td>
                     <td className="px-4 py-2">{Math.round(row.rate * 100)} %</td>

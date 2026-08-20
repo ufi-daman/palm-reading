@@ -9,6 +9,8 @@ interface RecordStatInput {
     linesDetected: number
     linesManual: number
     usedAi: boolean
+    /** Už serializovaný rozpad z klienta, viz AnalyzeRequestSchema. */
+    detectionDetail?: string
   }
   /** Podrobnosti detekce pro ladění prahů, např. {"lifeLine": {"found": true, "score": 0.8}} */
   detectionDetail?: Record<string, unknown>
@@ -31,9 +33,11 @@ export async function recordAnalysisStat(input: RecordStatInput): Promise<void> 
         linesManual: input.detection?.linesManual ?? 0,
         usedAi: input.detection?.usedAi ?? false,
         confidence: input.confidence,
-        detectionDetail: input.detectionDetail
-          ? JSON.stringify(input.detectionDetail)
-          : null,
+        // Klient posílá rozpad už jako řetězec; volání ze serveru může
+        // předat objekt. Přednost má to, co dorazilo s requestem.
+        detectionDetail:
+          input.detection?.detectionDetail ??
+          (input.detectionDetail ? JSON.stringify(input.detectionDetail) : null),
       },
     })
   } catch (error) {

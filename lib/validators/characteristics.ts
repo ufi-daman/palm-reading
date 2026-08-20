@@ -64,6 +64,13 @@ export const AnalyzeRequestSchema = z.object({
       linesDetected: z.number().int().min(0).default(0),
       linesManual: z.number().int().min(0).default(0),
       usedAi: z.boolean().default(false),
+      /**
+       * Rozpad úspěšnosti po jednotlivých čarách: `{ lifeLine: { found, score } }`.
+       * Jediná zpětná vazba, ze které jde ladit prahy na skutečných rukou
+       * místo na dvou kalibračních fotkách — proto se sbírá. Obsahuje jen
+       * skóre filtru, žádný obrys, žádný výřez, nic z obrázku.
+       */
+      detectionDetail: z.string().max(4000).optional(),
     })
     .optional(),
 })
