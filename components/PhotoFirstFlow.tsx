@@ -307,8 +307,25 @@ export function PhotoFirstFlow() {
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-8 text-center space-y-4">
           <p className="text-amber-900 font-medium">
             Rozpoznávání dlaně se v tomto prohlížeči nepodařilo spustit.
-            Pokračujte prosím ručně.
           </p>
+          {/*
+            AI rozbor běží na serveru a landmarky z prohlížeče nepotřebuje —
+            takže i když se místní detekce vůbec nespustí, tahle cesta pořád
+            funguje. Dřív tu nabídnutá nebyla a uživatel přišel o obě naráz.
+          */}
+          <div>
+            <AiVisionOptIn
+              dataUrl={state.dataUrl}
+              onResult={(characteristics) => applyAiResult(state.dataUrl, characteristics)}
+            />
+          </div>
+          <button
+            type="button"
+            onClick={retake}
+            className="bg-palm-700 hover:bg-palm-800 text-white px-6 py-2 rounded-lg font-semibold"
+          >
+            Vyfotit znovu
+          </button>
         </div>
         {manualAlternatives}
       </div>

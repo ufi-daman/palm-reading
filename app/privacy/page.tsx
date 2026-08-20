@@ -44,11 +44,21 @@ export default function PrivacyPage() {
                 Vertex AI (Google Cloud). Jde o předání zvláštní kategorie
                 údajů třetí straně — proto to vyžaduje samostatný, výslovný
                 souhlas (zaškrtávací pole před odesláním), ne obecný souhlas
-                s podmínkami užití. Fotografie se při tom nikde neukládá —
-                ani na našem serveru, ani u Google — vrací se jen rozpoznané
-                znaky. Server
-                eviduje pouze počet volání za den (bez fotografie, bez
-                obsahu), aby šlo hlídat bezpečnostní strop.
+                s podmínkami užití. <strong>Na našem serveru se fotografie
+                neukládá</strong> — projde pamětí a zahodí se, vrací se jen
+                rozpoznané znaky. Server eviduje pouze počet volání za den
+                (datum a čas volání, bez fotografie a bez obsahu), aby šlo
+                hlídat bezpečnostní strop.
+              </p>
+              <p>
+                Co se s odeslaným snímkem děje <strong>na straně Googlu</strong>,
+                se řídí podmínkami Vertex AI a jeho zásadami pro uchovávání dat
+                — to už není v naší moci a nemůžeme to za Google zaručit.
+                Dřívější znění téhle stránky tvrdilo, že se fotka neukládá
+                „ani u Google"; to jsme nemohli doložit, tak jsme to opravili.
+                Pokud vám tahle nejistota vadí, AI rozbor nepoužívejte —
+                aplikace bez něj funguje v plném rozsahu a fotka pak
+                prohlížeč vůbec neopustí.
               </p>
             </section>
 

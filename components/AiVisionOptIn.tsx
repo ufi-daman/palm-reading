@@ -16,6 +16,10 @@ const ERROR_MESSAGES: Record<string, string> = {
   AI_ERROR: 'AI rozbor se nepodařilo dokončit. Zkuste to prosím znovu.',
   AI_EMPTY: 'AI rozbor nevrátil použitelný výsledek.',
   AI_INVALID: 'AI rozbor vrátil neplatná data.',
+  AI_NO_DATABASE:
+    'AI rozbor je teď nedostupný — nejde ověřit denní strop volání. Zkuste to prosím za chvíli, ruční doplnění funguje dál.',
+  VALIDATION_ERROR: 'Požadavek se nepodařilo zpracovat. Zkuste fotku vyfotit znovu.',
+  BAD_REQUEST: 'Požadavek se nepodařilo zpracovat. Zkuste fotku vyfotit znovu.',
 }
 
 /**
@@ -84,8 +88,17 @@ export function AiVisionOptIn({
         <p className="text-sm text-gray-600">
           Fotografie dlaně je biometrický údaj. Odesláním na AI rozbor ji
           pošlete na server a odtud k vyhodnocení přes Gemini na Vertex AI — mimo
-          tuto volbu fotka nikdy neopouští váš prohlížeč. Nic se neukládá,
-          výsledek jsou jen znaky (typ ruky, čáry, pahorky), ne obrázek.
+          tuto volbu fotka nikdy neopouští váš prohlížeč. Zpátky se vrátí jen
+          znaky (typ ruky, čáry, pahorky, tvar prstů a nehtů), ne obrázek.
+        </p>
+        <p className="text-sm text-gray-600 mt-2">
+          <strong>Fotografii neukládáme</strong> — projde serverem a zahodí se.
+          Ukládá se jen záznam, že volání proběhlo (datum a čas, nic víc), aby
+          se dal hlídat denní strop. Co s odeslanou fotkou dělá Google na své
+          straně, se řídí podmínkami Vertex AI a my to neovlivníme.{' '}
+          <a href="/privacy" className="text-palm-700 underline">
+            Podrobnosti o zpracování
+          </a>
         </p>
       </div>
 

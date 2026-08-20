@@ -4,7 +4,7 @@ import { GoogleGenAI, FinishReason } from '@google/genai'
 import { VISION_RESPONSE_SCHEMA, type VisionCharacteristics } from '@/lib/vision/visionSchema'
 import { visionResultToCharacteristics } from '@/lib/vision/visionConvert'
 import { CharacteristicsSchema } from '@/lib/validators/characteristics'
-import { tryReserveAiCall } from '@/lib/db/aiCap'
+import { tryReserveAiCall, releaseAiCall } from '@/lib/db/aiCap'
 
 export const maxDuration = 60
 
@@ -121,7 +121,7 @@ export async function POST(request: Request) {
     }
   }
 
-  const reserved = await tryReserveAiCall()
+  const { result: reserved, reservationId } = await tryReserveAiCall()
   if (reserved === 'no-database') {
     return NextResponse.json(
       {
@@ -137,6 +137,29 @@ export async function POST(request: Request) {
       { error: 'AI rozbor je pro dnešek vyčerpaný. Zkuste to prosím zítra, nebo pokračujte ručně.', code: 'DAILY_CAP' },
       { status: 429 },
     )
+  }
+  if (reserved === 'db-error') {
+    return NextResponse.json(
+      {
+        error:
+          'Nepodařilo se ověřit denní strop volání (databáze neodpovídá), takže AI rozbor teď nespustíme. Zkuste to prosím za chvíli.',
+        code: 'AI_NO_DATABASE',
+      },
+      { status: 503 },
+    )
+  }
+
+  /**
+   * Rezervace se odečetla ještě před voláním modelu — kdyby se odsud dál
+   * cokoliv nepovedlo, musí se vrátit. Bez toho spálila série chyb celý
+   * denní strop, aniž by uživatel dostal jediný výsledek.
+   */
+  async function failWith(
+    body: { error: string; code: string },
+    status: number,
+  ) {
+    await releaseAiCall(reservationId)
+    return NextResponse.json(body, { status })
   }
 
   const client = new GoogleGenAI({
@@ -164,48 +187,36 @@ export async function POST(request: Request) {
     })
   } catch (error) {
     console.error('[api/vision] generateContent selhal:', error)
-    return NextResponse.json(
+    return failWith(
       { error: 'AI rozbor se nepodařilo dokončit. Zkuste to prosím znovu.', code: 'AI_ERROR' },
-      { status: 502 },
+      502,
     )
   }
 
   // Odmítnutí ještě před vznikem odpovědi — candidates je prázdné/chybí.
   if (response.promptFeedback?.blockReason) {
-    return NextResponse.json(
-      { error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' },
-      { status: 422 },
-    )
+    return failWith({ error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' }, 422)
   }
 
   const candidate = response.candidates?.[0]
   if (!candidate) {
-    return NextResponse.json(
-      { error: 'AI rozbor nevrátil žádný výsledek.', code: 'AI_EMPTY' },
-      { status: 502 },
-    )
+    return failWith({ error: 'AI rozbor nevrátil žádný výsledek.', code: 'AI_EMPTY' }, 502)
   }
 
   // Odmítnutí/oříznutí po zahájení generování.
   if (candidate.finishReason && BLOCKING_FINISH_REASONS.has(candidate.finishReason)) {
-    return NextResponse.json(
-      { error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' },
-      { status: 422 },
-    )
+    return failWith({ error: 'AI fotku odmítla vyhodnotit.', code: 'AI_REFUSAL' }, 422)
   }
   if (candidate.finishReason === FinishReason.MAX_TOKENS) {
-    return NextResponse.json(
+    return failWith(
       { error: 'AI rozbor byl useknutý kvůli limitu délky odpovědi.', code: 'AI_EMPTY' },
-      { status: 502 },
+      502,
     )
   }
 
   const text = response.text
   if (!text) {
-    return NextResponse.json(
-      { error: 'AI rozbor nevrátil použitelný výsledek.', code: 'AI_EMPTY' },
-      { status: 502 },
-    )
+    return failWith({ error: 'AI rozbor nevrátil použitelný výsledek.', code: 'AI_EMPTY' }, 502)
   }
 
   let visionResult: VisionCharacteristics
@@ -213,10 +224,7 @@ export async function POST(request: Request) {
     visionResult = JSON.parse(text)
   } catch (error) {
     console.error('[api/vision] JSON.parse(text) selhal:', error, text)
-    return NextResponse.json(
-      { error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' },
-      { status: 502 },
-    )
+    return failWith({ error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' }, 502)
   }
 
   try {
@@ -226,9 +234,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ characteristics })
   } catch (error) {
     console.error('[api/vision] CharacteristicsSchema.parse selhal:', error)
-    return NextResponse.json(
-      { error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' },
-      { status: 502 },
-    )
+    return failWith({ error: 'AI rozbor vrátil neplatná data.', code: 'AI_INVALID' }, 502)
   }
 }
