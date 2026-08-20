@@ -376,7 +376,7 @@ export const PALM_LINES: PalmLineContent[] = [
         broken: {
           meaning: 'Přerušená čára — citová rána nebo zásadní zvrat ve vztahu, ne trvalá vlastnost.',
           personality: 'Prošli jste citovým zvratem, který vás přenastavil — a unesli jste ho.',
-          source: [cheiro('Rozbor jednotlivých znaků')],
+          source: [cheiro('The Line of Heart')],
         },
         chained: {
           meaning:

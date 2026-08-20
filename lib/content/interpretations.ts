@@ -1,12 +1,88 @@
 import type { InterpretationContent } from './types'
+import { cheiro } from './sources'
 
 /**
  * Vícefaktorové kombinace. Interpretace je použitelná jen tehdy, když sedí
  * *všechna* uvedená kritéria — proto jsou psané cíleně, ne kombinatoricky.
  * Vstupy, na které tu kombinace není, pokrývá skládání z jednotlivých významů
  * čar a pahorků (viz `lib/analysis/palmReader.ts`).
+ *
+ * ZÁKLADNÍ VRSTVA JEN NA TYP RUKY je první v pořadí a je záměrná. Dokud
+ * neexistovala, neměla žádná ze zdejších kombinací kritérium splnitelné
+ * bez nalezené čáry nebo pahorku — takže když detekce z fotky nenašla nic
+ * (běžný případ u horšího snímku), vyšlo „nalezeno 0 kombinací" a jistota
+ * spadla na 0,29, i když byl typ ruky rozpoznaný správně. Tyhle položky
+ * mají nízkou `confidence`, takže konkrétnější kombinace přebijí vždycky —
+ * slouží jen jako dno, ne jako výklad na úkor přesnějšího.
  */
 export const INTERPRETATIONS: InterpretationContent[] = [
+  // ---------- Základní vrstva: jen typ ruky ----------
+  {
+    criteria: { handType: 'earth' },
+    personality:
+      'Váš přístup ke světu stojí na tom, co se dá ověřit a osahat. Nová věc si u vás musí zásluhy nejdřív odpracovat — a když si je odpracuje, držíte se jí pak spolehlivěji než většina lidí.',
+    strengths: ['Spolehlivost v dlouhém běhu', 'Odolnost vůči tlaku', 'Smysl pro to, co funguje'],
+    challenges: ['Odmítnutí věci dřív, než ji zkusíte', 'Nesdělená únava'],
+    guidance:
+      'Vaše síla je ve vytrvalosti, a právě proto vás okolí snadno přetíží. Hranici si musíte pojmenovat sami — nikdo ji za vás neuhlídá.',
+    school: 'classical',
+    confidence: 0.55,
+    tags: ['praktičnost', 'stabilita'],
+    source: [cheiro('The Square Type')],
+  },
+  {
+    criteria: { handType: 'fire' },
+    personality:
+      'Energie u vás přichází v návalech a chce ven hned. Nejlíp vám je, když se něco rozjíždí — a nejhůř, když se čeká na povolení.',
+    strengths: ['Rychlý start', 'Strhnutí ostatních', 'Odvaha do nejistého'],
+    challenges: ['Ztráta zájmu po rozjezdu', 'Netrpělivost s pomalejšími'],
+    guidance:
+      'Rozjet věc umíte líp než dokončit. Nejvíc získáte tím, že si k sobě najdete někoho, koho baví přesně ta druhá půlka.',
+    school: 'classical',
+    confidence: 0.55,
+    tags: ['energie', 'iniciativa'],
+    source: [cheiro('The Spatulate Hand')],
+  },
+  {
+    criteria: { handType: 'air' },
+    personality:
+      'Věcem potřebujete rozumět dřív, než je uděláte — a to platí i o vlastních pocitech. Odstup, který si tím držíte, je vaše výhoda i to, co vás občas připraví o bezprostřednost.',
+    strengths: ['Jasné pojmenování', 'Nadhled v napětí', 'Chuť jít do hloubky'],
+    challenges: ['Analýza místa jednání', 'Kritičnost k sobě i druhým'],
+    guidance:
+      'Ne všechno se dá promyslet dopředu. Někdy je pochopení až na druhé straně rozhodnutí, ne před ním.',
+    school: 'classical',
+    confidence: 0.55,
+    tags: ['myšlení', 'nadhled'],
+    source: [cheiro('The Philosophic Hand')],
+  },
+  {
+    criteria: { handType: 'water' },
+    personality:
+      'Náladu prostředí vnímáte dřív a silněji než většina lidí kolem — často dřív, než si to stihnete vysvětlit. Je to zdroj vaší vnímavosti i vaší únavy.',
+    strengths: ['Cit pro atmosféru', 'Vcítění bez vysvětlování', 'Tvořivost'],
+    challenges: ['Přebírání cizích nálad', 'Zranitelnost vůči tvrdšímu jednání'],
+    guidance:
+      'Ne každý pocit, který ve vás vznikne, je váš. Rozlišit, co jste přijali od okolí, je u vás praktická dovednost, ne filozofie.',
+    school: 'classical',
+    confidence: 0.55,
+    tags: ['citlivost', 'tvořivost'],
+    source: [cheiro('The Conic or Artistic Hand')],
+  },
+  {
+    criteria: { handType: 'mixed' },
+    personality:
+      'Nezapadáte čistě do jedné škatulky a je to na vás vidět — umíte se bavit s kýmkoliv o čemkoliv. Cenou za ten záběr bývá otázka, čemu se vlastně věnovat naplno.',
+    strengths: ['Široký rozhled', 'Přizpůsobivost', 'Role prostředníka'],
+    challenges: ['Roztříštěnost', 'Odkládané rozhodnutí o směru'],
+    guidance:
+      'Všestrannost není nedostatek zaměření. Ale jednu věc dotaženou do konce vám nikdo nenahradí — vyberte si ji vědomě, ne až zbyde čas.',
+    school: 'classical',
+    confidence: 0.55,
+    tags: ['všestrannost', 'hledání směru'],
+    source: [cheiro('The Mixed Hand')],
+  },
+
   // ---------- Ruka Země ----------
   {
     criteria: { handType: 'earth', lines: { lifeLine: 'strong' } },
@@ -597,5 +673,75 @@ export const INTERPRETATIONS: InterpretationContent[] = [
     school: 'classical',
     confidence: 0.78,
     tags: ['myšlení', 'komunikace'],
+  },
+
+  // ---------- Kombinace čar a pahorků ----------
+  // Dokud tyhle neexistovaly, nemíchala kritéria čar a pahorků ani jedna
+  // položka — a protože skóre počítá obě roviny zvlášť, byl strop jistoty
+  // fakticky 0,89 místo deklarovaných 0,97. Všechny čtyři vycházejí
+  // z míst, kde Cheiro sám obě roviny spojuje.
+  {
+    criteria: { mounts: { jupiter: 'large' }, lines: { headLine: 'strong' } },
+    personality:
+      'Ctižádost podložená jasnou hlavou. Cheiro tuhle dvojici čte jako nejlepší znamení úspěchu z vlastní síly — u velkého pahorku Jupitera prý rozhoduje právě čára hlavy, jestli z touhy vést vyroste vedení, nebo jen domýšlivost.',
+    strengths: ['Vedení podložené úsudkem', 'Vytrvalost v cíli', 'Přirozená autorita'],
+    challenges: ['Netrpělivost s nerozhodností druhých', 'Sklon přebírat i cizí odpovědnost'],
+    guidance:
+      'Umíte vést i rozhodovat — právě proto na vás okolí přesune víc, než je vaše. Rozlišujte, co je opravdu vaše rozhodnutí.',
+    school: 'classical',
+    confidence: 0.86,
+    tags: ['ambice', 'úsudek'],
+    source: [
+      cheiro('The Mount of Jupiter and its Meaning'),
+      cheiro('The Line of Head and its Variations'),
+    ],
+  },
+  {
+    criteria: { mounts: { luna: 'large' }, lines: { headLine: 'weak' } },
+    personality:
+      'Mimořádná představivost, kterou rozvaha málo drží při zemi. Cheiro u výrazného pahorku Luny upozorňuje, že teprve čára hlavy rozhoduje, jestli se z fantazie stane tvorba, nebo únik.',
+    strengths: ['Nápaditost', 'Cit pro nezvyklé', 'Schopnost představit si, co ještě není'],
+    challenges: ['Ztráta se ve vlastních představách', 'Odkládání střetu se skutečností'],
+    guidance:
+      'Vaše představivost je skutečný talent, ale potřebuje termín a někoho, komu se z ní budete zodpovídat. Bez toho zůstane u záměrů.',
+    school: 'classical',
+    confidence: 0.82,
+    tags: ['představivost', 'ukotvení'],
+    source: [
+      cheiro('The Mount of the Moon and its Meaning'),
+      cheiro('The Line of Head and its Variations'),
+    ],
+  },
+  {
+    criteria: { mounts: { venus: 'large' }, lines: { heartLine: 'strong' } },
+    personality:
+      'Vřelost, která je vidět i cítit. Cheiro spojuje vyvinutý pahorek Venuše s vitalitou a potřebou blízkosti; silná čára srdce k tomu přidává city, které se nedrží zpátky.',
+    strengths: ['Vřelost bez vypočítavosti', 'Pohostinnost', 'Věrnost blízkým'],
+    challenges: ['Prudká reakce, když se city zasáhnou', 'Sklon dávat víc, než dostáváte'],
+    guidance:
+      'Dávat vám jde snadno. Ověřte si občas, jestli to není jednosměrné — velkorysost bez hranic vyčerpá i vás.',
+    school: 'classical',
+    confidence: 0.84,
+    tags: ['vřelost', 'vztahy'],
+    source: [
+      cheiro('The Mount of Venus and its Meaning'),
+      cheiro('The Line of Heart'),
+    ],
+  },
+  {
+    criteria: { mounts: { saturn: 'large' }, lines: { lifeLine: 'strong' } },
+    personality:
+      'Vážnost a výdrž pohromadě. Cheiro čte výrazný pahorek Saturna jako sklon k samotě a hloubavosti; se silnou čárou života z toho není únava ze světa, ale schopnost dlouho nést, co ostatní odloží.',
+    strengths: ['Vytrvalost v dlouhém běhu', 'Samostatnost', 'Odpovědnost, na kterou je spoleh'],
+    challenges: ['Izolace, když je toho moc', 'Neochota požádat o pomoc'],
+    guidance:
+      'Unesete víc než většina lidí, a proto se snadno ocitnete sami. Samota je u vás volba, ne osud — hlídejte si, aby jí zůstala.',
+    school: 'classical',
+    confidence: 0.83,
+    tags: ['vytrvalost', 'samostatnost'],
+    source: [
+      cheiro('The Mount of Saturn and its Meaning'),
+      cheiro('The Line of Life and its Variations'),
+    ],
   },
 ]

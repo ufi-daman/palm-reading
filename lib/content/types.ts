@@ -138,7 +138,14 @@ export interface InterpretationContent {
   challenges: string[]
   guidance: string
   school: 'classical' | 'modern'
-  source?: string
+  /**
+   * Stejný tvar jako `Meaning.source` ve zbytku báze. Dřív to byl holý
+   * řetězec a nepoužila ho ani jedna položka — celá vrstva kombinací tak
+   * zůstala bez pramene, přestože právě ona tvoří hlavní text výsledku.
+   * Zůstává nepovinný: položky psané mimo prameny se nemají tvářit
+   * ocitované, mají se dát poznat podle toho, že zdroj nemají.
+   */
+  source?: Source[]
   confidence: number
   tags: string[]
 }
